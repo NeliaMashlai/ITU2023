@@ -2,7 +2,7 @@ import requests as re
 import json
 
 data = {
-    'name': 'pidor',
+    'name': 'test',
     'description': 'test',
     'price': 1.0,
     'contact_email': 'test',

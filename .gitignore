@@ -1,4 +1,6 @@
 .idea
 src/**/__pycache__/
 database.db
-
+tests/crypto.py
+tests/imgur.py
+tests/test.png

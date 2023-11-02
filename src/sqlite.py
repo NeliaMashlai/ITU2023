@@ -1,6 +1,7 @@
-from sqlite3 import Cursor, connect, Error
+from sqlite3 import connect, Error
 from src.config import DATABASE_FILE
 import os
+
 
 class Database:
 
@@ -8,7 +9,8 @@ class Database:
         """ create a database connection to a SQLite database """
         try:
 
-            self.conn = connect(os.path.join(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'src'), DATABASE_FILE))
+            self.conn = connect(
+                os.path.join(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'src'), DATABASE_FILE))
 
             self.conn.execute('''CREATE TABLE IF NOT EXISTS items (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -38,7 +40,7 @@ class Database:
         except Error as e:
             print(e)
             return False
-        
+
     def get_items(self) -> list:
         """ get all items from the items table """
         try:
@@ -52,7 +54,7 @@ class Database:
         except Error as e:
             print(e)
             return []
-    
+
     def get_item(self, item_id: int) -> dict:
         """ get a single item from the items table """
         try:
@@ -66,7 +68,7 @@ class Database:
         except Error as e:
             print(e)
             return {}
-        
+
     def delete_item(self, item_id: int) -> bool:
         """ delete a single item from the items table """
         try:
@@ -79,27 +81,21 @@ class Database:
         except Error as e:
             print(e)
             return False
-        
+
     def update_item(self, item_id: int, **item) -> bool:
         """ update a single item from the items table """
         try:
             cursor = self.conn.cursor()
             cursor.execute('''
-            UPDATE items SET name = :name, description = :description, price = :price, contact_email = :contact_email, contact_phone = :contact_phone, image_path = :image_path WHERE id = :id
+            UPDATE items SET name = :name, description = :description, price = :price, contact_email = :contact_email,
+            contact_phone = :contact_phone, image_path = :image_path WHERE id = :id
             ''', {'id': item_id, **item})
             self.conn.commit()
             return True
         except Error as e:
             print(e)
             return False
-        
+
     def __del__(self) -> None:
         """ close the database connection """
         self.conn.close()
-
-
-        
-
-
-
-

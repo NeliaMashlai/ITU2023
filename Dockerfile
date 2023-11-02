@@ -10,8 +10,8 @@ EXPOSE 8080
 COPY . /app
 WORKDIR /app
 
-# TODO - fix database connection
-# VOLUME [ "/app/src" ]
+# mount database volume into
+VOLUME [ "/app/database.db" ]
 
 CMD [ "python" , "run.py" ]
 
