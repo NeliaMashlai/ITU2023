@@ -10,4 +10,4 @@ data = {
     'image_path': 'test'
 }
 
-print(re.post('http://localhost:8080/api/v1.0/items', data = json.dumps(data)))
+print(re.post('http://localhost:8080/api/v1.0/items', data=json.dumps(data)))
