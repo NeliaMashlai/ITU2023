@@ -65,6 +65,14 @@ async def get_user():
     pass
 
 
+@app.get('/api/v1.0/user/{user_id}/items')
+async def get_user_items(user_id: int) -> list[Item]:
+    items = get_user_items(user_id)
+    if items:
+        return items
+    raise HTTPException(status_code = 500, detail='Server error')
+        
+
 @app.delete('/api/v1.0/user/{user_id}/delete')
 async def delete_user():
     pass

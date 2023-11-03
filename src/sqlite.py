@@ -208,6 +208,26 @@ class Database:
             print(e)
             return -3
         
+    def get_user_items(self, user_id: int) -> list:
+        """ get all items from the items table """
+        try:
+
+            cursor = self.conn.cursor()
+
+            cursor.execute('''
+            SELECT * FROM items WHERE author_id = :author_id
+            ''', {'author_id': user_id})
+
+            rows = cursor.fetchall()
+            keys = ('id', 'name', 'description', 'price', 'contact_email', 'contact_phone', 'image_path')
+
+            return [{key: value for key, value in zip(keys, row)} for row in rows]
+        
+        except Error as e:
+
+            print(e)
+            return None
+        
     # def update_user(self, user_id : int, **user) -> bool:
     #     """ update a single user if correct password is provided, if new password is provided, it will be encrypted and old password checked to be correct before iupdate"""
 
