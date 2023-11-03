@@ -1,3 +1,13 @@
+"""
+ * Project: ITU project - Garage sale website
+ * @file crypto.py
+
+ * @brief cryptography class for api
+
+ * @author Neonila Mashlai - xmashl00
+
+"""
+
 from cryptography.fernet import Fernet
 
 class Crypto:

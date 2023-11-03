@@ -1,3 +1,13 @@
+"""
+ * Project: ITU project - Garage sale website
+ * @file sqlite.py
+
+ * @brief sqlite database class for api
+
+ * @author Neonila Mashlai - xmashl00
+
+"""
+
 from sqlite3 import connect, Error
 from src.config import DATABASE_FILE
 from src.crypto import Crypto

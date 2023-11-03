@@ -1,3 +1,14 @@
+"""
+ * Project: ITU project - Garage sale website
+ * @file models.py
+
+ * @brief models for api
+
+ * @author Maksym Podhornyi - xpodho08
+
+"""
+
+
 from typing import Optional
 from pydantic import BaseModel
 

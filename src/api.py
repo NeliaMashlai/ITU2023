@@ -1,3 +1,13 @@
+"""
+ * Project: ITU project - Garage sale website
+ * @file api.py
+
+ * @brief main file for api
+
+ * @author Maksym Podhornyi - xpodho08
+
+"""
+
 from fastapi import FastAPI, HTTPException
 import uvicorn
 from src.config import ENDPOINT_HOST, ENDPOINT_PORT
