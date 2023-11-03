@@ -2,12 +2,12 @@ from fastapi import FastAPI, HTTPException
 import uvicorn
 from src.config import ENDPOINT_HOST, ENDPOINT_PORT
 from src.sqlite import Database
-from pydantic import BaseModel
-from typing import Optional
 from fastapi.middleware.cors import CORSMiddleware
+from src.models import Item, ItemUpdate, User, UserUpdate
 
 app = FastAPI()
 db = Database()
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -18,22 +18,44 @@ app.add_middleware(
 )
 
 
-class Item(BaseModel):
-    name: str
-    description: str
-    price: float
-    contact_email: str
-    contact_phone: str
-    image_path: str
+@app.post('/api/v1.0/register')
+async def user_registration(user : User) -> bool:
+    """ register a new user """
+    status = db.register_user(**user.dict())
+    if status == 0:
+        return True
+    elif status == -1:
+        raise HTTPException(status_code=409, detail='Username already taken')
+    else:
+        raise HTTPException(status_code=500, detail='Server error')
 
 
-class ItemUpdate(BaseModel):
-    name: Optional[str]
-    description: Optional[str]
-    price: Optional[float]
-    contact_email: Optional[str]
-    contact_phone: Optional[str]
-    image_path: Optional[str]
+@app.post('/api/v1.0/login')
+async def user_login(user : User) -> int:
+    """ login a user and return user id """
+    user_id = db.login_user(**user.dict())
+    if user_id > 0:
+        return user_id
+    elif user_id == -1:
+        raise HTTPException(status_code=401, detail='Incorrect username or password')
+    else:
+        raise HTTPException(status_code=500, detail='Server error')
+    
+
+
+@app.put('/api/v1.0/user/{user_id}/update')
+async def user_update():
+    pass
+
+
+@app.get('/api/v1.0/user/{user_id}')
+async def get_user():
+    pass
+
+
+@app.delete('/api/v1.0/user/{user_id}/delete')
+async def delete_user():
+    pass
 
 
 @app.get('/api/v1.0/items')
@@ -74,4 +96,3 @@ async def update_item(item_id: int, item: ItemUpdate) -> dict:
 
 def run():
     uvicorn.run(app, host=ENDPOINT_HOST, port=ENDPOINT_PORT)
-
