@@ -1,6 +1,6 @@
 FROM python
 
-RUN pip install fastapi uvicorn
+RUN pip install fastapi uvicorn cryptography
 
 ENV PROJECT_NAME=itu-api
 
