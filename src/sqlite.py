@@ -170,7 +170,8 @@ class Database:
             return -2
         
     def login_user(self, **user) -> int:
-        """ login a user and return user id """
+        """ login a user and return user id if correct username and password are provided, 
+        if user does not exist return -1, if password is incorrect return -2, else error return -3 """
         try:
 
             cursor = self.conn.cursor()
@@ -181,19 +182,21 @@ class Database:
 
             row = cursor.fetchone()
 
-            if row:
+            if not row:
+                return -1
+            
+            crypto = Crypto()
+            decrypted = crypto.decrypt(row[2], row[3])
 
-                crypto = Crypto()
-                decrypted = crypto.decrypt(row[2], row[3])
-
-                if decrypted == user['password']:
-                    return row[0]
-                
-            return -1
+            if decrypted != user['password']:
+                return -2
+            
+            return row[0]
+        
         except Error as e:
 
             print(e)
-            return -2
+            return -3
         
     # def update_user(self, user_id : int, **user) -> bool:
     #     """ update a single user if correct password is provided, if new password is provided, it will be encrypted and old password checked to be correct before iupdate"""

@@ -34,9 +34,11 @@ async def user_registration(user : User) -> bool:
 async def user_login(user : User) -> int:
     """ login a user and return user id """
     user_id = db.login_user(**user.dict())
-    if user_id > 0:
+    if user_id >= 0:
         return user_id
     elif user_id == -1:
+        raise HTTPException(status_code=404, detail='User not found')
+    elif user_id == -2:
         raise HTTPException(status_code=401, detail='Incorrect username or password')
     else:
         raise HTTPException(status_code=500, detail='Server error')
