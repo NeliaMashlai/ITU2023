@@ -151,6 +151,10 @@ class Database:
         """ register a new user if username is not taken """
         try:
 
+            if not user['username'] or not user['password']:
+                return -2
+
+
             cursor = self.conn.cursor()
 
             cursor.execute('''
@@ -177,7 +181,7 @@ class Database:
         except Error as e:
 
             print(e)
-            return -2
+            return -3
         
     def login_user(self, **user) -> int:
         """ login a user and return user id if correct username and password are provided, 

@@ -36,6 +36,8 @@ async def user_registration(user : User) -> bool:
         return True
     elif status == -1:
         raise HTTPException(status_code=409, detail='Username already taken')
+    elif status == -2:
+        raise HTTPException(status_code=400, detail='Username or password is empty')
     else:
         raise HTTPException(status_code=500, detail='Server error')
 
