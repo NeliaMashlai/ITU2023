@@ -28,6 +28,13 @@ app.add_middleware(
 )
 
 
+@app.post('/api/v1.0/user/unauthorized')
+async def unauthorized_user() -> bool:
+    if db.unauthorized_user() >= 0:
+        return True
+    raise HTTPException(status_code=500, detail='Server error')
+
+
 @app.post('/api/v1.0/register')
 async def user_registration(user : User) -> bool:
     """ register a new user """
@@ -63,8 +70,12 @@ async def user_update():
 
 
 @app.get('/api/v1.0/user/{user_id}')
-async def get_user():
-    pass
+async def get_user(user_id : int) -> dict:
+    user = db.get_user(user_id)
+    if user:
+        return user
+    raise HTTPException(status_code = 500, detail='Server error')
+    
 
 
 @app.get('/api/v1.0/user/{user_id}/items')

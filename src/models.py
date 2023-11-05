@@ -35,10 +35,18 @@ class ItemUpdate(BaseModel):
 class User(BaseModel):
     username: str
     password: str
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    address: Optional[str]  = None
+    date_of_birth: Optional[str] = None
 
     
 class UserUpdate(BaseModel):
     username: Optional[str]
     password: Optional[str]
+    email: Optional[str]
+    phone: Optional[str]
+    address: Optional[str]
+    date_of_birth: Optional[str]
 
     

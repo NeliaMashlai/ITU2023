@@ -39,7 +39,17 @@ class Database:
                             id INTEGER PRIMARY KEY AUTOINCREMENT,
                             username TEXT UNIQUE NOT NULL,
                             encrypted_password TEXT NOT NULL,
-                            key TEXT NOT NULL);
+                            key TEXT NOT NULL,
+                            email TEXT,
+                            phone TEXT,
+                            address TEXT,
+                            date_of_birth TEXT,
+                            is_allowed INTEGER DEFAULT 0,
+                            FOREIGN KEY (id) REFERENCES items (author_id));
+            ''')
+
+            self.conn.execute('''CREATE TABLE IF NOT EXISTS unauthorized_users (
+                            id INTEGER PRIMARY KEY AUTOINCREMENT,
             ''')
 
             self.conn.commit()
@@ -236,20 +246,50 @@ class Database:
     #     """ update a single user if correct password is provided, if new password is provided, it will be encrypted and old password checked to be correct before iupdate"""
 
         
-    # def get_user(self, user_id : int) -> dict:
-    #     """ get a single user from the users table """
-    #     try:
-    #         cursor = self.conn.cursor()
-    #         cursor.execute('''
-    #         SELECT * FROM users WHERE id = :id
-    #         ''', {'id': user_id})
-    #         row = cursor.fetchone()
-    #         keys = ('id', 'username', 'password')
-    #         return {key: value for key, value in zip(keys, row)} if row else {}
-    #     except Error as e:
-    #         print(e)
-    #         return {}
+    def get_user(self, user_id : int) -> dict:
+        """ get a single user from the users table """
+        try:
 
+            cursor = self.conn.cursor()
+
+            cursor.execute('''
+            SELECT id, username, email, phone, address, date_of_birth FROM users WHERE id = :id
+            ''', {'id': user_id})
+
+            row = cursor.fetchone()
+
+            return {
+                'id': row[0],
+                'username': row[1],
+                'email': row[2],
+                'phone': row[3],
+                'address': row[4],
+                'date_of_birth': row[5]
+            } if row else {}
+        
+        except Error as e:
+
+            print(e)
+            return {}
+
+    def unauthorized_user(self) -> int:
+        """ add a new unauthorized user """
+        try:
+
+            cursor = self.conn.cursor()
+
+            cursor.execute('''
+            INSERT INTO unauthorized_users DEFAULT VALUES
+            ''')
+
+            self.conn.commit()
+
+            return cursor.lastrowid
+        
+        except Error as e:
+
+            print(e)
+            return -1
 
     def __del__(self) -> None:
         """ close the database connection """
