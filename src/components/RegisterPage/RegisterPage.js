@@ -1,3 +1,13 @@
+/*
+ * Project: ITU project - Garage sale website
+ * @file RegisterPage.js
+
+ * @brief ReactJS component of the register page of the website
+
+ * @author Maksym Podhornyi - xpodho08
+ * @author Mashlai Neonila - xmashl00
+*/
+
 import React, { useState, useEffect, useRef } from 'react';
 import RegisterPageStyle from './RegisterPage.module.css';
 import { fixElementHeight } from '../Utils';

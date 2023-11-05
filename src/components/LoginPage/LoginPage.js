@@ -1,3 +1,12 @@
+/*
+ * Project: ITU project - Garage sale website
+ * @file LoginPage.js
+
+ * @brief ReactJS component of the login page of the website
+
+ * @author Maksym Podhornyi - xpodho08
+*/
+
 import React, { useState, useRef, useEffect } from 'react';
 import LoginPageStyle from './LoginPage.module.css';
 import { fixElementHeight } from '../Utils';

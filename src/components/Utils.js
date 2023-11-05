@@ -1,3 +1,13 @@
+/*
+ * Project: ITU project - Garage sale website
+ * @file Utils.js
+
+ * @brief ReactJS functions used in multiple components
+
+ * @author Maksym Podhornyi - xpodho08
+ * @author Mashlai Neonila - xmashl00
+*/
+
 export const fixElementHeight = (element) => {
     if (element) {
 
