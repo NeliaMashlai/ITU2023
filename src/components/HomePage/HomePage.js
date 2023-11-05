@@ -58,7 +58,7 @@ const HomePage = () => {
             alt: "image10"
         }
     ]
-
+    
     useEffect(() => {
         if (headerRef.current) {
             fixElementHeight(headerRef.current);
@@ -77,6 +77,13 @@ const HomePage = () => {
             } else {
                 logInRef.current.style.display = 'flex';
                 fixElementWidth(logInRef.current);
+
+                response = await fetch("http://localhost:8080/api/v1.0/unauthorized", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                });
             }
         }
     
