@@ -41,3 +41,40 @@
     height: 90%;
     width: 108px;
 }
+
+.kids,
+.men,
+.women {
+    position: absolute;
+    height: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--blue);
+    top: 62.5%;
+}
+
+.men {
+    width: 8%;
+    left: 33%;
+    cursor: pointer;
+}
+
+.women {
+    width: 8%;
+    left: 45%;
+    cursor: pointer;
+}
+
+.kids {
+    width: 8%;
+    left: 57%;
+    cursor: pointer;
+}
+
+.kids:hover,
+.women:hover,
+.men:hover {
+    border-bottom: 2px solid var(--blue);
+}

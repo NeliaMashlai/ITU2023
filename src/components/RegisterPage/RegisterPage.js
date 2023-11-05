@@ -2,54 +2,71 @@ import React, { useState } from 'react';
 import RegisterPageStyle from './RegisterPage.module.css';
 import '../GlobalStyles.css';
 
-function register(){
+const RegisterPage = () => {
 
-    if (document.getElementById('password').value != document.getElementById('confirm-password').value) {
-        document.getElementById('error').innerHTML = "Passwords do not match";
-        return;
-    }
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState('');
 
-    const data = {
-        username: document.getElementById('username').value,
-        password: document.getElementById('password').value
+    const handleRegister = async () => {
+        if (password !== confirmPassword) {
+          setError("Passwords do not match");
+          return;
+        }
+    
+        const data = {
+          username: username,
+          password: password,
+        };
+    
+        try {
+          const response = await fetch("http://localhost:8080/api/v1.0/register", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+    
+          if (response.ok) {
+            window.location.href = "http://localhost:3000/login";
+          } else if (response.status === 409) {
+            setError("Username already exists");
+          } else {
+            setError("Server error");
+          }
+        } catch (err) {
+          setError("Failed to connect to the server");
+        }
     };
 
-    fetch("http://localhost:8080/api/v1.0/register", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-
-    .then(response => {
-        if (response.status == 200) {
-            response.json().then(data => {
-                window.location.href = "http://localhost:5001/login";
-            })
-        } else if (response.status == 409) {
-            document.getElementById('error').innerHTML = "Username already exists";
-        } else if (response.status == 500) {
-            document.getElementById('error').innerHTML = "Server error";
-        }
-    })
-}
-
-const RegisterPage = () => {
     return (
         <div>
-            <div class="register-form" id="register-form"></div>
-            <label for="username" class="username-label">Email or login:</label>
-            <input type="text" name="username" class="username-input" id ="username" />
 
-            <label for="password" class="password-label">Password:</label>
-            <input type="text" name="password" class="password-input" id="password" />
+            {/* <div className="header">
+                <div className="header-item"></div>
+            </div> */}
 
-            <label for="password" class="password-label">Confirm password:</label>
-            <input type="text" name="password" class="password-input" id="confirm-password" />
+            <div className={RegisterPageStyle['register-form']}></div>
 
-            <input type="submit" value="Create Account" id="sign-up" class="sign-up-btn" />
-            <div id="error" class="error-message"></div>
+            <label for="username" className={RegisterPageStyle['username-label']}>Login:</label>
+            <input type="text" name="username" className={RegisterPageStyle['username-input']}
+                    onChange={e => setUsername(e.target.value)} />
+
+            <label for="password" className={RegisterPageStyle['password-label']}>Password:</label>
+            <input type="text" name="password" className={RegisterPageStyle['password-input']}
+                    onChange={e => setPassword(e.target.value)} />
+
+            <label for="password" className={RegisterPageStyle['password-label1']}>Confirm password:</label>
+            <input type="text" name="password" className={RegisterPageStyle['password-input1']}
+                    onChange={e => setConfirmPassword(e.target.value)} />
+
+            <input type="submit" value="Create Account" className={RegisterPageStyle['sign-up-btn']}
+                    onClick={handleRegister} />
+                    
+            {/* add error styles */}
+            {error && <div>{error}</div>}
         </div>
     );
 }
