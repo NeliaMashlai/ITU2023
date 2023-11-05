@@ -21,21 +21,16 @@ export const ifUserLoggedIn = async () => {
     const userId = cookies.find(cookie => cookie.includes('user_id'));
     if (userId) {
 
-        const data = {
-            user_id: userId.split('=')[1]
-        };
-
         try {
-            const response = await fetch("http://localhost:8080/api/v1.0/verify", {
-                method: 'POST',
+            const response = await fetch("http://localhost:8080/api/v1.0/user/" + userId.split('=')[1], {
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data)
             });
-
             if (response.ok) {
-                return true;
+                const userData = await response.json();
+                return userData.username;
             } else {
                 return false;
             }
@@ -48,6 +43,12 @@ export const ifUserLoggedIn = async () => {
     return false;
 }
 
+export const HandleLoginClick = async () => {
+    window.location.href = "http://localhost:3000/login";
+}
 
+export const HandleProfileClick = async () => {
+    window.location.href = "http://localhost:3000/user";
+}
     
   

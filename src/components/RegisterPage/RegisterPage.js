@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import RegisterPageStyle from './RegisterPage.module.css';
+import { fixElementHeight } from '../Utils';
 import '../GlobalStyles.css';
 
 const RegisterPage = () => {
@@ -8,6 +9,13 @@ const RegisterPage = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
+    const headerRef = useRef(null);
+
+    useEffect(() => {
+        if (headerRef.current) {
+            fixElementHeight(headerRef.current);
+        }
+    }, []);
 
     const handleRegister = async () => {
         if (password !== confirmPassword) {
@@ -33,8 +41,12 @@ const RegisterPage = () => {
             window.location.href = "http://localhost:3000/login";
           } else if (response.status === 409) {
             setError("Username already exists");
-          } else {
+          } else if (response.status === 500) {
             setError("Server error");
+          } else if (response.status === 400) {
+            setError("Username or password cannot be empty");
+          } else {
+            throw new Error('Something went wrong');
           }
         } catch (err) {
           setError("Failed to connect to the server");
@@ -44,29 +56,28 @@ const RegisterPage = () => {
     return (
         <div>
 
-            {/* <div className="header">
+            <div className="header" ref={headerRef}>
                 <div className="header-item"></div>
-            </div> */}
+            </div>
 
             <div className={RegisterPageStyle['register-form']}></div>
 
-            <label for="username" className={RegisterPageStyle['username-label']}>Login:</label>
+            <label htmlFor="username" className={RegisterPageStyle['username-label']}>Login:</label>
             <input type="text" name="username" className={RegisterPageStyle['username-input']}
                     onChange={e => setUsername(e.target.value)} />
 
-            <label for="password" className={RegisterPageStyle['password-label']}>Password:</label>
+            <label htmlFor="password" className={RegisterPageStyle['password-label']}>Password:</label>
             <input type="text" name="password" className={RegisterPageStyle['password-input']}
                     onChange={e => setPassword(e.target.value)} />
 
-            <label for="password" className={RegisterPageStyle['password-label1']}>Confirm password:</label>
+            <label htmlFor="password" className={RegisterPageStyle['password-label1']}>Confirm password:</label>
             <input type="text" name="password" className={RegisterPageStyle['password-input1']}
                     onChange={e => setConfirmPassword(e.target.value)} />
 
             <input type="submit" value="Create Account" className={RegisterPageStyle['sign-up-btn']}
                     onClick={handleRegister} />
                     
-            {/* add error styles */}
-            {error && <div>{error}</div>}
+            {error && <div className={RegisterPageStyle['error']}>{error}</div>}
         </div>
     );
 }

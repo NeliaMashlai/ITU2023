@@ -88,14 +88,15 @@
 
 .error-message {
     position: absolute;
-    top: 80%;
-    left: 40%;
-    width: auto;
+    top: 82%;
+    left: 33.3%;
+    width: 33.33%;
     height: auto;
     color: red;
     font-family: var(--font-inria-sans);
     font-weight: 700;
     font-size: var(--font-size-13xl);
+    text-align: center;
 }
 
 .sign-up-btn {
@@ -113,4 +114,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.sign-up-btn:hover {
+    background-color: lightgray;
+}
+
+.log-in-btn:hover {
+    background-color: lightgray;
 }

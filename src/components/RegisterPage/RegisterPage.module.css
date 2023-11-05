@@ -95,6 +95,19 @@
     background-color:  rgba(217, 217, 217, 0.7);
 }
 
+.error{
+    position: absolute;
+    top: 82%;
+    left: 33.3%;
+    width: 33.33%;
+    height: auto;
+    color: red;
+    font-family: var(--font-inria-sans);
+    font-weight: 700;
+    font-size: var(--font-size-13xl);
+    text-align: center;
+}
+
 .sign-up-btn {
     position: absolute;
     top: 73%;
@@ -110,4 +123,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.sign-up-btn:hover {
+    background-color: lightgray;
 }

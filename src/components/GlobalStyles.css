@@ -78,3 +78,77 @@
 .men:hover {
     border-bottom: 2px solid var(--blue);
 }
+
+.log-in-text,
+.log-in-icon {
+    position: absolute;
+    height: 75%;
+    top: 12.5%;
+}
+
+.log-in-text {
+    width: 58.46%;
+    left: 5.38%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans-serif);
+    color: var(--blue);
+}
+
+.log-in-icon {
+    width: 25px;
+    right: 13.08%;
+    bottom: 12.5%;
+    left: 63.85%;
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 100%;
+}
+
+.log-in-container {
+    position: absolute;
+    height: 40%;
+    width: 8%;
+    top: 6%;
+    right: 0.5%;
+    cursor: pointer;
+    text-align: center;
+    font-size: var(--font-size-5xl);
+    border-radius: var(--br-xl);
+    background-color: var(--titanium);
+    display: none;
+}
+
+.log-in-container:hover {
+    background-color: lightgray;
+}
+
+.logged-in-container{
+    position: absolute;
+    width: 20%;
+    height: 60%;
+    top: 20%;
+    right: 5%;
+    display: none;
+    cursor: pointer;
+}
+
+.logged-in-as {
+    position: absolute;
+    width: 75%;
+    top: 25%;
+    left: 50%;
+    color: var(--black);
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.user-icon {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 20%;
+    left: 40%;
+    max-width: 100%;
+    max-height: 100%;
+}
