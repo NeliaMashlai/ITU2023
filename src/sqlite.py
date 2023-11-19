@@ -49,8 +49,8 @@ class Database:
             ''')
 
             self.conn.execute('''CREATE TABLE IF NOT EXISTS unauthorized_users (
-                            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            ''')
+                            id INTEGER PRIMARY KEY AUTOINCREMENT
+            );''')
 
             self.conn.commit()
 
