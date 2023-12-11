@@ -8,8 +8,9 @@
 */
 
 import React, { useState, useRef, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import LoginPageStyle from './LoginPage.module.css';
-import { fixElementHeight } from '../Utils';
+import { API_BASE_URL, fixElementHeight } from '../Utils';
 import '../GlobalStyles.css';
 let timer;
 
@@ -19,6 +20,7 @@ const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const elementRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (elementRef.current) {
@@ -42,7 +44,7 @@ const LoginPage = () => {
         };
     
         try {
-            const response = await fetch("http://localhost:8080/api/v1.0/login", {
+            const response = await fetch(API_BASE_URL + "/login", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -55,7 +57,7 @@ const LoginPage = () => {
                 const date = new Date();
                 date.setTime(date.getTime() + (7 * 24 * 60 * 60 * 1000));
                 document.cookie = `user_id=${userData}; expires=${date.toUTCString()}; path=/`;
-                window.location.href = "http://localhost:3000/";
+                navigate('/');
             } else if (response.status === 401) {
                 setError("Incorrect username or password");
             } else if (response.status === 404) {
@@ -70,10 +72,6 @@ const LoginPage = () => {
             setError('An error occurred while logging in');
         }
     }
-    
-    const register = () => {
-        window.location.href = "http://localhost:3000/register";
-    };
 
     return (
         <div>
@@ -102,8 +100,8 @@ const LoginPage = () => {
             {error && <div id="error" 
                         className={LoginPageStyle['error-message']}>{error}</div>}
 
-            <input type="button" value="Create Account" id="sign-up" 
-                    className={LoginPageStyle['sign-up-btn']} onClick={register} />
+            <Link to="/register" className={LoginPageStyle['sign-up-btn']}>Create Account</Link>
+
         </div>
     );
 };

@@ -1,29 +1,18 @@
-/*
- * Project: ITU project - Garage sale website
- * @file HomePage.js
-
- * @brief ReactJS component of the main page of the website
-
- * @author Neonila Mashlai - xmashl00
-*/
-
 import React, {useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import HomePageStyle from "./HomePage.module.css";
 import HeaderImage from "../images/header_img.png";
 import Vector from "../images/vector.png";
 import UserAvatar from "../images/user_avatar.png";
-import BackgroundImage from "../images/background.png";
-import { HomeImages, MapImages } from "../images/ImageMaps";
-import { fixElementHeight, checkLogin, AddContact } from "../Utils";
+import MenCategoriesStyle from "./MenCategories.module.css";
+import { fixElementHeight, checkLogin, AddContact, AddCategories } from "../Utils";
 import "../GlobalStyles.css";
 
-const HomePage = () => {
+const MenCategoryPage = () => {
 
     const headerRef = useRef(null);
     const logInRef = useRef(null);
     const loggedIn = useRef(null);
-    
+
     useEffect(() => {
         if (headerRef.current) {
             fixElementHeight(headerRef.current);
@@ -61,25 +50,16 @@ const HomePage = () => {
                     />
                 </Link>
             </div>
+            
+            <div className={MenCategoriesStyle['main-container']}>
+                <div className={MenCategoriesStyle['categories']}>Categories</div>
 
-            <div className={HomePageStyle['main-container']}>
-
-                <img className={HomePageStyle['background-image']} alt="" src={BackgroundImage} />
-
-                <p className={HomePageStyle['main-text']}>New Year Sale!! <br /> 28.12 </p>
-
-                <div className={HomePageStyle['line']}></div>
-
-                <div className={HomePageStyle['gallery']}>
-                    {MapImages(HomeImages)}
-                </div>
-
+                {AddCategories()}
             </div>
 
             {AddContact()}
-
         </div>
     );
 }
 
-export default HomePage;
+export default MenCategoryPage;

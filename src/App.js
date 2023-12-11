@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginPage from './components/LoginPage/LoginPage';
 import RegisterPage from './components/RegisterPage/RegisterPage';
 import HomePage from './components/HomePage/HomePage';
+// import UserPage from './components/UserPage/UserPage';
+import MenCategoryPage from './components/Categories/MenCategories';
 import './components/GlobalStyles.css';
 import './App.css';
 
@@ -14,6 +16,9 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         {/* <Route path="/user" element={<UserPage />} /> */}
+        <Route path="/men" element={<MenCategoryPage />} />
+        {/* <Route path="/women" element={<WomenCategoryPage />} /> */}
+        {/* <Route path="/kids" element={<KidsCategoryPage />} /> */}
       </Routes>
     </BrowserRouter>
   );

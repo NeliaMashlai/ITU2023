@@ -9,8 +9,9 @@
 */
 
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import RegisterPageStyle from './RegisterPage.module.css';
-import { fixElementHeight } from '../Utils';
+import { fixElementHeight, API_BASE_URL } from '../Utils';
 import '../GlobalStyles.css';
 
 const RegisterPage = () => {
@@ -20,6 +21,7 @@ const RegisterPage = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
     const headerRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (headerRef.current) {
@@ -39,7 +41,7 @@ const RegisterPage = () => {
         };
     
         try {
-          const response = await fetch("http://localhost:8080/api/v1.0/register", {
+          const response = await fetch(API_BASE_URL + "/register", {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -48,7 +50,7 @@ const RegisterPage = () => {
           });
     
           if (response.ok) {
-            window.location.href = "http://localhost:3000/login";
+            navigate('/login');
           } else if (response.status === 409) {
             setError("Username already exists");
           } else if (response.status === 500) {
