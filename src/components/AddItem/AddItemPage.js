@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fixElementHeight, AddContact, checkLogin, AddHeader, CreateItem} from "../Utils";
+import { fixElementHeight, AddContact, checkLogin, AddHeader, uploadImage, GetUserInformation, API_BASE_URL } from "../Utils";
 import img_svg from "../images/photo_img.svg";
 import AddItemPageStyles from "./AddItemPage.module.css";
 import "../GlobalStyles.css";
@@ -13,12 +13,19 @@ const AddItemPage = () => {
     const uploadContainerRef = useRef(null);
     const navigate = useNavigate();
     const [selectedFile, setSelectedFile] = useState(null);
+    const [error, setError] = useState('');
     const fileInputRef = useRef(null);
 
     const [ItemData, setItemData] = useState({
         name: "",
         description: "",
         price: "",
+        conditionId: "",
+        categoryId: "",
+        contact_email: "",
+        contact_phone: "",
+        image_path: "",
+        author_id: "",
     });
 
     const handleInputChange = (e) => {
@@ -33,7 +40,7 @@ const AddItemPage = () => {
             setSelectedFile(file);
             uploadContainerRef.current.style.background = 'none';
         } else {
-            alert('Please upload an image file');
+            setError('Invalid file type');
             setSelectedFile(null);
         }
     };
@@ -59,6 +66,70 @@ const AddItemPage = () => {
 
     const CreateItem = async (e) => {
         e.preventDefault();
+
+        if (!selectedFile || !ItemData.name || !ItemData.price || !ItemData.conditionId || !ItemData.categoryId) {
+            setError('Please fill all fields');
+            return;
+        }
+
+        const response = await GetUserInformation();
+
+        if (!response) {
+            setError('Failed to get user information');
+            return;
+        }
+
+        await uploadImage(selectedFile).then((result) => {
+            if (result) {
+
+                const imageUrl = result.url
+                setItemData({
+                    ...ItemData,
+                    image_path: imageUrl
+                });
+            } else {
+                setError('Failed to upload image');
+                return;
+            }
+        }
+        );
+
+        if (!parseFloat(ItemData.price)) {
+            setError('Invalid price');
+            return;
+        }
+
+        const data = {
+            name: ItemData.name,
+            description: ItemData.description,
+            price: parseFloat(ItemData.price),
+            conditionId: ItemData.conditionId,
+            categoryId: ItemData.categoryId,
+            contact_email: response.email,
+            contact_phone: response.phone,
+            image_path: ItemData.image_path,
+            author_id: parseInt(response.id),
+        };
+
+        try {
+            const response = await fetch(API_BASE_URL + "/item/create", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                navigate('/profile');
+            } else if (response.status === 500) {
+                setError("Server error");
+            } else {
+                throw new Error('Something went wrong');
+            }
+        } catch (err) {
+            setError("Failed to connect to the server");
+        }
     }
 
     useEffect(() => {
@@ -72,8 +143,9 @@ const AddItemPage = () => {
             }
         }
         );
+        
     }
-    , []);
+    , [navigate]);
 
     return (
         <div>
@@ -129,7 +201,8 @@ const AddItemPage = () => {
 
                 <div className={AddItemPageStyles["condition-input-container"]}>
                     <label htmlFor="condition" className={AddItemPageStyles["condition-label"]}>Condition:</label>
-                    <select name="condition" className={AddItemPageStyles["condition-input"]} id="condition" defaultValue="-none-">
+                    <select name="conditionId" className={AddItemPageStyles["condition-input"]} id="condition" defaultValue="-none-" 
+                    onChange={handleInputChange}>
                         <option value="-none-">--none--</option>
                         <option value="new">Brand new</option>
                         <option value="likeNew">Like new</option>
@@ -142,7 +215,8 @@ const AddItemPage = () => {
 
                 <div className={AddItemPageStyles["category-input-container"]}>
                     <label htmlFor="category" className={AddItemPageStyles["category-label"]}>Category:</label>
-                    <select name="category" className={AddItemPageStyles["category-input"]} id="category" defaultValue="-none-">
+                    <select name="categoryId" className={AddItemPageStyles["category-input"]} id="category" defaultValue="-none-"
+                    onChange={handleInputChange}>
                         <option value="-none-">--none--</option>
                         <optgroup label="Men">
                             <option value="menClothing">Clothing</option>
@@ -178,6 +252,8 @@ const AddItemPage = () => {
                 </div>
 
                 <input type="submit" value="DONE" className={AddItemPageStyles["submit-button"]} onClick = {CreateItem} />
+
+                {error && <div className={AddItemPageStyles['error']}>{error}</div>}
 
             </div>
 
