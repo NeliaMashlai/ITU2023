@@ -17,7 +17,7 @@ import UserAvatar from "./images/user_avatar.png";
 import { Link } from "react-router-dom";
 
 // API base URL
-export const API_BASE_URL = "http://localhost:8080/api/v1.0";
+export const API_BASE_URL = "http://10.0.0.106:8080/api/v1.0";
 
 export const fixElementHeight = (element) => {
     if (element) {

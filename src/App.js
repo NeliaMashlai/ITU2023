@@ -7,6 +7,7 @@ import HomePage from './components/HomePage/HomePage';
 import MenCategoryPage from './components/Categories/MenCategories';
 import MenItemsList from './components/ItemsLists/MenItemsList';
 import AddItemPage from './components/AddItem/AddItemPage';
+import EditItemPage from './components/EditItem/EditItemPage';
 import './components/GlobalStyles.css';
 import './App.css';
 
@@ -23,6 +24,7 @@ const App = () => {
         {/* <Route path="/kids" element={<KidsCategoryPage />} /> */}
         <Route path="/men/items" element={<MenItemsList />} /> 
         <Route path="/user/add-item" element={<AddItemPage />} />
+        <Route path="/user/edit-item" element={<EditItemPage />} />
       </Routes>
     </BrowserRouter>
   );
