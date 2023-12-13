@@ -170,3 +170,45 @@ export const AddHeader = (headerRef, logInRef, loggedIn) => {
             </div>
     )
 }
+
+export const uploadImage = async (image) => {
+    const formData = new FormData();
+    formData.append('image', image);
+    try {
+        const response = await fetch(API_BASE_URL + "/image/upload", {
+            method: 'POST',
+            body: formData
+        });
+        if (response.ok) {
+            const imageId = await response.json();
+            return imageId;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        return false;
+    }
+}
+
+export const GetUserInformation = async () => {
+    const cookies = document.cookie.split(';');
+    const userId = cookies.find(cookie => cookie.includes('user_id'));
+    try {
+        const response = await fetch(API_BASE_URL + "/user/" + userId.split('=')[1], {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        if (response.ok) {
+            const userData = await response.json();
+            return userData;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        return false;
+    }
+}
