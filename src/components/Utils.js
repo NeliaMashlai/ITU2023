@@ -43,7 +43,7 @@ export const ifUserLoggedIn = async () => {
     if (userId) {
 
         try {
-            const response = await fetch("http://localhost:8080/api/v1.0/user/" + userId.split('=')[1], {
+            const response = await fetch(API_BASE_URL + "/user/" + userId.split('=')[1], {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -79,7 +79,7 @@ export const checkLogin = async (loggedInElement, logInElement) => {
         logInElement.current.style.display = 'flex';
         fixElementWidth(logInElement.current);
 
-        var response = await fetch("http://localhost:8080/api/v1.0/user/unauthorized", {
+        var response = await fetch(API_BASE_URL + "/user/unauthorized", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
