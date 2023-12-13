@@ -79,6 +79,7 @@
 .women:hover,
 .men:hover {
     border-bottom: 2px solid var(--blue);
+    transition: 0.1s ease;
 }
 
 .log-in-text,
@@ -224,27 +225,32 @@
 .categories-container {
     position: absolute;
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Adjust the number of columns as needed */
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 10px;
+    column-gap: 20px;
     left: 8%;
     top: 22%;
     width: 84%;
-    height: 20%;
+    height: 55%;
+    padding: 0;
 }
   
 .category-item {
-    text-align: center; /* Center the text */
-    position: relative; /* Make the container relative */
-    width: 100%; /* Set a specific width */
-    height: 50%; /* Set a specific height */
+    text-align: center;
+    position: relative;
+    height: 200px;
+    margin: 0;
+    padding: 0;
 }
   
 .category-item img {
-    width: 85%; /* Make the image fill the container */
-    height: 90%; /* Maintain aspect ratio */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: filter 0.3s ease;
 }
 
-.category-item img:hover {
-    /* blur image */
+.category-item:hover img {
     filter: blur(3px);
 }
 
@@ -253,7 +259,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: var(--white);
     font-size: var(--font-size-17xl);
     font-family: var(--font-inria-serif);
+    z-index: 10;
 }

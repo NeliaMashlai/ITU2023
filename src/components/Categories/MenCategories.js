@@ -1,10 +1,7 @@
 import React, {useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import HeaderImage from "../images/header_img.png";
-import Vector from "../images/vector.png";
-import UserAvatar from "../images/user_avatar.png";
 import MenCategoriesStyle from "./MenCategories.module.css";
-import { fixElementHeight, checkLogin, AddContact, AddCategories } from "../Utils";
+import { fixElementHeight, checkLogin, AddContact, AddHeader } from "../Utils";
 import "../GlobalStyles.css";
 
 const MenCategoryPage = () => {
@@ -23,38 +20,41 @@ const MenCategoryPage = () => {
 
     return (
         <div>
-            <div className="header" ref={headerRef}>
-                <div className="header-item"></div>
-                <img
-                    className="header-logo"
-                    alt=""
-                    src={HeaderImage}
-                    id="logo"
-                />
-
-                <Link to = "/men" className="men">Men</Link>
-                <b className="women">Women</b>
-                <b className="kids">Kids</b>
-
-                <Link className="log-in-container" id="log-in-container" ref={logInRef} to = "/login">
-                    <b className="log-in-text">Log In</b>
-                    <img className="log-in-icon" alt="" src={Vector} />
-                </Link>
-
-                <Link className="logged-in-container" ref={loggedIn} to="/profile">
-                    <b className="logged-in-as">Logged in as John</b>
-                    <img
-                        className="user-icon"
-                        alt=""
-                        src={UserAvatar}
-                    />
-                </Link>
-            </div>
+            
+            {AddHeader(headerRef, logInRef, loggedIn)}
             
             <div className={MenCategoriesStyle['main-container']}>
                 <div className={MenCategoriesStyle['categories']}>Categories</div>
 
-                {AddCategories()}
+                <div className="categories-container">
+                    <Link className="category-item" to="/men/items?categoryId=1">
+                        <img src="https://images.pexels.com/photos/4210866/pexels-photo-4210866.jpeg" alt="Clothing"/>
+                        <div className="centered-text" style = {{color: "#093825"}}>Clothing</div>
+                    </Link>
+                    <div className="category-item">
+                        <img src="https://donabees.co.uk/cdn/shop/products/mnz-v13tnV6D9lw-unsplash.jpg?v=1682244843&width=1946" alt="Shoes"/>
+                        <div className="centered-text" style = {{color: "var(--titanium)"}}>Shoes</div>
+                    </div>
+                    <div className="category-item">
+                        <img src="https://netstorage-legit.akamaized.net/images/afee74afb4d8ea20.jpg" alt="Accessories"/>
+                        <div className="centered-text" style = {{color: "var(--titanium)"}}>Accessories</div>
+                    </div>
+                    <div className="category-item">
+                        <img src="https://newtraveltrait.com/wp-content/uploads/2023/02/pexels-ketut-subiyanto-4246101-1-683x1024.jpg" alt="Bags and luggage"/>
+                        <div className="centered-text" style = {{color: "var(--titanium)"}}>Bags and Luggage</div>
+                    </div>
+                    <div className="category-item">
+                        <img src="https://images.pexels.com/photos/2155319/pexels-photo-2155319.jpeg" alt="Jewelry and watches"/>
+                        <div className="centered-text" style = {{color: "var(--titanium)"}}>Jewelry and watches</div>
+                    </div>
+                    <div className="category-item">
+                        <img src="https://okrok.cz/wp-content/uploads/2021/12/typewriter-g7715445ec_1280.jpg" alt="Vintage and collectibles"/>
+                        <div className="centered-text" >
+                            <span style={{color: "var(--blue)"}}>Vintage</span>
+                            <span style={{color: "var(--titanium)"}}> and collectibles</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             {AddContact()}

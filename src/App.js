@@ -5,6 +5,8 @@ import RegisterPage from './components/RegisterPage/RegisterPage';
 import HomePage from './components/HomePage/HomePage';
 // import UserPage from './components/UserPage/UserPage';
 import MenCategoryPage from './components/Categories/MenCategories';
+import MenItemsList from './components/ItemsLists/MenItemsList';
+import AddItemPage from './components/AddItem/AddItemPage';
 import './components/GlobalStyles.css';
 import './App.css';
 
@@ -19,6 +21,8 @@ const App = () => {
         <Route path="/men" element={<MenCategoryPage />} />
         {/* <Route path="/women" element={<WomenCategoryPage />} /> */}
         {/* <Route path="/kids" element={<KidsCategoryPage />} /> */}
+        <Route path="/men/items" element={<MenItemsList />} /> 
+        <Route path="/user/add-item" element={<AddItemPage />} />
       </Routes>
     </BrowserRouter>
   );

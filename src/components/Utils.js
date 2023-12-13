@@ -11,6 +11,10 @@
 import InstagramIcon from "./images/instagram_icon.png";
 import FacebookIcon from "./images/facebook_icon.png";
 import TwitterIcon from "./images/twitter_icon.png";
+import HeaderImage from "./images/header_img.png";
+import Vector from "./images/vector.png";
+import UserAvatar from "./images/user_avatar.png";
+import { Link } from "react-router-dom";
 
 // API base URL
 export const API_BASE_URL = "http://localhost:8080/api/v1.0";
@@ -70,6 +74,7 @@ export const checkLogin = async (loggedInElement, logInElement) => {
             loggedInElement.current.children[0].textContent = 'Logged in as ' + username;
         }
         fixElementWidth(loggedInElement.current);
+        return true;
     } else {
         logInElement.current.style.display = 'flex';
         fixElementWidth(logInElement.current);
@@ -83,6 +88,7 @@ export const checkLogin = async (loggedInElement, logInElement) => {
         if (!response.ok) {
             console.error('Error:', response);
         }
+        return false;
     }
 }
 
@@ -133,33 +139,34 @@ export const AddContact = () => {
     )
 }
 
-export const AddCategories = () => {
+export const AddHeader = (headerRef, logInRef, loggedIn) => {
     return (
-        <div className="categories-container">
-            <div class="category-item">
-                <img src="https://images.pexels.com/photos/4210866/pexels-photo-4210866.jpeg" alt="Clothing"/>
-                <div class="centered-text">Clothing</div>
+        <div className="header" ref={headerRef}>
+                <div className="header-item"></div>
+                <img
+                    className="header-logo"
+                    alt=""
+                    src={HeaderImage}
+                    id="logo"
+                />
+
+                <Link to = "/men" className="men">Men</Link>
+                <b className="women">Women</b>
+                <b className="kids">Kids</b>
+
+                <Link className="log-in-container" id="log-in-container" ref={logInRef} to = "/login">
+                    <b className="log-in-text">Log In</b>
+                    <img className="log-in-icon" alt="" src={Vector} />
+                </Link>
+
+                <Link className="logged-in-container" ref={loggedIn} to="/profile">
+                    <b className="logged-in-as">Logged in as John</b>
+                    <img
+                        className="user-icon"
+                        alt=""
+                        src={UserAvatar}
+                    />
+                </Link>
             </div>
-            <div class="category-item">
-                <img src="https://netstorage-legit.akamaized.net/images/afee74afb4d8ea20.jpg" alt="Shoes"/>
-                <div class="centered-text">Shoes</div>
-            </div>
-            <div class="category-item">
-                <img src="https://netstorage-legit.akamaized.net/images/afee74afb4d8ea20.jpg" alt="Accessories"/>
-                <div class="centered-text">Accessories</div>
-            </div>
-            <div class="category-item">
-                <img src="https://netstorage-legit.akamaized.net/images/afee74afb4d8ea20.jpg" alt="Clothing"/>
-                <div class="centered-text">Clothing</div>
-            </div>
-            <div class="category-item">
-                <img src="https://netstorage-legit.akamaized.net/images/afee74afb4d8ea20.jpg" alt="Shoes"/>
-                <div class="centered-text">Clothing</div>
-            </div>
-            <div class="category-item">
-                <img src="https://netstorage-legit.akamaized.net/images/afee74afb4d8ea20.jpg" alt="Accessories"/>
-                <div class="centered-text">Clothing</div>
-            </div>
-        </div>
     )
 }
