@@ -15,10 +15,12 @@ from pydantic import BaseModel
 
 class Item(BaseModel):
     name: str
-    description: str
+    description: Optional[str]
     price: float
-    contact_email: str
-    contact_phone: str
+    conditionId: str
+    categoryId: str
+    contact_email: Optional[str]
+    contact_phone: Optional[str]
     image_path: str
     author_id: int
 

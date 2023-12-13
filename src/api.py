@@ -8,12 +8,14 @@
 
 """
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile
 import uvicorn
 from src.config import ENDPOINT_HOST, ENDPOINT_PORT
 from src.sqlite import Database
 from fastapi.middleware.cors import CORSMiddleware
 from src.models import Item, ItemUpdate, User, UserUpdate
+from src.imgur import ImageUploader
+
 
 app = FastAPI()
 db = Database()
@@ -26,6 +28,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"], 
 )
+
+
+@app.post('/api/v1.0/image/upload')
+async def upload_image(image: UploadFile = None) -> dict:
+    if image:
+        uploader = ImageUploader()
+        return {"url" : uploader.upload(image.file.read())}
+    raise HTTPException(status_code=400, detail='No image provided')
 
 
 @app.post('/api/v1.0/user/unauthorized')
@@ -104,21 +114,21 @@ async def get_item(item_id: int) -> dict:
     raise HTTPException(status_code=404, detail='Item not found')
 
 
-@app.post('/api/v1.0/items')
+@app.post('/api/v1.0/item/create')
 async def create_item(item: Item) -> Item:
     if db.insert_item(**item.dict()):
         return item
     raise HTTPException(status_code=500, detail='Server error')
 
 
-@app.delete('/api/v1.0/items/{item_id}')
+@app.delete('/api/v1.0/items/{item_id}/delete')
 async def delete_item(item_id: int) -> dict:
     if db.delete_item(item_id):
         return {'message': 'Item deleted'}
     raise HTTPException(status_code=500, detail='Server error')
 
 
-@app.put('/api/v1.0/items/{item_id}')
+@app.put('/api/v1.0/items/{item_id}/update')
 async def update_item(item_id: int, item: ItemUpdate) -> dict:
     updated_item = db.update_item(item_id, **item.dict(exclude_unset=True))
     if updated_item:

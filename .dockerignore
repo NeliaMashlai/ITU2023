@@ -6,3 +6,4 @@ README.md
 .git
 .dockerignore
 Dockerfile
+.DS_Store

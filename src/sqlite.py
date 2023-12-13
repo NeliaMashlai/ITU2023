@@ -29,9 +29,11 @@ class Database:
                             name TEXT NOT NULL,
                             description TEXT,
                             price REAL NOT NULL,
+                            category_id TEXT NOT NULL,
+                            condition_id TEXT NOT NULL,
                             contact_email TEXT,
                             contact_phone TEXT,
-                            image_path TEXT,
+                            image_path TEXT NOT NULL,
                             author_id INTEGER NOT NULL);
             ''')
 
@@ -65,8 +67,8 @@ class Database:
             cursor = self.conn.cursor()
 
             cursor.execute('''
-            INSERT INTO items (name, description, price, contact_email, contact_phone, image_path)
-            VALUES (:name, :description, :price, :contact_email, :contact_phone, :image_path)
+            INSERT INTO items (name, description, price, category_id, condition_id, contact_email, contact_phone, image_path, author_id)
+            VALUES (:name, :description, :price, :categoryId, :conditionId, :contact_email, :contact_phone, :image_path, :author_id)
             ''', item)
 
             self.conn.commit()
@@ -89,7 +91,7 @@ class Database:
             ''')
 
             rows = cursor.fetchall()
-            keys = ('id', 'name', 'description', 'price', 'contact_email', 'contact_phone', 'image_path')
+            keys = ('id', 'name', 'description', 'price', 'condition_id', 'category_id', 'contact_email', 'contact_phone', 'image_path')
 
             return [{key: value for key, value in zip(keys, row)} for row in rows]
         

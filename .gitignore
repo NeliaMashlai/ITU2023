@@ -4,4 +4,5 @@ database.db
 tests/crypto.py
 tests/imgur.py
 tests/test.png
+tests/test1.png
 .DS_Store
