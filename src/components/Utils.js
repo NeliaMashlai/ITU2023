@@ -153,8 +153,8 @@ export const Header = forwardRef((props, ref) => {
                 />
 
                 <Link to = "/men" className="men">Men</Link>
-                <b className="women">Women</b>
-                <b className="kids">Kids</b>
+                <Link to = "/women" className="women">Women</Link>
+                <Link to = "/kids" className="kids">Kids</Link>
 
                 <Link className="log-in-container" id="log-in-container" ref={logInRef} to = "/login">
                     <b className="log-in-text">Log In</b>
