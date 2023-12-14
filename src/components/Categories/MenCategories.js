@@ -4,7 +4,7 @@ import MenCategoriesStyle from "./MenCategories.module.css";
 import { fixElementHeight, checkLogin, AddContact, AddHeader } from "../Utils";
 import "../GlobalStyles.css";
 
-const MenCategoryPage = () => {
+const MenCategoriesPage = () => {
 
     const headerRef = useRef(null);
     const logInRef = useRef(null);
@@ -62,4 +62,4 @@ const MenCategoryPage = () => {
     );
 }
 
-export default MenCategoryPage;
+export default MenCategoriesPage;

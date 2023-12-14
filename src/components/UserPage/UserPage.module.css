@@ -1,0 +1,384 @@
+.main-container{
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.user-image{
+    width: 12%;
+    height: 24%;
+    top: 13%;
+    left: 3%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    overflow: hidden;
+    background: #cccccc;
+    border-radius: 50%;
+}
+
+.name-input-container{
+    width: 15%;
+    height: 10%;
+    top: 13%;
+    left: 19%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+}
+
+.name-input{
+    width: 100%;
+    height: 50%;
+    font-size: 1.5em;
+    text-align: left;
+    border: none;
+    outline: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-bottom: 0%;
+}
+
+.name-input:focus{
+    border: none;
+    outline: none;
+}
+
+.name-input:hover{
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.name-input::placeholder{
+    color: var(--gray);
+    opacity: 0.5;
+    font-weight: 500;
+}
+
+.name-label{
+    font-weight: 700;
+    font-size: 1.5em;
+    color: var(--black);
+}
+
+.surname-input-container{
+    width: 15%;
+    height: 10%;
+    top: 23%;
+    left: 19%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+}
+
+.surname-input{
+    width: 100%;
+    height: 50%;
+    font-size: 1.5em;
+    text-align: left;
+    border: none;
+    outline: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-bottom: 0%;
+}
+
+.surname-input:focus{
+    border: none;
+    outline: none;
+}
+
+.surname-input:hover{
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.surname-input::placeholder{
+    color: var(--gray);
+    opacity: 0.5;
+    font-weight: 500;
+}
+
+.surname-label{
+    font-weight: 700;
+    font-size: 1.5em;
+    color: var(--black);
+}
+
+.email-input-container{
+    width: 22%;
+    height: 10%;
+    top: 38%;
+    left: 3%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+}
+
+.email-input{
+    width: 100%;
+    height: 50%;
+    font-size: 1.5em;
+    text-align: left;
+    border: none;
+    outline: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-bottom: 0%;
+}
+
+.email-input:focus{
+    border: none;
+    outline: none;
+}
+
+.email-input:hover{
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.email-input::placeholder{
+    color: var(--gray);
+    opacity: 0.5;
+    font-weight: 500;
+}
+
+.email-label{
+    font-weight: 700;
+    font-size: 1.5em;
+    color: var(--black);
+}
+
+.phone-input-container{
+    width: 22%;
+    height: 10%;
+    top: 48%;
+    left: 3%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+}
+
+.phone-input{
+    width: 100%;
+    height: 50%;
+    font-size: 1.5em;
+    text-align: left;
+    border: none;
+    outline: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-bottom: 0%;
+}
+
+.phone-input:focus{
+    border: none;
+    outline: none;
+}
+
+.phone-input:hover{
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.phone-input::placeholder{
+    color: var(--gray);
+    opacity: 0.5;
+    font-weight: 500;
+}
+
+.phone-label{
+    font-weight: 700;
+    font-size: 1.5em;
+    color: var(--black);
+}
+
+.date_of_birth-input-container{
+    width: 10%;
+    height: 10%;
+    top: 58%;
+    left: 3%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+}
+
+.date_of_birth-input{
+    width: 100%;
+    height: 50%;
+    font-size: 1.5em;
+    text-align: left;
+    border: none;
+    outline: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-bottom: 0%;
+}
+
+.date_of_birth-input:focus{
+    border: none;
+    outline: none;
+}
+
+.date_of_birth-input:hover{
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.date_of_birth::placeholder{
+    color: var(--gray);
+    opacity: 0.5;
+    font-weight: 500;
+}
+
+.date_of_birth-label{
+    font-weight: 700;
+    font-size: 1.5em;
+    color: var(--black);
+}
+
+.address-input-container{
+    width: 22%;
+    height: 10%;
+    top: 68%;
+    left: 3%;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+}
+
+.address-input{
+    width: 100%;
+    height: 50%;
+    font-size: 1.5em;
+    text-align: left;
+    border: none;
+    outline: none;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-bottom: 0%;
+}
+
+.address-input:focus{
+    border: none;
+    outline: none;
+}
+
+.address-input:hover{
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.address-input::placeholder{
+    color: var(--gray);
+    opacity: 0.5;
+    font-weight: 500;
+}
+
+.address-label{
+    font-weight: 700;
+    font-size: 1.5em;
+    color: var(--black);
+}
+
+.add-item-button{
+    width: 15%;
+    height: 7%;
+    top: 87%;
+    left: 3%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #d9d9d9;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.add-item-button:hover{
+    cursor: pointer;
+    background-color: #bfbfbf;
+}
+
+.add-item-button:active{
+    background-color: #a6a6a6;
+}
+
+.chat-button{
+    width: 15%;
+    height: 7%;
+    top: 87%;
+    left: 19%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #d9d9d9;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.chat-button:hover{
+    cursor: pointer;
+    background-color: #bfbfbf;
+}
+
+.chat-button:active{
+    background-color: #a6a6a6;
+}
+
+.submit-button{
+    width: 15%;
+    height: 7%;
+    top: 85%;
+    left: 3%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #d9d9d9;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.submit-button:hover{
+    cursor: pointer;
+    background-color: #bfbfbf;
+}
+
+.submit-button:active{
+    background-color: #a6a6a6;
+}
+
+.full-height-line {
+    left: 35%;
+    width: 2px;
+    height: 100%; 
+    position: absolute;
+    z-index: -1;
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+    background-color: var(--blue); 
+}
