@@ -62,10 +62,9 @@ Aenean nec elit eu libero consequat sodales. Sed leo dolor, fringilla nec feugia
                     Name of the item
                 </div>
 
-                {/* <div className={ItemPageStyle["item-description"]}>
-                    Description:<br />
+                <div className={ItemPageStyle["item-description"]}>
                     {loremIpsum}
-                </div> */}
+                </div>
 
                 <div className={ItemPageStyle["item-size"]}>
                     Size: <br />
