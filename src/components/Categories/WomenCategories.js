@@ -1,7 +1,7 @@
 import React, {useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import WomenCategoriesStyle from "./WomenCategories.module.css";
-import { fixElementHeight, checkLogin, AddContact, AddHeader } from "../Utils";
+import { fixElementHeight, checkLogin, Contacts, Header } from "../Utils";
 import "../GlobalStyles.css";
 
 const WomenCategoriesPage = () => {
@@ -21,7 +21,7 @@ const WomenCategoriesPage = () => {
     return (
         <div>
             
-            {AddHeader(headerRef, logInRef, loggedIn)}
+            <Header headerRef={headerRef} logInRef={logInRef} loggedIn={loggedIn} />
             
             <div className={WomenCategoriesStyle['main-container']}>
                 <div className={WomenCategoriesStyle['categories']}>Categories</div>
@@ -54,7 +54,7 @@ const WomenCategoriesPage = () => {
                 </div>
             </div>
 
-            {AddContact()}
+            <Contacts />
         </div>
     );
 }

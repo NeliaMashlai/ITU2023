@@ -1,7 +1,7 @@
 import React, {useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import KidsCategoriesStyle from "./KidsCategories.module.css";
-import { fixElementHeight, checkLogin, AddContact, AddHeader } from "../Utils";
+import { fixElementHeight, checkLogin, Contacts, Header } from "../Utils";
 import "../GlobalStyles.css";
 
 const KidsCategoriesPage = () => {
@@ -21,7 +21,7 @@ const KidsCategoriesPage = () => {
     return (
         <div>
             
-            {AddHeader(headerRef, logInRef, loggedIn)}
+            <Header headerRef={headerRef} logInRef={logInRef} loggedIn={loggedIn} />
             
             <div className={KidsCategoriesStyle['main-container']}>
                 <div className={KidsCategoriesStyle['categories']}>Categories</div>
@@ -54,7 +54,7 @@ const KidsCategoriesPage = () => {
                 </div>
             </div>
 
-            {AddContact()}
+            <Contacts />
         </div>
     );
 }

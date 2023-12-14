@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fixElementHeight, AddContact, checkLogin, AddHeader, uploadImage, GetUserInformation, API_BASE_URL } from "../Utils";
+import { fixElementHeight, checkLogin, Header } from "../Utils";
 import user_svg from "../images/user.svg";
 import UserPageStyles from "./UserPage.module.css";
 import "../GlobalStyles.css";
@@ -10,11 +10,7 @@ const UserPage = () => {
     const headerRef = useRef(null);
     const logInRef = useRef(null);
     const loggedIn = useRef(null);
-    const uploadContainerRef = useRef(null);
     const navigate = useNavigate();
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [error, setError] = useState('');
-    const fileInputRef = useRef(null);
 
     const [UserData, setUserData] = useState({
         name: "",
@@ -32,21 +28,14 @@ const UserPage = () => {
         });
     };
 
-
-    const handleClick = () => {
-        fileInputRef.current.click();
-    };
-
-
-
-    const data = {
-        name: UserData.name,
-        surname: UserData.surname,
-        email: UserData.email,
-        phone: UserData.phone,
-        address: UserData.address,
-        date_of_birth: UserData.date_of_birth,
-    };
+    // const data = {
+    //     name: UserData.name,
+    //     surname: UserData.surname,
+    //     email: UserData.email,
+    //     phone: UserData.phone,
+    //     address: UserData.address,
+    //     date_of_birth: UserData.date_of_birth,
+    // };
 
     useEffect(() => {
         if (headerRef.current) {
@@ -67,7 +56,7 @@ const UserPage = () => {
 
         <div>
 
-            {AddHeader(headerRef, logInRef, loggedIn)}
+            <Header headerRef={headerRef} logInRef={logInRef} loggedIn={loggedIn} />
 
             <div className={UserPageStyles["main-container"]} >
 
