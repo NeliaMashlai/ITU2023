@@ -15,6 +15,7 @@ import HeaderImage from "./images/header_img.png";
 import Vector from "./images/vector.png";
 import UserAvatar from "./images/user_avatar.png";
 import { Link } from "react-router-dom";
+import React, { forwardRef } from "react";
 
 // API base URL
 export const API_BASE_URL = "http://10.0.0.106:8080/api/v1.0";
@@ -92,7 +93,7 @@ export const checkLogin = async (loggedInElement, logInElement) => {
     }
 }
 
-export const AddContact = () => {
+export const Contacts = forwardRef((props, ref) => {
     return (
         <div className="contacts">
 
@@ -137,9 +138,10 @@ export const AddContact = () => {
 
         </div>
     )
-}
+})
 
-export const AddHeader = (headerRef, logInRef, loggedIn) => {
+export const Header = forwardRef((props, ref) => {
+    const { headerRef, logInRef, loggedIn } = props;
     return (
         <div className="header" ref={headerRef}>
                 <div className="header-item"></div>
@@ -170,6 +172,7 @@ export const AddHeader = (headerRef, logInRef, loggedIn) => {
             </div>
     )
 }
+)
 
 export const uploadImage = async (image) => {
     const formData = new FormData();
@@ -204,6 +207,26 @@ export const GetUserInformation = async () => {
         if (response.ok) {
             const userData = await response.json();
             return userData;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        return false;
+    }
+}
+
+export const GetItem = async (item_id) => {
+    try {
+        const response = await fetch(API_BASE_URL + "/items/" + item_id, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        if (response.ok) {
+            const items = await response.json();
+            return items;
         } else {
             return false;
         }

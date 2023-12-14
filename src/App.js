@@ -5,6 +5,7 @@ import RegisterPage from './components/RegisterPage/RegisterPage';
 import HomePage from './components/HomePage/HomePage';
 // import UserPage from './components/UserPage/UserPage';
 import MenCategoryPage from './components/Categories/MenCategories';
+import ItemPage from './components/ItemPage/ItemPage';
 import MenItemsList from './components/ItemsLists/MenItemsList';
 import AddItemPage from './components/AddItem/AddItemPage';
 import EditItemPage from './components/EditItem/EditItemPage';
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/men/items" element={<MenItemsList />} /> 
         <Route path="/user/add-item" element={<AddItemPage />} />
         <Route path="/user/edit-item" element={<EditItemPage />} />
+        <Route path="/item" element={<ItemPage />} />
       </Routes>
     </BrowserRouter>
   );

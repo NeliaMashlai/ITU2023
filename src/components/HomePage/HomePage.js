@@ -11,7 +11,7 @@ import React, {useEffect, useRef } from "react";
 import HomePageStyle from "./HomePage.module.css";
 import BackgroundImage from "../images/background.png";
 import { HomeImages, MapImages } from "../images/ImageMaps";
-import { fixElementHeight, checkLogin, AddContact, AddHeader } from "../Utils";
+import { fixElementHeight, checkLogin, Contacts, Header } from "../Utils";
 import "../GlobalStyles.css";
 
 const HomePage = () => {
@@ -31,7 +31,7 @@ const HomePage = () => {
     return (
         <div>
 
-            {AddHeader(headerRef, logInRef, loggedIn)}
+            <Header headerRef={headerRef} logInRef={logInRef} loggedIn={loggedIn} />
 
             <div className={HomePageStyle['main-container']}>
 
@@ -47,7 +47,7 @@ const HomePage = () => {
 
             </div>
 
-            {AddContact()}
+            <Contacts />
 
         </div>
     );

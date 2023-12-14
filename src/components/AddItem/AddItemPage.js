@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fixElementHeight, AddContact, checkLogin, AddHeader, uploadImage, GetUserInformation, API_BASE_URL } from "../Utils";
+import { fixElementHeight, Contacts, checkLogin, Header, uploadImage, GetUserInformation, API_BASE_URL } from "../Utils";
 import img_svg from "../images/photo_img.svg";
 import AddItemPageStyles from "./AddItemPage.module.css";
 import "../GlobalStyles.css";
@@ -20,10 +20,9 @@ const AddItemPage = () => {
         name: "",
         description: "",
         price: "",
+        size: "",
         conditionId: "",
         categoryId: "",
-        contact_email: "",
-        contact_phone: "",
         image_path: "",
         author_id: "",
     });
@@ -79,20 +78,12 @@ const AddItemPage = () => {
             return;
         }
 
-        await uploadImage(selectedFile).then((result) => {
-            if (result) {
+        const responseUrl = await uploadImage(selectedFile);
 
-                const imageUrl = result.url
-                setItemData({
-                    ...ItemData,
-                    image_path: imageUrl
-                });
-            } else {
-                setError('Failed to upload image');
-                return;
-            }
+        if (!responseUrl) {
+            setError('Failed to upload image');
+            return;
         }
-        );
 
         if (!parseFloat(ItemData.price)) {
             setError('Invalid price');
@@ -103,11 +94,10 @@ const AddItemPage = () => {
             name: ItemData.name,
             description: ItemData.description,
             price: parseFloat(ItemData.price),
+            size: ItemData.size,
             conditionId: ItemData.conditionId,
             categoryId: ItemData.categoryId,
-            contact_email: response.email,
-            contact_phone: response.phone,
-            image_path: ItemData.image_path,
+            image_path: responseUrl.url,
             author_id: parseInt(response.id),
         };
 
@@ -150,7 +140,7 @@ const AddItemPage = () => {
     return (
         <div>
 
-            {AddHeader(headerRef, logInRef, loggedIn)}
+            <Header headerRef={headerRef} logInRef={logInRef} loggedIn={loggedIn} />
 
             <div className={AddItemPageStyles["main-container"]} >
 
@@ -173,7 +163,7 @@ const AddItemPage = () => {
                     <input
                         type="file"
                         onChange={handleChange}
-                        accept="image/*"
+                        accept=".jpg,.jpeg,.png"
                         ref={fileInputRef}
                         style={{ display: 'none' }}
                     />
@@ -196,7 +186,7 @@ const AddItemPage = () => {
                 <div className={AddItemPageStyles["size-input-container"]}>
                     <label htmlFor="size" className={AddItemPageStyles["size-label"]}>Size:</label>
                     <input type="text" name="size" className={AddItemPageStyles["size-input"]} id="size" 
-                    placeholder="Add item size here..."/>
+                    placeholder="Add item size here..." value = {ItemData.size} onChange = {handleInputChange}/>
                 </div>
 
                 <div className={AddItemPageStyles["condition-input-container"]}>
@@ -257,8 +247,8 @@ const AddItemPage = () => {
 
             </div>
 
-
-            {AddContact()}
+            <Contacts />
+            
         </div>
     );
 }
