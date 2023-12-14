@@ -11,6 +11,7 @@ import ItemPage from './components/ItemPage/ItemPage';
 import MenItemsList from './components/ItemsLists/MenItemsList';
 import AddItemPage from './components/AddItem/AddItemPage';
 import EditItemPage from './components/EditItem/EditItemPage';
+import ChatsPage from './components/Chats/ChatsPage'
 import './components/GlobalStyles.css';
 import './App.css';
 
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/user/add-item" element={<AddItemPage />} />
         <Route path="/user/edit-item" element={<EditItemPage />} />
         <Route path="/item" element={<ItemPage />} />
+        <Route path="/user/chats" element={<ChatsPage />} />
       </Routes>
     </BrowserRouter>
   );

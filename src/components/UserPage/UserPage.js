@@ -107,7 +107,7 @@ const UserPage = () => {
 
                 <div className={UserPageStyles["full-height-line"]}></div>
 
-                {/* <input type="submit" value="DONE" className={UserPageStyles["submit-button"]} onClick = {Updateuser} /> */}
+                {/* <input type="submit" value="DONE" className={UserPageStyles["submit-button"]} onClick = {UpdateUser} /> */}
                 <Link to = "/user/add-item" className={UserPageStyles["add-item-button"]}>ADD ITEM</Link>
                 <Link to = "/user/chats" className={UserPageStyles["chat-button"]}>CHATS</Link>
 
