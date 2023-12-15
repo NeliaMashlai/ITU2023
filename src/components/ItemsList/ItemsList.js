@@ -14,6 +14,8 @@ const ItemsList = () => {
     const loggedIn = useRef(null);
     
     const itemsContainerRef = useRef(null);
+    const captionRef = useRef(null);
+    const contactsRef = useRef(null);
 
     const [items, setItems] = useState([]);
 
@@ -23,11 +25,30 @@ const ItemsList = () => {
         var link = "/item?item_id=" + item_id;
         return (
             <Link key = {item_id} to = {link} className={ItemsListStyles['item-container']}>
-                <img src={image_path} alt="Clothing" className={ItemsListStyles['item-image']} />
+                <img src={image_path} alt="preview" className={ItemsListStyles['item-image']} />
                 <div className={ItemsListStyles['item-name']}>{name}</div>
-                <div className={ItemsListStyles['item-price']}>{price}</div>
+                <div className={ItemsListStyles['item-price']}>€{price}</div>
             </Link>
         );
+    }
+
+    const fetchItems = async (category_id) => {
+        const response = await fetch(API_BASE_URL + "/items/" + category_id + "/category", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        const data = await response.json();
+
+        if(data.length <= 4){
+            contactsRef.current.style.position = "absolute";
+            contactsRef.current.style.bottom = "0";
+        } else {
+            contactsRef.current.style.position = "relative";
+        }
+
+        setItems(data);
     }
 
     useEffect(() => {
@@ -37,23 +58,27 @@ const ItemsList = () => {
     
         checkLogin(loggedIn, logInRef);
 
-        const fetchItems = async (category_id) => {
-            const response = await fetch(API_BASE_URL + "/items/" + category_id + "/category", {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            });
-            const data = await response.json();
-            setItems(data);
-        }
-
         const queryParams = new URLSearchParams(location.search);
         const categoryId = queryParams.get('categoryId');
 
-        // 
+        if(categoryId.includes("women")) {
+            headerRef.current.childNodes[3].style.borderBottom = "2px solid var(--blue)";
+            captionRef.current.textContent = categoryId.replace("women", "")
+        } else if (categoryId.includes("men")){
+            headerRef.current.childNodes[2].style.borderBottom = "2px solid var(--blue)";
+            captionRef.current.textContent = categoryId.replace("men", "")
+        } else if (categoryId.includes("kids")){
+            headerRef.current.childNodes[4].style.borderBottom = "2px solid var(--blue)";
+            captionRef.current.textContent = categoryId.replace("kids", "")
+        }
 
         fetchItems(categoryId);
+        
+        const interval = setInterval(() => {
+            fetchItems(categoryId);
+        }, 3000); 
+
+        return () => clearInterval(interval);
     }
     , [location]);
 
@@ -64,7 +89,7 @@ const ItemsList = () => {
 
             <div className={ItemsListStyles['main-container']}>
 
-                <div className={ItemsListStyles['caption']}>Men : Clothing</div>
+                <div className={ItemsListStyles['caption']} ref = {captionRef}>Men : Clothing</div>
 
                 <div className={ItemsListStyles['items-container']} ref = {itemsContainerRef}>
 
@@ -72,7 +97,7 @@ const ItemsList = () => {
 
                 </div>
 
-                <div className={ItemsListStyles['contacts']}>
+                <div className={ItemsListStyles['contacts']} ref = {contactsRef}>
                     <b className={ItemsListStyles['contacts-container']}>
                         <p className={ItemsListStyles['contacts-text']}>
                             Contacts: <br />

@@ -21,6 +21,19 @@ const UserPage = () => {
 
     const[error, setError] = useState("");
 
+    const [items, setItems] = useState([]);
+
+    const createItem = (item_id, image_path, name, price) => {
+        var link = "/user/edit-item?item_id=" + item_id;
+        return (
+            <Link key = {item_id} to = {link} className={UserPageStyles['item-container']}>
+                <img src={image_path} alt="preview" className={UserPageStyles['item-image']} />
+                <div className={UserPageStyles['item-name']}>{name}</div>
+                <div className={UserPageStyles['item-price']}>€{price}</div>
+            </Link>
+        );
+    }
+
     const setUnlock = (e) => {
         if(e.target.name === "edit-name") {
             NameInputRef.current.disabled = false;
@@ -64,7 +77,7 @@ const UserPage = () => {
         });
     };
 
-    const clicker = async () => {
+    const handleDoneClick = async () => {
 
         const cookies = document.cookie.split(';');
         const userId = cookies.find(cookie => cookie.includes('user_id'));
@@ -88,7 +101,12 @@ const UserPage = () => {
             });
     
             if (response.ok) {
-                window.location.reload();
+                NameInputRef.current.disabled = true;
+                SurnameInputRef.current.disabled = true;
+                EmailInputRef.current.disabled = true;
+                PhoneNumberInputRef.current.disabled = true;
+                AddressInputRef.current.disabled = true;
+                DateOfBirthInputRef.current.disabled = true;
             } else if (response.status === 409) {
                 setError("Username already exists");
             } else if (response.status === 500) {
@@ -133,7 +151,22 @@ const UserPage = () => {
             });
         }
         );  
+
+        const cookies = document.cookie.split(';');
+        const userId = cookies.find(cookie => cookie.includes('user_id'));
+
+        const fetchItems = async (user_id) => {
+            const response = await fetch(API_BASE_URL + "/user/" + user_id + "/items", {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+            const data = await response.json();
+            setItems(data);
+        }
         
+        fetchItems(userId.split('=')[1]);
     }
     , [navigate]);
 
@@ -198,7 +231,13 @@ const UserPage = () => {
 
                 <div className={UserPageStyles["full-height-line"]}></div>
 
-                <input type="submit" value="DONE" className={UserPageStyles["submit-button"]} onClick = {clicker} />
+                <div className={UserPageStyles["user-items-label"]}>My items for sale</div>
+
+                <div className={UserPageStyles["user-items-container"]}>
+                    {items.map(item => createItem(item.id, item.image_path, item.name, item.price))}
+                </div>
+
+                <input type="submit" value="DONE" className={UserPageStyles["submit-button"]} onClick = {handleDoneClick} />
                 <Link to = "/user/add-item" className={UserPageStyles["add-item-button"]}>ADD ITEM</Link>
                 <Link to = "/user/chats" className={UserPageStyles["chat-button"]}>CHATS</Link>
 

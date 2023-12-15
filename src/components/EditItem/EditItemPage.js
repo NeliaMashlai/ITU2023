@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { fixElementHeight, Contacts, checkLogin, Header, GetItem, API_BASE_URL, uploadImage } from "../Utils";
 import img_svg from "../images/photo_img.svg";
 import EditItemPageStyles from "./EditItemPage.module.css";
@@ -22,6 +22,8 @@ const EditItemPage = () => {
     const [file, setFile] = useState(null);
     const fileInputRef = useRef(null);
     const [error, setError] = useState('');
+
+    const location = useLocation();
 
     const [ItemData, setItemData] = useState({
         name: "",
@@ -55,6 +57,8 @@ const EditItemPage = () => {
             ...ItemData,
             [e.target.name]: e.target.value,
         });
+        console.log(e.target.name);
+        console.log(e.target.value);
     };
 
     const handleFiles = (file) => {
@@ -88,6 +92,8 @@ const EditItemPage = () => {
 
     const EditItem = async (e) => {
         e.preventDefault();
+        const queryParams = new URLSearchParams(location.search);
+        const item_id = queryParams.get('item_id');
         if(e.target.value === "DONE"){
             var responseUrl = "";
             if(selectedFile.includes('imgur')){
@@ -110,7 +116,7 @@ const EditItemPage = () => {
             };
 
             try {
-                const response = await fetch(API_BASE_URL + "/items/1/update", {
+                const response = await fetch(API_BASE_URL + "/items/" + item_id + "/update", {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -136,7 +142,7 @@ const EditItemPage = () => {
             }
         } else if(e.target.value === "DELETE"){
             try {
-                const response = await fetch(API_BASE_URL + "/items/1/delete", {
+                const response = await fetch(API_BASE_URL + "/items/" + item_id + "/delete", {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
@@ -162,6 +168,11 @@ const EditItemPage = () => {
         }
     };
 
+ document.getElementsByName("categoryId").onChange = function() {
+    console.log("test");
+    console.log(this.value);
+ }
+
 
     useEffect(() => {
 
@@ -169,8 +180,10 @@ const EditItemPage = () => {
             fixElementHeight(headerRef.current);
         }
 
-        // TODO GET ID FROM URL
-        GetItem("1").then((data) => {
+        const queryParams = new URLSearchParams(location.search);
+        const item_id = queryParams.get('item_id');
+
+        GetItem(item_id).then((data) => {
             if(data){
                 setItemData({
                     name: data.name,
@@ -215,7 +228,7 @@ const EditItemPage = () => {
         }
 
     }
-    , [navigate, headerRef, logInRef, loggedIn]);
+    , [navigate, headerRef, logInRef, loggedIn, location]);
 
     return (
         <div>
@@ -286,7 +299,7 @@ const EditItemPage = () => {
 
                 <div className={EditItemPageStyles["category-input-container"]}>
                     <label htmlFor="category" className={EditItemPageStyles["category-label"]}>Category:</label>
-                    <select name="categotyId" className={EditItemPageStyles["category-input"]} id="category"
+                    <select name="categoryId" className={EditItemPageStyles["category-input"]} id="category"
                     value={ItemData.categoryId} onChange = {handleInputChange}>
                         <option value="-none-">--none--</option>
                         <optgroup label="Men">

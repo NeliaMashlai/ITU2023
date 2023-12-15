@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState } from "react";
 import ItemPageStyle from "./ItemPage.module.css";
-import { fixElementHeight, checkLogin, Contacts, Header, GetItem } from "../Utils";
+import { fixElementHeight, checkLogin, Contacts, Header, GetItem, API_BASE_URL } from "../Utils";
 import "../GlobalStyles.css";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
@@ -19,14 +19,14 @@ const ItemPage = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
+
+    const queryParams = new URLSearchParams(location.search);
+    const item_id = queryParams.get('item_id');
     
     useEffect(() => {
         if (headerRef.current) {
             fixElementHeight(headerRef.current);
         }
-
-        const queryParams = new URLSearchParams(location.search);
-        const item_id = queryParams.get('item_id');
 
         GetItem(item_id).then((item) => {
             if(!item) {
@@ -58,7 +58,7 @@ const ItemPage = () => {
         });
     
         checkLogin(loggedIn, logInRef);
-    }, [navigate, location]);
+    }, [navigate, location, item_id]);
 
     return (
         <div>
@@ -94,7 +94,7 @@ const ItemPage = () => {
                     </div>
                 </div>
  
-                <Link to = "/user/chats" className={ItemPageStyle["contact-seller-button"]}>Contact seller</Link>
+                <Link to = {item_id} className={ItemPageStyle["contact-seller-button"]}>Contact seller</Link>
 
             </div>
 
