@@ -354,8 +354,8 @@
 .submit-button{
     width: 15%;
     height: 7%;
-    top: 85%;
-    left: 3%;
+    top: 78%;
+    left: 11%;
     position: absolute;
     display: flex;
     align-items: center;
@@ -385,4 +385,166 @@
     z-index: -1;
     box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
     background-color: var(--blue); 
+}
+
+.edit-name-button{
+    width: 18%;
+    height: 30%;
+    top: 11%;
+    left: 34%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.2em;
+    color: var(--blue);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.edit-name-button:hover{
+    cursor: pointer;
+    background-color: #bfbfbf;
+}
+
+.edit-name-button:active{
+    background-color: #a6a6a6;
+}
+
+.edit-surname-button{
+    width: 18%;
+    height: 30%;
+    top: 10%;
+    left: 48%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.2em;
+    color: var(--blue);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.edit-surname-button:hover{
+    cursor: pointer;
+    background-color: #bfbfbf;
+}
+
+.edit-surname-button:active{
+    background-color: #a6a6a6;
+}
+
+.edit-email-button{
+    width: 14%;
+    height: 30%;
+    top: 10%;
+    left: 24%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.2em;
+    color: var(--blue);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.edit-email-button:hover{
+    cursor: pointer;
+    background-color: #bfbfbf;
+}
+
+.edit-email-button:active{
+    background-color: #a6a6a6;
+}
+
+.edit-phone-button{
+    width: 14%;
+    height: 30%;
+    top: 10%;
+    left: 53%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.2em;
+    color: var(--blue);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.edit-phone-button:hover{
+    cursor: pointer;
+    background-color: #bfbfbf;
+}
+
+.edit-phone-button:active{
+    background-color: #a6a6a6;
+}
+
+.edit-address-button{
+    width: 14%;
+    height: 30%;
+    top: 10%;
+    left: 30%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.2em;
+    color: var(--blue);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.edit-address-button:hover{
+    cursor: pointer;
+    background-color: #bfbfbf;
+}
+
+.edit-address-button:active{
+    background-color: #a6a6a6;
+}
+
+.edit-date-of-birth-button{
+    width: 30%;
+    height: 30%;
+    top: 10%;
+    left: 92%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.2em;
+    color: var(--blue);
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.edit-date-of-birth-button:hover{
+    cursor: pointer;
+    background-color: #bfbfbf;
+}
+
+.edit-date-of-birth-button:active{
+    background-color: #a6a6a6;
 }
