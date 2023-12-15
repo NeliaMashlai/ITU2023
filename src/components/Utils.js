@@ -40,6 +40,11 @@ export const fixElementWidth = (element) => {
 
 export const ifUserLoggedIn = async () => {
     const cookies = document.cookie.split(';');
+
+    if (!cookies) {
+        return false;
+    }
+
     const userId = cookies.find(cookie => cookie.includes('user_id'));
     if (userId) {
 
@@ -67,6 +72,7 @@ export const ifUserLoggedIn = async () => {
 
 export const checkLogin = async (loggedInElement, logInElement) => {
     const username = await ifUserLoggedIn();
+
     if (username) {
         loggedInElement.current.style.display = 'flex';
         if (username.length > 6) {
@@ -145,13 +151,14 @@ export const Header = forwardRef((props, ref) => {
     return (
         <div className="header" ref={headerRef}>
                 <div className="header-item"></div>
-                <img
-                    className="header-logo"
-                    alt=""
-                    src={HeaderImage}
-                    id="logo"
-                />
-
+                <Link to = "/" className="home">
+                    <img
+                        className="header-logo"
+                        alt=""
+                        src={HeaderImage}
+                        id="logo"
+                    />
+                </Link>
                 <Link to = "/men" className="men">Men</Link>
                 <Link to = "/women" className="women">Women</Link>
                 <Link to = "/kids" className="kids">Kids</Link>
@@ -196,7 +203,17 @@ export const uploadImage = async (image) => {
 
 export const GetUserInformation = async () => {
     const cookies = document.cookie.split(';');
+
+    if (!cookies) {
+        return false;
+    }
+
     const userId = cookies.find(cookie => cookie.includes('user_id'));
+
+    if (!userId) {
+        return false;
+    }
+
     try {
         const response = await fetch(API_BASE_URL + "/user/" + userId.split('=')[1], {
             method: 'GET',

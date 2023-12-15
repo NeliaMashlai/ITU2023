@@ -84,7 +84,18 @@ const UserPage = () => {
     const handleDoneClick = async () => {
 
         const cookies = document.cookie.split(';');
+
+        if(!cookies){
+            navigate('/login');
+            return;
+        }
+
         const userId = cookies.find(cookie => cookie.includes('user_id'));
+
+        if(!userId){
+            navigate('/login');
+            return;
+        }
 
         const data = {
             name: UserData.name,
@@ -142,21 +153,28 @@ const UserPage = () => {
 
         GetUserInformation().then((user) => {
             if(!user) {
-                navigate('*');
+                navigate('/login');
                 return;
+            } else {
+                setUserData({
+                    name: user.name,
+                    surname: user.surname,
+                    email: user.email,
+                    phone: user.phone,
+                    address: user.address,
+                    date_of_birth: user.date_of_birth,
+                });
             }
-            setUserData({
-                name: user.name,
-                surname: user.surname,
-                email: user.email,
-                phone: user.phone,
-                address: user.address,
-                date_of_birth: user.date_of_birth,
-            });
         }
         );  
 
         const cookies = document.cookie.split(';');
+
+        if(!cookies){
+            navigate('/login');
+            return;
+        }
+
         const userId = cookies.find(cookie => cookie.includes('user_id'));
 
         const fetchItems = async (user_id) => {
@@ -170,7 +188,36 @@ const UserPage = () => {
             setItems(data);
         }
         
-        fetchItems(userId.split('=')[1]);
+        if(userId){
+            fetchItems(userId.split('=')[1]);
+        } else {
+            navigate('/login');
+            return;
+        }
+
+        const interval = setInterval(() => {
+            fetchItems(userId.split('=')[1]);
+
+            GetUserInformation().then((user) => {
+                if(!user) {
+                    navigate('/login');
+                    return;
+                } else {
+                    setUserData({
+                        name: user.name,
+                        surname: user.surname,
+                        email: user.email,
+                        phone: user.phone,
+                        address: user.address,
+                        date_of_birth: user.date_of_birth,
+                    });
+                }
+            }
+            );  
+        }
+        , 3000);
+
+        return () => clearInterval(interval);
     }
     , [navigate]);
 
