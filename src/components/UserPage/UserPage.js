@@ -12,6 +12,17 @@ const UserPage = () => {
     const loggedIn = useRef(null);
     const navigate = useNavigate();
 
+    const NameInputRef = useRef(null);
+    const SurnameInputRef = useRef(null);
+    const EmailInputRef = useRef(null);
+    const PhoneNumberInputRef = useRef(null);
+    const DateOfBirthInputRef = useRef(null);
+    const AddressInputRef = useRef(null);
+
+    const setUnlock = (e) => {
+    //todo
+    }
+
     const [UserData, setUserData] = useState({
         name: "",
         surname: "",
@@ -91,42 +102,48 @@ const UserPage = () => {
                     <label htmlFor="name" className={UserPageStyles["name-label"]}
                     value = {UserData.name} onChange={handleInputChange}>Name:</label>
                     <input type="text" name="name" className={UserPageStyles["name-input"]} id="name" 
-                    placeholder="set name" value = {UserData.name} onChange = {handleInputChange}/>
+                    placeholder="set name" value = {UserData.name} onChange = {handleInputChange} ref={NameInputRef} disabled/>
+                    <input type="button" value="EDIT" name = "edit-name" className={UserPageStyles["edit-name-button"]} onClick = {setUnlock} />
                 </div>
 
                 <div className={UserPageStyles["surname-input-container"]}>
                     <label htmlFor="surname" className={UserPageStyles["surname-label"]}
                     value = {UserData.surname} onChange={handleInputChange}>Surname:</label>
                     <input type="text" name="surname" className={UserPageStyles["surname-input"]} id="surname" 
-                    placeholder="set surname" value = {UserData.surname} onChange = {handleInputChange}/>
+                    placeholder="set surname" value = {UserData.surname} onChange = {handleInputChange} ref={SurnameInputRef} disabled/>
+                    <input type="button" value="EDIT" name = "edit-surname" className={UserPageStyles["edit-surname-button"]} onClick = {setUnlock} />
                 </div>
 
                 <div className={UserPageStyles["email-input-container"]}>
                     <label htmlFor="email" className={UserPageStyles["email-label"]}
                     value = {UserData.email} onChange={handleInputChange}>E-mail:</label>
                     <input type="email" name="email" className={UserPageStyles["email-input"]} id="email" 
-                    placeholder="set email" value = {UserData.email} onChange = {handleInputChange}/>
+                    placeholder="set email" value = {UserData.email} onChange = {handleInputChange} ref={EmailInputRef} disabled/>
+                    <input type="button" value="EDIT" name = "edit-email" className={UserPageStyles["edit-email-button"]} onClick = {setUnlock} />
                 </div>
 
                 <div className={UserPageStyles["phone-input-container"]}>
                     <label htmlFor="phone" className={UserPageStyles["phone-label"]}
                     value = {UserData.phone} onChange={handleInputChange}>Phone number:</label>
                     <input type="tel" name="phone" className={UserPageStyles["phone-input"]} id="phone" 
-                    placeholder="set phone number" value = {UserData.phone} onChange = {handleInputChange}/>
+                    placeholder="set phone number" value = {UserData.phone} onChange = {handleInputChange} ref={PhoneNumberInputRef} disabled/>
+                    <input type="button" value="EDIT" name = "edit-phone" className={UserPageStyles["edit-phone-button"]} onClick = {setUnlock} />
                 </div>
 
                 <div className={UserPageStyles["address-input-container"]}>
                     <label htmlFor="address" className={UserPageStyles["address-label"]}
                     value = {UserData.address} onChange={handleInputChange}>Address:</label>
                     <input type="text" name="address" className={UserPageStyles["address-input"]} id="address" 
-                    placeholder="set address" value = {UserData.address} onChange = {handleInputChange}/>
+                    placeholder="set address" value = {UserData.address} onChange = {handleInputChange} ref={AddressInputRef} disabled/>
+                    <input type="button" value="EDIT" name = "edit-address" className={UserPageStyles["edit-address-button"]} onClick = {setUnlock} />
                 </div>
 
                 <div className={UserPageStyles["date_of_birth-input-container"]}>
                     <label htmlFor="date_of_birth" className={UserPageStyles["date_of_birth-label"]}
                     value = {UserData.date_of_birth} onChange={handleInputChange}>Date of birth:</label>
                     <input type="date" name="date_of_birth" className={UserPageStyles["date_of_birth-input"]} id="date_of_birth" 
-                    placeholder="set date of birth" value = {UserData.date_of_birth} onChange = {handleInputChange}/>
+                    placeholder="set date of birth" value = {UserData.date_of_birth} onChange = {handleInputChange} ref={DateOfBirthInputRef} disabled/>
+                    <input type="button" value="EDIT" name = "edit-date-of-birth" className={UserPageStyles["edit-date-of-birth-button"]} onClick = {setUnlock} />
                 </div>
 
                 <div className={UserPageStyles["full-height-line"]}></div>
