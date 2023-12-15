@@ -388,9 +388,9 @@
 }
 
 .edit-name-button{
-    width: 18%;
+    width: 23%;
     height: 30%;
-    top: 11%;
+    top: 5.5%;
     left: 34%;
     position: absolute;
     display: flex;
@@ -407,17 +407,17 @@
 
 .edit-name-button:hover{
     cursor: pointer;
-    background-color: #bfbfbf;
+    color: #bfbfbf;
 }
 
 .edit-name-button:active{
-    background-color: #a6a6a6;
+    color: #a6a6a6;
 }
 
 .edit-surname-button{
-    width: 18%;
+    width: 22%;
     height: 30%;
-    top: 10%;
+    top: 5.5%;
     left: 48%;
     position: absolute;
     display: flex;
@@ -434,17 +434,17 @@
 
 .edit-surname-button:hover{
     cursor: pointer;
-    background-color: #bfbfbf;
+    color: #bfbfbf;
 }
 
 .edit-surname-button:active{
-    background-color: #a6a6a6;
+    color: #a6a6a6;
 }
 
 .edit-email-button{
-    width: 14%;
+    width: 15%;
     height: 30%;
-    top: 10%;
+    top: 5.5%;
     left: 24%;
     position: absolute;
     display: flex;
@@ -461,17 +461,17 @@
 
 .edit-email-button:hover{
     cursor: pointer;
-    background-color: #bfbfbf;
+    color : #bfbfbf;
 }
 
 .edit-email-button:active{
-    background-color: #a6a6a6;
+    color : #a6a6a6;
 }
 
 .edit-phone-button{
-    width: 14%;
+    width: 15%;
     height: 30%;
-    top: 10%;
+    top: 5.5%;
     left: 53%;
     position: absolute;
     display: flex;
@@ -488,17 +488,17 @@
 
 .edit-phone-button:hover{
     cursor: pointer;
-    background-color: #bfbfbf;
+    color: #bfbfbf;
 }
 
 .edit-phone-button:active{
-    background-color: #a6a6a6;
+    color: #a6a6a6;
 }
 
 .edit-address-button{
-    width: 14%;
+    width: 15%;
     height: 30%;
-    top: 10%;
+    top: 5.5%;
     left: 30%;
     position: absolute;
     display: flex;
@@ -515,17 +515,17 @@
 
 .edit-address-button:hover{
     cursor: pointer;
-    background-color: #bfbfbf;
+    color: #bfbfbf;
 }
 
 .edit-address-button:active{
-    background-color: #a6a6a6;
+    color: #a6a6a6;
 }
 
 .edit-date-of-birth-button{
     width: 30%;
     height: 30%;
-    top: 10%;
+    top: 5.5%;
     left: 92%;
     position: absolute;
     display: flex;
@@ -542,9 +542,19 @@
 
 .edit-date-of-birth-button:hover{
     cursor: pointer;
-    background-color: #bfbfbf;
+    color: #bfbfbf;
 }
 
 .edit-date-of-birth-button:active{
-    background-color: #a6a6a6;
+    color: #a6a6a6;
+}
+
+.error{
+    color: red;
+    font-size: 1.5em;
+    font-weight: 700;
+    position: absolute;
+    top: 95%;
+    left: 8%;
+    transform: translate(-6%, -6%);
 }

@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fixElementHeight, checkLogin, Header, GetUserInformation } from "../Utils";
+import { fixElementHeight, checkLogin, Header, GetUserInformation, API_BASE_URL } from "../Utils";
 import user_svg from "../images/user.svg";
 import UserPageStyles from "./UserPage.module.css";
 import "../GlobalStyles.css";
@@ -18,6 +18,8 @@ const UserPage = () => {
     const PhoneNumberInputRef = useRef(null);
     const DateOfBirthInputRef = useRef(null);
     const AddressInputRef = useRef(null);
+
+    const[error, setError] = useState("");
 
     const setUnlock = (e) => {
         if(e.target.name === "edit-name") {
@@ -62,25 +64,44 @@ const UserPage = () => {
         });
     };
 
-    // const data = {
-    //     name: UserData.name,
-    //     surname: UserData.surname,
-    //     email: UserData.email,
-    //     phone: UserData.phone,
-    //     address: UserData.address,
-    //     date_of_birth: UserData.date_of_birth,
-    // };
+    const clicker = async () => {
 
-    const clicker = () => {
-        console.log(UserData);
-        setUserData({
-            name: "Negr",
-            surname: "",
-            email: "",
-            phone: "",
-            address: "",
-            date_of_birth: "",
-        });
+        const cookies = document.cookie.split(';');
+        const userId = cookies.find(cookie => cookie.includes('user_id'));
+
+        const data = {
+            name: UserData.name,
+            surname: UserData.surname,
+            email: UserData.email,
+            phone: UserData.phone,
+            address: UserData.address,
+            date_of_birth: UserData.date_of_birth,
+        };
+    
+        try {
+            const response = await fetch(API_BASE_URL + "/user/" + userId.split('=')[1] + "/update", {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+    
+            if (response.ok) {
+                window.location.reload();
+            } else if (response.status === 409) {
+                setError("Username already exists");
+            } else if (response.status === 500) {
+                setError("Server error");
+            } else if (response.status === 400) {
+                setError("Username or password cannot be empty");
+            } else {
+                throw new Error('Something went wrong');
+            }
+        } catch (err) {
+            console.error('Error:', err);
+            setError("Failed to connect to the server");
+        }
     };
 
     useEffect(() => {
@@ -102,10 +123,16 @@ const UserPage = () => {
                 navigate('*');
                 return;
             }
-            console.log(user);
+            setUserData({
+                name: user.name,
+                surname: user.surname,
+                email: user.email,
+                phone: user.phone,
+                address: user.address,
+                date_of_birth: user.date_of_birth,
+            });
         }
-        );
-        
+        );  
         
     }
     , [navigate]);
@@ -174,6 +201,8 @@ const UserPage = () => {
                 <input type="submit" value="DONE" className={UserPageStyles["submit-button"]} onClick = {clicker} />
                 <Link to = "/user/add-item" className={UserPageStyles["add-item-button"]}>ADD ITEM</Link>
                 <Link to = "/user/chats" className={UserPageStyles["chat-button"]}>CHATS</Link>
+
+                {error && <div id="error" className={UserPageStyles['error']}>{error}</div>}
 
 
             </div>
