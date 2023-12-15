@@ -38,6 +38,29 @@ const ChatsPage = () => {
 
                 <div className={ChatsPageStyles['chats-container']} ref = {chatsRef}>
 
+                    <div className={ChatsPageStyles['caption-container']}>
+                        <p className={ChatsPageStyles['caption']}>YOUR CHATS<br /> </p>
+                    </div>
+
+                    <div className={ChatsPageStyles['one-chat-container']}>
+                        <img src={user_svg} alt="Upload" className={ChatsPageStyles["chat-user-image"]} />
+                    </div>
+
+                    <div className={ChatsPageStyles['one-chat-container']}>
+                        <img src={user_svg} alt="Upload" className={ChatsPageStyles["chat-user-image"]} />
+                    </div>
+
+                    <div className={ChatsPageStyles['one-chat-container']}>
+                        <img src={user_svg} alt="Upload" className={ChatsPageStyles["chat-user-image"]} />
+                    </div>
+
+                    <div className={ChatsPageStyles['one-chat-container']}>
+                        <img src={user_svg} alt="Upload" className={ChatsPageStyles["chat-user-image"]} />
+                    </div>
+
+                    <div className={ChatsPageStyles['one-chat-container']}>
+                        <img src={user_svg} alt="Upload" className={ChatsPageStyles["chat-user-image"]} />
+                    </div>
                 </div>
 
             </div>
