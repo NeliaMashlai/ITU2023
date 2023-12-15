@@ -73,6 +73,13 @@ export const ifUserLoggedIn = async () => {
 export const checkLogin = async (loggedInElement, logInElement) => {
     const username = await ifUserLoggedIn();
 
+    if (!loggedInElement || !logInElement) {
+        setInterval(() => {
+            checkLogin(loggedInElement, logInElement);
+        }
+            , 1000);
+    }
+
     if (username) {
         loggedInElement.current.style.display = 'flex';
         if (username.length > 6) {
