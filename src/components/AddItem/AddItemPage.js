@@ -229,8 +229,8 @@ const AddItemPage = () => {
                             <option value="kidsShoes">Shoes</option>
                             <option value="kidsAccessories">Accessories</option>
                             <option value="kidsBags">Bags and Luggage</option>
-                            <option value="kidsJewelry">Jewelry and watches</option>
-                            <option value="kidsVintage">Vintage and collectibles</option>
+                            <option value="kidsToys">Toys</option>
+                            <option value="kidsEducational">Educational and craft supplies</option>
                         </optgroup>
                     </select>
                 </div>
