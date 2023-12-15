@@ -2,6 +2,7 @@ import React, {useEffect, useRef } from "react";
 import ItemPageStyle from "./ItemPage.module.css";
 import { fixElementHeight, checkLogin, Contacts, Header, GetItem } from "../Utils";
 import "../GlobalStyles.css";
+import { Link } from "react-router-dom";
 
 const ItemPage = () => {
 
@@ -62,16 +63,24 @@ Aenean nec elit eu libero consequat sodales. Sed leo dolor, fringilla nec feugia
                     Name of the item
                 </div>
 
-                <div className={ItemPageStyle["item-description"]}>
-                    {loremIpsum}
-                </div>
-
                 <div className={ItemPageStyle["item-size"]}>
                     Size: <br />
                     M
                 </div>
 
-                <div className={ItemPageStyle["item-condition"]}>Condition: New</div>
+                <div className={ItemPageStyle["item-condition"]}>
+                    Condition: <br />
+                    New
+                </div>
+
+                <div className={ItemPageStyle["item-description-container"]}>
+                    <div className={ItemPageStyle["item-description-label"]}>Description:</div>
+                    <div className={ItemPageStyle["item-description"]}>
+                        {loremIpsum}
+                    </div>
+                </div>
+ 
+                <Link to = "/user/chats" className={ItemPageStyle["contact-seller-button"]}>Contact seller</Link>
 
             </div>
 
