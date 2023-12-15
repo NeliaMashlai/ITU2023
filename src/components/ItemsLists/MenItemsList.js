@@ -117,10 +117,9 @@ const MenItemsList = () => {
 
                 </div>
 
-            </div>
-            
-            <Contacts />
+                <div className={MenItemsListStyles['contacts']}></div>
 
+            </div>
         </div>
     );
 }
