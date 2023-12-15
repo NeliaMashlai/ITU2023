@@ -5,10 +5,10 @@
 }
 
 .chats-container{
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    position: absolute;
+    display: flex;
+    flex-direction: column;
     row-gap: 10px;
+    position: absolute;
     top: 15%;
     left: 10%;
     width: 450px;
@@ -33,7 +33,7 @@
     font-size: 4em;
     font: var(--blue);
     font-weight: 700;
-    left: 40%;
+    left: 38%;
 }
 
 .one-chat-container{
@@ -51,5 +51,15 @@
     top: 10%;
     align-items: center;
     border-radius: 100%;
+    background-color: var(--titanium);
+}
+
+.each-chat-container{
+    row-gap: 10px;
+    position: absolute;
+    top: 15%;
+    left:45%;
+    width: 750px;
+    height: 550px;
     background-color: var(--titanium);
 }

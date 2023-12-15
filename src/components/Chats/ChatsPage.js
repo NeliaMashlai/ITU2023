@@ -63,6 +63,10 @@ const ChatsPage = () => {
                     </div>
                 </div>
 
+                <div className={ChatsPageStyles['each-chat-container']}>
+                    
+                </div>
+
             </div>
         </div>
     );
