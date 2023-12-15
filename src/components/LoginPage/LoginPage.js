@@ -56,7 +56,7 @@ const LoginPage = () => {
                 const userData = await response.json();
                 const date = new Date();
                 date.setTime(date.getTime() + (7 * 24 * 60 * 60 * 1000));
-                document.cookie = `user_id=${userData}; expires=${date.toUTCString()}; path=/`;
+                document.cookie = `user_id=${userData}; expires=${date.toUTCString()}; path=/; SameSite=None; Secure`;
                 navigate('/');
         
             } else if (response.status === 401) {
