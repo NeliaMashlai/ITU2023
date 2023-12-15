@@ -77,9 +77,13 @@ const UserPage = () => {
         });
     };
 
-    const MaksymNapusefunkciu= () =>{
-        //MaksymLox
-    };
+    const handleLogOutClick = async () => {
+        const cookies = document.cookie.split(';');
+        for (const cookie of cookies) {
+            document.cookie = cookie.split('=')[0] + '=; Max-Age=-99999999;';
+        }
+        navigate('/');
+    }
     
     const handleDoneClick = async () => {
 
@@ -156,14 +160,43 @@ const UserPage = () => {
                 navigate('/login');
                 return;
             } else {
-                setUserData({
-                    name: user.name,
-                    surname: user.surname,
-                    email: user.email,
-                    phone: user.phone,
-                    address: user.address,
-                    date_of_birth: user.date_of_birth,
-                });
+                if(user.name) {
+                    setUserData({
+                        ...UserData,
+                        name: user.name,
+                    });
+                } 
+                if(user.surname) {
+                    setUserData({
+                        ...UserData,
+                        surname: user.surname,
+                    });
+                }
+                if(user.email) {
+                    setUserData({
+                        ...UserData,
+                        email: user.email,
+                    });
+                }
+                if(user.phone) {
+                    setUserData({
+                        ...UserData,
+                        phone: user.phone,
+                    });
+                }
+                if(user.address) {
+                    setUserData({
+                        ...UserData,
+                        address: user.address,
+                    });
+                }
+                if(user.date_of_birth) {
+                    setUserData({
+                        ...UserData,
+                        date_of_birth: user.date_of_birth,
+                    });
+                }
+
             }
         }
         );  
@@ -197,29 +230,12 @@ const UserPage = () => {
 
         const interval = setInterval(() => {
             fetchItems(userId.split('=')[1]);
-
-            GetUserInformation().then((user) => {
-                if(!user) {
-                    navigate('/login');
-                    return;
-                } else {
-                    setUserData({
-                        name: user.name,
-                        surname: user.surname,
-                        email: user.email,
-                        phone: user.phone,
-                        address: user.address,
-                        date_of_birth: user.date_of_birth,
-                    });
-                }
-            }
-            );  
         }
         , 3000);
 
         return () => clearInterval(interval);
     }
-    , [navigate]);
+    , [navigate, UserData]);
 
     return(
 
@@ -289,7 +305,7 @@ const UserPage = () => {
                 </div>
 
                 <input type="submit" value="DONE" className={UserPageStyles["submit-button"]} onClick = {handleDoneClick} />
-                <input type="submit" value="Log out" className={UserPageStyles["log-out-button"]} onClick = {MaksymNapusefunkciu} />
+                <input type="submit" value="Log out" className={UserPageStyles["log-out-button"]} onClick = {handleLogOutClick} />
                 <Link to = "/user/add-item" className={UserPageStyles["add-item-button"]}>ADD ITEM</Link>
                 <Link to = "/user/chats" className={UserPageStyles["chat-button"]}>CHATS</Link>
 
