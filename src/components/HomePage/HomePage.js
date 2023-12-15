@@ -24,8 +24,15 @@ const HomePage = () => {
         if (headerRef.current) {
             fixElementHeight(headerRef.current);
         }
-    
-        checkLogin(loggedIn, logInRef);
+        
+        
+        if (headerRef.current && logInRef.current && loggedIn.current) {
+            checkLogin(loggedIn, logInRef);
+        } else {
+            setTimeout(() => {
+                checkLogin(loggedIn, logInRef);
+            }, 100);
+        }
     }, []);
 
     return (
