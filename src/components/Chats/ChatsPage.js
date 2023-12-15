@@ -12,6 +12,8 @@ const ChatsPage = () => {
     const loggedIn = useRef(null);
     const navigate = useNavigate();
 
+    const chatsRef = useRef(null);
+
     useEffect(() => {
         if (headerRef.current) {
             fixElementHeight(headerRef.current);
@@ -31,6 +33,14 @@ const ChatsPage = () => {
 
         <div>
             <Header headerRef={headerRef} logInRef={logInRef} loggedIn={loggedIn} />
+
+            <div className={ChatsPageStyles['main-container']}>
+
+                <div className={ChatsPageStyles['chats-container']} ref = {chatsRef}>
+
+                </div>
+
+            </div>
         </div>
     );
 

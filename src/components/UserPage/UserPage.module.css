@@ -355,7 +355,7 @@
     width: 15%;
     height: 7%;
     top: 78%;
-    left: 11%;
+    left: 3%;
     position: absolute;
     display: flex;
     align-items: center;
@@ -374,6 +374,32 @@
 }
 
 .submit-button:active{
+    background-color: #a6a6a6;
+}
+
+.log-out-button{
+    width: 15%;
+    height: 7%;
+    top: 78%;
+    left: 19%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #d9d9d9;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.log-out-button:hover{
+    cursor: pointer;
+    background-color: #bfbfbf;
+}
+
+.log-out-button:active{
     background-color: #a6a6a6;
 }
 

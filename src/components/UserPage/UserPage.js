@@ -77,6 +77,10 @@ const UserPage = () => {
         });
     };
 
+    const MaksymNapusefunkciu= () =>{
+        //MaksymLox
+    };
+    
     const handleDoneClick = async () => {
 
         const cookies = document.cookie.split(';');
@@ -238,8 +242,10 @@ const UserPage = () => {
                 </div>
 
                 <input type="submit" value="DONE" className={UserPageStyles["submit-button"]} onClick = {handleDoneClick} />
+                <input type="submit" value="Log out" className={UserPageStyles["log-out-button"]} onClick = {MaksymNapusefunkciu} />
                 <Link to = "/user/add-item" className={UserPageStyles["add-item-button"]}>ADD ITEM</Link>
                 <Link to = "/user/chats" className={UserPageStyles["chat-button"]}>CHATS</Link>
+
 
                 {error && <div id="error" className={UserPageStyles['error']}>{error}</div>}
 
