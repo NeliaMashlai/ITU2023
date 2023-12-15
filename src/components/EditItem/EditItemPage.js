@@ -272,7 +272,7 @@ const EditItemPage = () => {
 
                 <div className={EditItemPageStyles["condition-input-container"]}>
                     <label htmlFor="condition" className={EditItemPageStyles["condition-label"]}>Condition:</label>
-                    <select name="conditionId" className={EditItemPageStyles["condition-input"]} id="condition" defaultValue="-none-" 
+                    <select name="conditionId" className={EditItemPageStyles["condition-input"]} id="condition" 
                     value={ItemData.conditionId} onChange = {handleInputChange}>
                         <option value="-none-">--none--</option>
                         <option value="new">Brand new</option>
@@ -286,7 +286,7 @@ const EditItemPage = () => {
 
                 <div className={EditItemPageStyles["category-input-container"]}>
                     <label htmlFor="category" className={EditItemPageStyles["category-label"]}>Category:</label>
-                    <select name="categotyId" className={EditItemPageStyles["category-input"]} id="category" defaultValue="-none-"
+                    <select name="categotyId" className={EditItemPageStyles["category-input"]} id="category"
                     value={ItemData.categoryId} onChange = {handleInputChange}>
                         <option value="-none-">--none--</option>
                         <optgroup label="Men">

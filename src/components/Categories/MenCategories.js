@@ -27,33 +27,33 @@ const MenCategoriesPage = () => {
                 <div className={MenCategoriesStyle['categories']}>Categories</div>
 
                 <div className="categories-container">
-                    <Link className="category-item" to="/men/items?categoryId=1">
+                    <Link className="category-item" to="/items?categoryId=menClothing">
                         <img src="https://images.pexels.com/photos/4210866/pexels-photo-4210866.jpeg" alt="Clothing"/>
                         <div className="centered-text" style = {{color: "#093825"}}>Clothing</div>
                     </Link>
-                    <div className="category-item">
+                    <Link className="category-item" to = "/items?categoryId=menShoes">
                         <img src="https://donabees.co.uk/cdn/shop/products/mnz-v13tnV6D9lw-unsplash.jpg?v=1682244843&width=1946" alt="Shoes"/>
                         <div className="centered-text" style = {{color: "var(--titanium)"}}>Shoes</div>
-                    </div>
-                    <div className="category-item">
+                    </Link>
+                    <Link className="category-item" to = "/items?categoryId=menAccessories">
                         <img src="https://netstorage-legit.akamaized.net/images/afee74afb4d8ea20.jpg" alt="Accessories"/>
                         <div className="centered-text" style = {{color: "var(--titanium)"}}>Accessories</div>
-                    </div>
-                    <div className="category-item">
+                    </Link>
+                    <Link className="category-item" to = "/items?categoryId=menBags">
                         <img src="https://newtraveltrait.com/wp-content/uploads/2023/02/pexels-ketut-subiyanto-4246101-1-683x1024.jpg" alt="Bags and luggage"/>
                         <div className="centered-text" style = {{color: "var(--titanium)"}}>Bags and Luggage</div>
-                    </div>
-                    <div className="category-item">
+                    </Link>
+                    <Link className="category-item" to = "/items?categoryId=menJewelry">
                         <img src="https://images.pexels.com/photos/2155319/pexels-photo-2155319.jpeg" alt="Jewelry and watches"/>
                         <div className="centered-text" style = {{color: "var(--titanium)"}}>Jewelry and watches</div>
-                    </div>
-                    <div className="category-item">
+                    </Link>
+                    <Link className="category-item" to = "/items?categoryId=menVintage">
                         <img src="https://okrok.cz/wp-content/uploads/2021/12/typewriter-g7715445ec_1280.jpg" alt="Vintage and collectibles"/>
                         <div className="centered-text" >
                             <span style={{color: "var(--blue)"}}>Vintage</span>
                             <span style={{color: "var(--titanium)"}}> and collectibles</span>
                         </div>
-                    </div>
+                    </Link>
                 </div>
             </div>
 

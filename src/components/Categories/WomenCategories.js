@@ -27,30 +27,30 @@ const WomenCategoriesPage = () => {
                 <div className={WomenCategoriesStyle['categories']}>Categories</div>
 
                 <div className="categories-container">
-                    <Link className="category-item" to="/women/items?categoryId=1">
+                    <Link className="category-item" to = "/items?categoryId=womenClothing">
                         <img src="https://images.pexels.com/photos/7691068/pexels-photo-7691068.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Clothing"/>
                         <div className="centered-text" style = {{color: "var(--green)"}}>Clothing</div>
                     </Link>
-                    <div className="category-item">
+                    <Link className="category-item" to = "/items?categoryId=womenShoes">
                         <img src="https://images.pexels.com/photos/7691393/pexels-photo-7691393.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Shoes"/>
                         <div className="centered-text" style = {{color: "var(--green)"}}>Shoes</div>
-                    </div>
-                    <div className="category-item">
+                    </Link>
+                    <Link className="category-item" to = "/items?categoryId=womenAccessories">
                         <img src="https://images.pexels.com/photos/1751150/pexels-photo-1751150.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Accessories"/>
                         <div className="centered-text" style = {{color: "var(--green)"}}>Accessories</div>
-                    </div>
-                    <div className="category-item">
+                    </Link>
+                    <Link className="category-item" to = "/items?categoryId=womenBags">
                         <img src="https://images.pexels.com/photos/7262777/pexels-photo-7262777.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Bags and luggage"/>
                         <div className="centered-text" style = {{color: "var(--green)"}}>Bags and Luggage</div>
-                    </div>
-                    <div className="category-item">
+                    </Link>
+                    <Link className="category-item" to = "/items?categoryId=womenJewelry">
                         <img src="https://images.pexels.com/photos/1467188/pexels-photo-1467188.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Jewelry and watches"/>
                         <div className="centered-text" style = {{color: "var(--titanium)"}}>Jewelry and watches</div>
-                    </div>
-                    <div className="category-item">
+                    </Link>
+                    <Link className="category-item" to = "/items?categoryId=womenVintage">
                         <img src="https://images.pexels.com/photos/326316/pexels-photo-326316.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Vintage and collectibles"/>
                         <div className="centered-text" style = {{color: "var(--green)"}}>Vintage and Collectibles</div>
-                    </div>
+                    </Link>
                 </div>
             </div>
 

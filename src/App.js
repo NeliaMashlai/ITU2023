@@ -8,7 +8,7 @@ import KidsCategoriesPage from './components/Categories/KidsCategories';
 import MenCategoriesPage from './components/Categories/MenCategories';
 import WomenCategoriesPage from './components/Categories/WomenCategories';
 import ItemPage from './components/ItemPage/ItemPage';
-import MenItemsList from './components/ItemsLists/MenItemsList';
+import ItemsList from './components/ItemsList/ItemsList';
 import AddItemPage from './components/AddItem/AddItemPage';
 import EditItemPage from './components/EditItem/EditItemPage';
 import ChatsPage from './components/Chats/ChatsPage'
@@ -27,7 +27,7 @@ const App = () => {
         <Route path="/men" element={<MenCategoriesPage />} />
         <Route path="/women" element={<WomenCategoriesPage />} /> 
         <Route path="/kids" element={<KidsCategoriesPage />} />
-        <Route path="/men/items" element={<MenItemsList />} /> 
+        <Route path="/items" element={<ItemsList />} /> 
         <Route path="/user/add-item" element={<AddItemPage />} />
         <Route path="/user/edit-item" element={<EditItemPage />} />
         <Route path="/item" element={<ItemPage />} />

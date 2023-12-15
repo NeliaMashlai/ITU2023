@@ -20,7 +20,30 @@ const UserPage = () => {
     const AddressInputRef = useRef(null);
 
     const setUnlock = (e) => {
-    //todo
+        if(e.target.name === "edit-name") {
+            NameInputRef.current.disabled = false;
+            NameInputRef.current.focus();
+        }
+        else if(e.target.name === "edit-surname") {
+            SurnameInputRef.current.disabled = false;
+            SurnameInputRef.current.focus();
+        }
+        else if(e.target.name === "edit-email") {
+            EmailInputRef.current.disabled = false;
+            EmailInputRef.current.focus();
+        }
+        else if(e.target.name === "edit-phone") {
+            PhoneNumberInputRef.current.disabled = false;
+            PhoneNumberInputRef.current.focus();
+        }
+        else if(e.target.name === "edit-address") {
+            AddressInputRef.current.disabled = false;
+            AddressInputRef.current.focus();
+        }
+        else if(e.target.name === "edit-date-of-birth") {
+            DateOfBirthInputRef.current.disabled = false;
+            DateOfBirthInputRef.current.focus();
+        }
     }
 
     const [UserData, setUserData] = useState({

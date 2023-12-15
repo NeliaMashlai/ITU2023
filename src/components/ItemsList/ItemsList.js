@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Header, checkLogin, fixElementHeight, API_BASE_URL } from '../Utils';
-import MenItemsListStyles from './MenItemsList.module.css';
+import ItemsListStyles from './ItemsList.module.css';
 import InstagramIcon from '../images/instagram_icon.png';
 import FacebookIcon from '../images/facebook_icon.png';
 import TwitterIcon from '../images/twitter_icon.png';
 import '../GlobalStyles.css';
 
-const MenItemsList = () => {
+const ItemsList = () => {
 
     const headerRef = useRef(null);
     const logInRef = useRef(null);
@@ -19,17 +19,13 @@ const MenItemsList = () => {
 
     const location = useLocation();
 
-    const queryParams = new URLSearchParams(location.search);
-
-    const categoryId = queryParams.get('categoryId');
-
     const addItem = (item_id, image_path, name, price) => {
         var link = "/item?item_id=" + item_id;
         return (
-            <Link key = {item_id} to = {link} className={MenItemsListStyles['item-container']}>
-                <img src={image_path} alt="Clothing" className={MenItemsListStyles['item-image']} />
-                <div className={MenItemsListStyles['item-name']}>{name}</div>
-                <div className={MenItemsListStyles['item-price']}>{price}</div>
+            <Link key = {item_id} to = {link} className={ItemsListStyles['item-container']}>
+                <img src={image_path} alt="Clothing" className={ItemsListStyles['item-image']} />
+                <div className={ItemsListStyles['item-name']}>{name}</div>
+                <div className={ItemsListStyles['item-price']}>{price}</div>
             </Link>
         );
     }
@@ -41,8 +37,8 @@ const MenItemsList = () => {
     
         checkLogin(loggedIn, logInRef);
 
-        const fetchItems = async () => {
-            const response = await fetch(API_BASE_URL + "/items", {
+        const fetchItems = async (category_id) => {
+            const response = await fetch(API_BASE_URL + "/items/" + category_id + "/category", {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -52,36 +48,41 @@ const MenItemsList = () => {
             setItems(data);
         }
 
-        fetchItems();
+        const queryParams = new URLSearchParams(location.search);
+        const categoryId = queryParams.get('categoryId');
+
+        // 
+
+        fetchItems(categoryId);
     }
-    , []);
+    , [location]);
 
     return (
         <div>
 
             <Header headerRef={headerRef} logInRef={logInRef} loggedIn={loggedIn} />
 
-            <div className={MenItemsListStyles['main-container']}>
+            <div className={ItemsListStyles['main-container']}>
 
-                <div className={MenItemsListStyles['caption']}>Men : Clothing</div>
+                <div className={ItemsListStyles['caption']}>Men : Clothing</div>
 
-                <div className={MenItemsListStyles['items-container']} ref = {itemsContainerRef}>
+                <div className={ItemsListStyles['items-container']} ref = {itemsContainerRef}>
 
                     {items.map(item => addItem(item.id, item.image_path, item.name, item.price))}
 
                 </div>
 
-                <div className={MenItemsListStyles['contacts']}>
-                    <b className={MenItemsListStyles['contacts-container']}>
-                        <p className={MenItemsListStyles['contacts-text']}>
+                <div className={ItemsListStyles['contacts']}>
+                    <b className={ItemsListStyles['contacts-container']}>
+                        <p className={ItemsListStyles['contacts-text']}>
                             Contacts: <br />
                             +420987654321 <br />
                             garage.sale@gmail.com
                         </p>
                     </b>
 
-                    <i className={MenItemsListStyles['address-container']}>
-                        <p className={MenItemsListStyles['address']}>Address:<br />
+                    <i className={ItemsListStyles['address-container']}>
+                        <p className={ItemsListStyles['address']}>Address:<br />
                         nám. Svobody 72/8 <br />
                         602 00 Brno-střed <br />
                         Czech Republic</p>
@@ -89,7 +90,7 @@ const MenItemsList = () => {
 
                     <a href="https://www.instagram.com/">
                         <img
-                            className={MenItemsListStyles['instagram-icon']}
+                            className={ItemsListStyles['instagram-icon']}
                             alt="Instagram"
                             src={InstagramIcon}
                         />
@@ -97,7 +98,7 @@ const MenItemsList = () => {
 
                     <a href="https://www.facebook.com/">
                         <img
-                            className={MenItemsListStyles['facebook-icon']}
+                            className={ItemsListStyles['facebook-icon']}
                             alt="Facebook"
                             src={FacebookIcon}
                         />
@@ -105,7 +106,7 @@ const MenItemsList = () => {
 
                     <a href="https://twitter.com/">
                         <img
-                            className={MenItemsListStyles['twitter-icon']}
+                            className={ItemsListStyles['twitter-icon']}
                             alt="Twitter"
                             src={TwitterIcon}
                         />
@@ -118,4 +119,4 @@ const MenItemsList = () => {
     );
 }
 
-export default MenItemsList;
+export default ItemsList;
