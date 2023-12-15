@@ -204,7 +204,7 @@
 }
 
 .date_of_birth-input-container{
-    width: 10%;
+    width: 11%;
     height: 10%;
     top: 58%;
     left: 3%;
@@ -310,6 +310,8 @@
     outline: none;
     font-size: 1.5em;
     font-weight: 700;
+    text-decoration: none;
+    color: var(--black);
 }
 
 .add-item-button:hover{
@@ -336,6 +338,8 @@
     outline: none;
     font-size: 1.5em;
     font-weight: 700;
+    text-decoration: none;
+    color: var(--black);
 }
 
 .chat-button:hover{

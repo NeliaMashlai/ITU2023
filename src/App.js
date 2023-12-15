@@ -12,6 +12,7 @@ import MenItemsList from './components/ItemsLists/MenItemsList';
 import AddItemPage from './components/AddItem/AddItemPage';
 import EditItemPage from './components/EditItem/EditItemPage';
 import ChatsPage from './components/Chats/ChatsPage'
+import Page404 from './components/ErrorPages/Page404';
 import './components/GlobalStyles.css';
 import './App.css';
 
@@ -31,6 +32,7 @@ const App = () => {
         <Route path="/user/edit-item" element={<EditItemPage />} />
         <Route path="/item" element={<ItemPage />} />
         <Route path="/user/chats" element={<ChatsPage />} />
+        <Route path="*" element={<Page404 />} />
       </Routes>
     </BrowserRouter>
   );

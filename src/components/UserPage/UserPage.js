@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fixElementHeight, checkLogin, Header } from "../Utils";
+import { fixElementHeight, checkLogin, Header, GetUserInformation } from "../Utils";
 import user_svg from "../images/user.svg";
 import UserPageStyles from "./UserPage.module.css";
 import "../GlobalStyles.css";
@@ -37,6 +37,18 @@ const UserPage = () => {
     //     date_of_birth: UserData.date_of_birth,
     // };
 
+    const clicker = () => {
+        console.log(UserData);
+        setUserData({
+            name: "Negr",
+            surname: "",
+            email: "",
+            phone: "",
+            address: "",
+            date_of_birth: "",
+        });
+    };
+
     useEffect(() => {
         if (headerRef.current) {
             fixElementHeight(headerRef.current);
@@ -45,9 +57,21 @@ const UserPage = () => {
         checkLogin(loggedIn, logInRef).then((result) => {
             if (!result) {
                 navigate('/login');
+                return;
             }
+            loggedIn.current.style.display = "none";
         }
         );
+
+        GetUserInformation().then((user) => {
+            if(!user) {
+                navigate('*');
+                return;
+            }
+            console.log(user);
+        }
+        );
+        
         
     }
     , [navigate]);
@@ -107,7 +131,7 @@ const UserPage = () => {
 
                 <div className={UserPageStyles["full-height-line"]}></div>
 
-                {/* <input type="submit" value="DONE" className={UserPageStyles["submit-button"]} onClick = {UpdateUser} /> */}
+                <input type="submit" value="DONE" className={UserPageStyles["submit-button"]} onClick = {clicker} />
                 <Link to = "/user/add-item" className={UserPageStyles["add-item-button"]}>ADD ITEM</Link>
                 <Link to = "/user/chats" className={UserPageStyles["chat-button"]}>CHATS</Link>
 

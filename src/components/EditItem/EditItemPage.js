@@ -110,7 +110,7 @@ const EditItemPage = () => {
             };
 
             try {
-                const response = await fetch(API_BASE_URL + "/items/2/update", {
+                const response = await fetch(API_BASE_URL + "/items/1/update", {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -136,7 +136,7 @@ const EditItemPage = () => {
             }
         } else if(e.target.value === "DELETE"){
             try {
-                const response = await fetch(API_BASE_URL + "/items/2/delete", {
+                const response = await fetch(API_BASE_URL + "/items/1/delete", {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
@@ -170,7 +170,7 @@ const EditItemPage = () => {
         }
 
         // TODO GET ID FROM URL
-        GetItem("2").then((data) => {
+        GetItem("1").then((data) => {
             if(data){
                 setItemData({
                     name: data.name,
@@ -279,7 +279,7 @@ const EditItemPage = () => {
                         <option value="likeNew">Like new</option>
                         <option value="gentlyUsed">Gently used</option>
                         <option value="used">Used</option>
-                        <option value="vinatge">Vintage or retro</option>
+                        <option value="vintage">Vintage or retro</option>
                         <option value="forParts">For parts or repair</option>
                     </select>
                 </div>

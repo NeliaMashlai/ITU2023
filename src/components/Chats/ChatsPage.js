@@ -30,7 +30,7 @@ const ChatsPage = () => {
     return(
 
         <div>
-
+            <Header headerRef={headerRef} logInRef={logInRef} loggedIn={loggedIn} />
         </div>
     );
 

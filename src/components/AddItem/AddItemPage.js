@@ -71,6 +71,11 @@ const AddItemPage = () => {
             return;
         }
 
+        if(ItemData.conditionId === "-none-" || ItemData.categoryId === "-none-") {
+            setError('Please fill all fields');
+            return;
+        }
+
         const response = await GetUserInformation();
 
         if (!response) {
@@ -198,7 +203,7 @@ const AddItemPage = () => {
                         <option value="likeNew">Like new</option>
                         <option value="gentlyUsed">Gently used</option>
                         <option value="used">Used</option>
-                        <option value="vinatge">Vintage or retro</option>
+                        <option value="vintage">Vintage or retro</option>
                         <option value="forParts">For parts or repair</option>
                     </select>
                 </div>
