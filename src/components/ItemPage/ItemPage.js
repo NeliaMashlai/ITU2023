@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState } from "react";
 import ItemPageStyle from "./ItemPage.module.css";
 import { fixElementHeight, checkLogin, Contacts, Header, GetItem } from "../Utils";
 import "../GlobalStyles.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const ItemPage = () => {
 
@@ -18,13 +18,17 @@ const ItemPage = () => {
     const [ItemImage, setItemImage] = useState("");
 
     const navigate = useNavigate();
+    const location = useLocation();
     
     useEffect(() => {
         if (headerRef.current) {
             fixElementHeight(headerRef.current);
         }
 
-        GetItem("1").then((item) => {
+        const queryParams = new URLSearchParams(location.search);
+        const item_id = queryParams.get('item_id');
+
+        GetItem(item_id).then((item) => {
             if(!item) {
                 navigate('*');
                 return;
@@ -54,7 +58,7 @@ const ItemPage = () => {
         });
     
         checkLogin(loggedIn, logInRef);
-    }, [navigate]);
+    }, [navigate, location]);
 
     return (
         <div>
