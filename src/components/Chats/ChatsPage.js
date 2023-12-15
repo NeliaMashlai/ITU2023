@@ -19,12 +19,23 @@ const ChatsPage = () => {
             fixElementHeight(headerRef.current);
         }
     
-        checkLogin(loggedIn, logInRef).then((result) => {
-            if (!result) {
-                navigate('/login');
+        if (headerRef.current && logInRef.current && loggedIn.current) {
+            checkLogin(loggedIn, logInRef).then((result) => {
+                if (!result) {
+                    navigate('/login');
+                }
             }
+            );
+        } else {
+            setTimeout(() => {
+                checkLogin(loggedIn, logInRef).then((result) => {
+                    if (!result) {
+                        navigate('/login');
+                    }
+                }
+                );
+            }, 100);
         }
-        );
         
     }
     , [navigate]);
