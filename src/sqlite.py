@@ -29,10 +29,9 @@ class Database:
                             name TEXT NOT NULL,
                             description TEXT,
                             price REAL NOT NULL,
+                            size TEXT,
                             category_id TEXT NOT NULL,
                             condition_id TEXT NOT NULL,
-                            contact_email TEXT,
-                            contact_phone TEXT,
                             image_path TEXT NOT NULL,
                             author_id INTEGER NOT NULL);
             ''')
@@ -42,12 +41,31 @@ class Database:
                             username TEXT UNIQUE NOT NULL,
                             encrypted_password TEXT NOT NULL,
                             key TEXT NOT NULL,
+                            name TEXT,
+                            surname TEXT,
                             email TEXT,
                             phone TEXT,
                             address TEXT,
                             date_of_birth TEXT,
-                            is_allowed INTEGER DEFAULT 0,
                             FOREIGN KEY (id) REFERENCES items (author_id));
+            ''')
+
+            self.conn.execute('''CREATE TABLE IF NOT EXISTS chats (
+                            chat_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            user_from INTEGER NOT NULL,
+                            user_to INTEGER NOT NULL,
+                            item_id INTEGER NOT NULL,
+                            FOREIGN KEY (user_from) REFERENCES users (id),
+                            FOREIGN KEY (user_to) REFERENCES users (id),
+                            FOREIGN KEY (item_id) REFERENCES items (id));
+            ''')
+
+            self.conn.execute('''CREATE TABLE IF NOT EXISTS messages (
+                            message_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            chat_id INTEGER NOT NULL,
+                            message TEXT NOT NULL,
+                            date TEXT NOT NULL,
+                            FOREIGN KEY (chat_id) REFERENCES chats (chat_id));
             ''')
 
             self.conn.execute('''CREATE TABLE IF NOT EXISTS unauthorized_users (
@@ -67,8 +85,8 @@ class Database:
             cursor = self.conn.cursor()
 
             cursor.execute('''
-            INSERT INTO items (name, description, price, category_id, condition_id, contact_email, contact_phone, image_path, author_id)
-            VALUES (:name, :description, :price, :categoryId, :conditionId, :contact_email, :contact_phone, :image_path, :author_id)
+            INSERT INTO items (name, description, price, size, category_id, condition_id, image_path, author_id)
+            VALUES (:name, :description, :price, :size, :categoryId, :conditionId, :image_path, :author_id)
             ''', item)
 
             self.conn.commit()
@@ -80,18 +98,18 @@ class Database:
             print(e)
             return False
 
-    def get_items(self) -> list:
+    def get_items(self, category_id: str) -> list:
         """ get all items from the items table """
         try:
 
             cursor = self.conn.cursor()
 
             cursor.execute('''
-            SELECT * FROM items
-            ''')
+            SELECT * FROM items WHERE category_id = :category_id
+            ''', {'category_id': category_id})
 
             rows = cursor.fetchall()
-            keys = ('id', 'name', 'description', 'price', 'condition_id', 'category_id', 'contact_email', 'contact_phone', 'image_path')
+            keys = ('id', 'name', 'description', 'price', 'size', 'categoryId', 'conditionId', 'image_path', 'author_id')
 
             return [{key: value for key, value in zip(keys, row)} for row in rows]
         
@@ -111,7 +129,7 @@ class Database:
             ''', {'id': item_id})
 
             row = cursor.fetchone()
-            keys = ('id', 'name', 'description', 'price', 'contact_email', 'contact_phone', 'image_path')
+            keys = ('id', 'name', 'description', 'price', 'size', 'category_id', 'condition_id', 'image_path', 'author_id')
 
             return {key: value for key, value in zip(keys, row)} if row else {}
         
@@ -146,8 +164,8 @@ class Database:
             cursor = self.conn.cursor()
 
             cursor.execute('''
-            UPDATE items SET name = :name, description = :description, price = :price, contact_email = :contact_email,
-            contact_phone = :contact_phone, image_path = :image_path WHERE id = :id
+            UPDATE items SET name = :name, description = :description, price = :price, size = :size, 
+            category_id = :categoryId, condition_id = :conditionId, image_path = :image_path WHERE id = :id
             ''', {'id': item_id, **item})
 
             self.conn.commit()
@@ -224,7 +242,7 @@ class Database:
             print(e)
             return -3
         
-    def get_user_items(self, user_id: int) -> list:
+    def get_user_items_bd(self, user_id: int) -> list:
         """ get all items from the items table """
         try:
 
@@ -235,7 +253,8 @@ class Database:
             ''', {'author_id': user_id})
 
             rows = cursor.fetchall()
-            keys = ('id', 'name', 'description', 'price', 'contact_email', 'contact_phone', 'image_path')
+
+            keys = ('id', 'name', 'description', 'price', 'size', 'categoryId', 'conditionId', 'image_path', 'author_id')
 
             return [{key: value for key, value in zip(keys, row)} for row in rows]
         
@@ -244,10 +263,6 @@ class Database:
             print(e)
             return None
         
-    # def update_user(self, user_id : int, **user) -> bool:
-    #     """ update a single user if correct password is provided, if new password is provided, it will be encrypted and old password checked to be correct before iupdate"""
-
-        
     def get_user(self, user_id : int) -> dict:
         """ get a single user from the users table """
         try:
@@ -255,7 +270,7 @@ class Database:
             cursor = self.conn.cursor()
 
             cursor.execute('''
-            SELECT id, username, email, phone, address, date_of_birth FROM users WHERE id = :id
+            SELECT id, username, name, surname, email, phone, address, date_of_birth FROM users WHERE id = :id
             ''', {'id': user_id})
 
             row = cursor.fetchone()
@@ -263,16 +278,207 @@ class Database:
             return {
                 'id': row[0],
                 'username': row[1],
-                'email': row[2],
-                'phone': row[3],
-                'address': row[4],
-                'date_of_birth': row[5]
+                'name': row[2],
+                'surname': row[3],
+                'email': row[4],
+                'phone': row[5],
+                'address': row[6],
+                'date_of_birth': row[7]
             } if row else {}
         
         except Error as e:
 
             print(e)
             return {}
+        
+    def update_user(self, user_id : int, **user) -> bool:
+        """ update a single user from the users table """
+        try:
+
+            cursor = self.conn.cursor()
+
+            cursor.execute('''
+            UPDATE users SET name = :name, surname = :surname, email = :email, phone = :phone, address = :address, date_of_birth = :date_of_birth WHERE id = :id
+            ''', {'id': user_id, **user})
+
+            self.conn.commit()
+
+            return True
+        
+        except Error as e:
+
+            print(e)
+            return False
+        
+    def create_chat(self, **chat) -> int:
+        """ create a new chat """
+        try:
+
+            cursor = self.conn.cursor()
+
+            # check if chat already exists
+            cursor.execute('''
+            SELECT * FROM chats WHERE user_from = :user_from AND user_to = :user_to AND item_id = :item_id 
+            ''', chat)
+
+            row = cursor.fetchone()
+
+            if row:
+                return row[0]
+            
+            cursor.execute('''
+            INSERT INTO chats (user_from, user_to, item_id)
+            VALUES (:user_from, :user_to, :item_id)
+            ''', chat)
+
+            self.conn.commit()
+
+            return cursor.lastrowid
+        
+        except Error as e:
+
+            print(e)
+            return -1
+        
+    def get_chat(self, chat_id: int) -> dict:
+        """ get a single chat """
+        try:
+
+            cursor = self.conn.cursor()
+
+            cursor.execute('''
+            SELECT * FROM chats WHERE chat_id = :chat_id
+            ''', {'chat_id': chat_id})
+
+            row = cursor.fetchone()
+
+            keys = ('chat_id', 'user_from', 'user_to', 'item_id')
+
+            return {key: value for key, value in zip(keys, row)} if row else {}
+        
+        except Error as e:
+
+            print(e)
+            return {}
+        
+    def get_chats(self, user_id: int) -> list:
+        """ get all chats for a user """
+        try:
+
+            cursor = self.conn.cursor()
+
+            cursor.execute('''
+            SELECT * FROM chats WHERE user_from = :user_id OR user_to = :user_id
+            ''', {'user_id': user_id})
+
+            rows = cursor.fetchall()
+
+            keys = ('chat_id', 'user_from', 'user_to', 'item_id')
+
+            return [{key: value for key, value in zip(keys, row)} for row in rows]
+        
+        except Error as e:
+
+            print(e)
+            return []
+        
+    def delete_chat(self, chat_id: int) -> bool:
+        """ delete a single chat """
+        try:
+
+            cursor = self.conn.cursor()
+
+            cursor.execute('''
+            DELETE FROM chats WHERE chat_id = :chat_id
+            ''', {'chat_id': chat_id})
+
+            self.conn.commit()
+
+            return True
+        
+        except Error as e:
+
+            print(e)
+            return False
+        
+    def create_message(self, **message) -> int:
+        """ create a new message """
+        try:
+
+            cursor = self.conn.cursor()
+
+            cursor.execute('''
+            INSERT INTO messages (chat_id, message, date)
+            VALUES (:chat_id, :message, :date)
+            ''', message)
+
+            self.conn.commit()
+
+            return cursor.lastrowid
+        
+        except Error as e:
+
+            print(e)
+            return -1
+    
+    def get_messages(self, chat_id: int) -> list:
+        """ get all messages for a chat """
+        try:
+
+            cursor = self.conn.cursor()
+
+            cursor.execute('''
+            SELECT * FROM messages WHERE chat_id = :chat_id
+            ''', {'chat_id': chat_id})
+
+            rows = cursor.fetchall()
+
+            keys = ('message_id', 'chat_id', 'message', 'date')
+
+            return [{key: value for key, value in zip(keys, row)} for row in rows]
+        
+        except Error as e:
+
+            print(e)
+            return []
+        
+    def delete_message(self, message_id: int) -> bool:
+        """ delete a single message """
+        try:
+
+            cursor = self.conn.cursor()
+
+            cursor.execute('''
+            DELETE FROM messages WHERE message_id = :message_id
+            ''', {'message_id': message_id})
+
+            self.conn.commit()
+
+            return True
+        
+        except Error as e:
+
+            print(e)
+            return False
+        
+    def update_message(self, message_id: int, **message) -> bool:
+        """ update a single message """
+        try:
+
+            cursor = self.conn.cursor()
+
+            cursor.execute('''
+            UPDATE messages SET message = :message WHERE message_id = :message_id
+            ''', {'message_id': message_id, **message})
+
+            self.conn.commit()
+
+            return True
+        
+        except Error as e:
+
+            print(e)
+            return False
 
     def unauthorized_user(self) -> int:
         """ add a new unauthorized user """

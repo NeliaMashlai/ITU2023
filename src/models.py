@@ -17,10 +17,9 @@ class Item(BaseModel):
     name: str
     description: Optional[str]
     price: float
+    size: Optional[str]
     conditionId: str
     categoryId: str
-    contact_email: Optional[str]
-    contact_phone: Optional[str]
     image_path: str
     author_id: int
 
@@ -29,14 +28,17 @@ class ItemUpdate(BaseModel):
     name: Optional[str]
     description: Optional[str]
     price: Optional[float]
-    contact_email: Optional[str]
-    contact_phone: Optional[str]
+    size: Optional[str]
+    conditionId: Optional[str]
+    categoryId: Optional[str]
     image_path: Optional[str]
 
 
 class User(BaseModel):
     username: str
     password: str
+    name : Optional[str] = None
+    surname : Optional[str] = None
     email: Optional[str] = None
     phone: Optional[str] = None
     address: Optional[str]  = None
@@ -44,11 +46,26 @@ class User(BaseModel):
 
     
 class UserUpdate(BaseModel):
-    username: Optional[str]
-    password: Optional[str]
+    name : Optional[str]
+    surname : Optional[str]
     email: Optional[str]
     phone: Optional[str]
     address: Optional[str]
     date_of_birth: Optional[str]
+
+class Chat(BaseModel):
+    chat_id: Optional[int]
+    user_from: int
+    user_to: int
+    item_id: int
+
+class ChatMessage(BaseModel):
+    message_id: int
+    chat_id: int
+    message: str
+    date: str
+
+class ChatMessageUpdate(BaseModel):
+    message: str
 
     

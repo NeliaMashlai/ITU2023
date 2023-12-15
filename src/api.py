@@ -13,7 +13,7 @@ import uvicorn
 from src.config import ENDPOINT_HOST, ENDPOINT_PORT
 from src.sqlite import Database
 from fastapi.middleware.cors import CORSMiddleware
-from src.models import Item, ItemUpdate, User, UserUpdate
+from src.models import Item, ItemUpdate, User, UserUpdate, Chat, ChatMessage, ChatMessageUpdate
 from src.imgur import ImageUploader
 
 
@@ -29,6 +29,62 @@ app.add_middleware(
     allow_headers=["*"], 
 )
 
+
+@app.get('/api/v1.0')
+async def root() -> dict:
+    return {"message": "Oops, you are not supposed to be here"}
+
+@app.post('/api/v1.0/chat/create')
+async def create_chat(chat: Chat) -> int:
+    res = db.create_chat(**chat.dict())
+    if res:
+        return res
+    raise HTTPException(status_code=500, detail='Server error')
+
+@app.delete('/api/v1.0/chat/{chat_id}/delete')
+async def delete_chat(chat_id: int) -> bool:
+    if db.delete_chat(chat_id):
+        return True
+    raise HTTPException(status_code=500, detail='Server error')
+
+@app.get('/api/v1.0/chats/{chat_id}')
+async def get_chat(chat_id: int) -> dict:
+    chat = db.get_chat(chat_id)
+    if chat:
+        return chat
+    raise HTTPException(status_code=500, detail='Server error')
+
+@app.get('/api/v1.0/{user_id}/chats')
+async def get_chats(user_id: int) -> list[dict]:
+    chats = db.get_chats(user_id)
+    if chats:
+        return chats
+    raise HTTPException(status_code=500, detail='Server error')
+
+@app.get('/api/v1.0/{chat_id}/messages')
+async def get_messages(chat_id: int) -> list[dict]:
+    messages = db.get_messages(chat_id)
+    if messages:
+        return messages
+    raise HTTPException(status_code=500, detail='Server error')
+
+@app.post('/api/v1.0/message/create')
+async def create_message(message: ChatMessage) -> bool:
+    if db.create_message(**message.dict()):
+        return True
+    raise HTTPException(status_code=500, detail='Server error')
+
+@app.delete('/api/v1.0/message/{message_id}/delete')
+async def delete_message(message_id: int) -> bool:
+    if db.delete_message(message_id):
+        return True
+    raise HTTPException(status_code=500, detail='Server error')
+
+@app.put('/api/v1.0/message/{message_id}/update')
+async def update_message(message_id: int, message: ChatMessageUpdate) -> bool:
+    if db.update_message(message_id, **message.dict(exclude_unset=True)):
+        return True
+    raise HTTPException(status_code=500, detail='Server error')
 
 @app.post('/api/v1.0/image/upload')
 async def upload_image(image: UploadFile = None) -> dict:
@@ -75,8 +131,12 @@ async def user_login(user : User) -> int:
 
 
 @app.put('/api/v1.0/user/{user_id}/update')
-async def user_update():
-    pass
+async def user_update(user_id : int, user : UserUpdate) -> bool:
+    """ update user data """
+    if db.update_user(user_id, **user.dict(exclude_unset=True)):
+        return True
+    else:
+        raise HTTPException(status_code=500, detail='Server error')
 
 
 @app.get('/api/v1.0/user/{user_id}')
@@ -89,10 +149,12 @@ async def get_user(user_id : int) -> dict:
 
 
 @app.get('/api/v1.0/user/{user_id}/items')
-async def get_user_items(user_id: int) -> list[Item]:
-    items = get_user_items(user_id)
+async def get_user_items(user_id: int) -> list[dict]:
+    items = db.get_user_items_bd(user_id)
     if items:
         return items
+    elif items == []:
+        return []
     raise HTTPException(status_code = 500, detail='Server error')
         
 
@@ -101,9 +163,9 @@ async def delete_user():
     pass
 
 
-@app.get('/api/v1.0/items')
-async def get_items() -> list:
-    return db.get_items()
+@app.get('/api/v1.0/items/{category_id}/category')
+async def get_items(category_id: str) -> list[dict]:
+    return db.get_items(category_id)
 
 
 @app.get('/api/v1.0/items/{item_id}')
@@ -129,10 +191,10 @@ async def delete_item(item_id: int) -> dict:
 
 
 @app.put('/api/v1.0/items/{item_id}/update')
-async def update_item(item_id: int, item: ItemUpdate) -> dict:
-    updated_item = db.update_item(item_id, **item.dict(exclude_unset=True))
-    if updated_item:
-        return updated_item
+async def update_item(item_id: int, item: ItemUpdate) -> bool:
+    sucess = db.update_item(item_id, **item.dict(exclude_unset=True))
+    if sucess:
+        return True
     else:
         raise HTTPException(status_code=500, detail='Server error')
 
