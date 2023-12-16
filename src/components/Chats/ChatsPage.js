@@ -4,9 +4,12 @@ import { fixElementHeight, checkLogin, Header, API_BASE_URL, GetItem } from "../
 import user_svg from "../images/user.svg";
 import ChatsPageStyles from "./ChatsPage.module.css";
 import "../GlobalStyles.css";
-import { Link } from "react-router-dom";
 
 const ChatsPage = () => {
+    // TODO: Add chat functionality(messages)
+    // TODO: Add chat categories(buy, sell)
+    // TODO: delete chats
+    // TODO: add functionality in chats
     const headerRef = useRef(null);
     const logInRef = useRef(null);
     const loggedIn = useRef(null);
@@ -14,6 +17,7 @@ const ChatsPage = () => {
 
     const chatsRef = useRef(null);
     const chatHeader = useRef(null);
+    const chatImage = useRef(null);
 
     const [chats, setChats] = useState([]);
 
@@ -41,7 +45,14 @@ const ChatsPage = () => {
         }
         
         GetItem(item_id).then((item) => {
-            chatHeader.current.innerHTML = "Item: " + item.name;
+            if (item.name.length > 30) {
+                item.name = item.name.substring(0, 30) + "...";
+            }
+            chatHeader.current.innerHTML = item.name;
+
+            if (item.image_path) {
+                chatImage.current.src = item.image_path;
+            }
         }
         );
 
@@ -94,7 +105,6 @@ const ChatsPage = () => {
             const chats = [];
             for (const chat of data) {
                 const item = await GetItem(chat.item_id);
-                // if item name more than 20 characters, truncate it
                 if (item.name.length > 15) {
                     item.name = item.name.substring(0, 15) + "...";
                 }
@@ -152,9 +162,10 @@ const ChatsPage = () => {
                 </div>
 
                 <div className={ChatsPageStyles['each-chat-container']}>
-                    <div className={ChatsPageStyles['each-chat-header']} ></div>
-                        <img src={user_svg} alt="Upload" className={ChatsPageStyles["chat-item-image"]} />
-                        <span className={ChatsPageStyles["item-id-header"]} ref = {chatHeader}>Item: [ItemID]</span>
+                    <div className={ChatsPageStyles['each-chat-header']} >
+                        <img src={user_svg} alt="Upload" className={ChatsPageStyles["chat-item-image"]} ref = {chatImage} />
+                        <span className={ChatsPageStyles["item-id-header"]} ref = {chatHeader}>Item: [ItemID]іотцмоітмоиімоимоіиоіиомоімиомоіиоіиоли</span>
+                    </div>
                 </div>
             </div>
         </div>
