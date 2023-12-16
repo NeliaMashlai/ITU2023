@@ -161,7 +161,7 @@
 
 .each-chat-message-container-mine {
     max-width: 80%;
-    width: 50%;
+    width: auto;
     height: 10%;
     margin: 10px;
     margin-left: auto;
@@ -205,7 +205,7 @@
 
 .each-chat-message-container-yours {
     max-width: 80%;
-    width: 50%;
+    width: auto;
     height: 10%;
     margin: 10px;
     background-color: var(--blue);
@@ -271,8 +271,8 @@
     color: var(--blue);
     bottom: 5%;
     transform: translateY(5%);
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
     background-color: var(--titanium);
     border: 2px solid var(--blue);
 }

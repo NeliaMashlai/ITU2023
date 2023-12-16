@@ -21,8 +21,8 @@ const ChatsPage = () => {
     const chatImage = useRef(null);
 
     const [chats, setChats] = useState([]);
-
-    const textsttst = `Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.`
+    const [messages, setMessages] = useState([]);
+    const [message, getMessage] = useState("");
 
     const addChat = (username, item_name, chat_id, item_id) => {
         return (
@@ -34,6 +34,51 @@ const ChatsPage = () => {
             </div>
         );
     }
+
+    const addMessage = (message, isMine, id) => {
+        const cookie = document.cookie.split(';').find(cookie => cookie.includes('user_id')).split('=')[1];
+        if (parseInt(isMine) === parseInt(cookie)) {
+            return (
+                <div className={ChatsPageStyles['each-chat-message-container-mine']} key = {id}>
+                    <span className={ChatsPageStyles['each-chat-message']}>{message}</span>
+                </div>
+            );
+        } else {
+            return (
+                <div className={ChatsPageStyles['each-chat-message-container-yours']} key = {id}>
+                    <span className={ChatsPageStyles['each-chat-message']}>{message}</span>
+                </div>
+            );
+        }
+    }
+
+    const setMessage = (event) => {
+        getMessage(event.target.value);
+    }
+
+    const handleSent = async() => {
+        const user_from = document.cookie.split(';').find(cookie => cookie.includes('user_id')).split('=')[1];
+        const chat_id = chatHeader.current.value;
+        const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+        const data = {
+            message: message,
+            user_from: user_from,
+            date: timestamp,
+            chat_id: chat_id
+        }
+
+        const response = await fetch(API_BASE_URL + "/message/create", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+    }
+
 
     const openChat = async(event) => {
         var chat_id;
@@ -47,11 +92,12 @@ const ChatsPage = () => {
             item_id = event.target.parentNode.getAttribute('value');
         }
         
-        GetItem(item_id).then((item) => {
+        await GetItem(item_id).then((item) => {
             if (item.name.length > 30) {
                 item.name = item.name.substring(0, 30) + "...";
             }
             chatHeader.current.innerHTML = item.name;
+            chatHeader.current.value = chat_id;
 
             if (item.image_path) {
                 chatImage.current.src = item.image_path;
@@ -59,6 +105,30 @@ const ChatsPage = () => {
         }
         );
 
+        await fetchMessages(chat_id);
+
+        setInterval(() => {
+            fetchMessages(chat_id);
+        }, 1000);
+
+    }
+
+    const fetchMessages = async(chat_id) => {
+        const response = await fetch(API_BASE_URL + "/chat/" + chat_id + "/messages", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        const data = await response.json();
+
+        const messages = [];
+        for (const message of data) {
+            messages.push({message: message.message, user_from: message.user_from, id: message.message_id});
+        }
+
+        setMessages(messages.reverse());
     }
 
     useEffect(() => {
@@ -170,19 +240,11 @@ const ChatsPage = () => {
                         <span className={ChatsPageStyles["item-id-header"]} ref = {chatHeader}></span>
                     </div>
                     <div className={ChatsPageStyles['each-chat-messages']}>
-                        <div className={ChatsPageStyles['each-chat-message-container-mine']}>
-                            <span className={ChatsPageStyles['each-chat-message']}>Hello</span>
-                        </div>
-                        <div className={ChatsPageStyles['each-chat-message-container-yours']}>
-                            <span className={ChatsPageStyles['each-chat-message']}>Hello</span>
-                        </div>
-                        <div className={ChatsPageStyles['each-chat-message-container-yours']}>
-                            <span className={ChatsPageStyles['each-chat-message']}>Hello</span>
-                        </div>
+                        {messages.map(message => addMessage(message.message, message.user_from, message.id))}
                     </div>
                     <div className={ChatsPageStyles['each-chat-input-container']}>
-                        <input type="text" className={ChatsPageStyles['each-chat-input']} placeholder="Type a message..."/>
-                        <img src={sendIcon} alt="sent" className={ChatsPageStyles["send-icon"]}/>
+                        <input type="text" className={ChatsPageStyles['each-chat-input']} placeholder="Type a message..." onChange={setMessage} />
+                        <img src={sendIcon} alt="sent" className={ChatsPageStyles["send-icon"]} onClick={handleSent} />
                     </div>
                 </div>
             </div>
