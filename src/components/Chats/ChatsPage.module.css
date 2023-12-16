@@ -159,14 +159,14 @@
     overflow-y: scroll;
 }
 
-.each-chat-message-container {
+.each-chat-message-container-mine {
     max-width: 80%;
-    width: 50%; /* Ваша ширина */
-    height: 10%; /* Ваша висота */
+    width: 50%;
+    height: 10%;
     margin: 10px;
-    margin-left: auto; /* Автоматичний відступ зліва, вирівнює елемент справа */
-    background-color: #0B93F6; /* Синій колір для відправлених повідомлень */
-    color: white; /* Білий колір тексту */
+    margin-left: auto;
+    background-color: var(--blue);
+    color: var(--titanium);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
@@ -181,35 +181,35 @@
     border-radius: 25px;
 }
 
-.each-chat-message-container:before,
-.each-chat-message-container:after {
+.each-chat-message-container-mine:before,
+.each-chat-message-container-mine:after {
     content: "";
     position: absolute;
     bottom: 0;
     height: 25px;
 }
 
-.each-chat-message-container:before {
+.each-chat-message-container-mine:before {
     right: -7px;
     width: 20px;
-    background-color: #0B93F6;
+    background-color: var(--blue);
     border-bottom-left-radius: 16px 14px;
 }
 
-.each-chat-message-container:after {
+.each-chat-message-container-mine:after {
     right: -8px;
     width: 8px; 
     background-color: var(--titanium);
     border-bottom-left-radius: 10px;
 }
 
-.each-chat-message-container1 {
+.each-chat-message-container-yours {
     max-width: 80%;
-    width: 50%; /* Ваша ширина */
-    height: 10%; /* Ваша висота */
+    width: 50%;
+    height: 10%;
     margin: 10px;
-    background-color: #0B93F6; /* Синій колір для відправлених повідомлень */
-    color: white; /* Білий колір тексту */
+    background-color: var(--blue);
+    color: var(--titanium);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
@@ -224,22 +224,22 @@
     border-radius: 25px;
 }
 
-.each-chat-message-container1:before,
-.each-chat-message-container1:after {
+.each-chat-message-container-yours:before,
+.each-chat-message-container-yours:after {
     content: "";
     position: absolute;
     bottom: 0;
     height: 25px;
 }
 
-.each-chat-message-container1:before {
+.each-chat-message-container-yours:before {
     left: -7px;
     width: 20px;
-    background-color: #0B93F6;
+    background-color: var(--blue);
     border-bottom-right-radius: 16px 14px;
 }
 
-.each-chat-message-container1:after {
+.each-chat-message-container-yours:after {
     left: -8px;
     width: 8px; 
     background-color: var(--titanium);
