@@ -106,3 +106,23 @@
     height: 15%;
     background-color: var(--blue);
 }
+
+.chat-item-image{
+    position: relative;
+    width: 8%;
+    height: 10%;
+    left: 5%;
+    top: -12.5%;
+    align-items: center;
+    border-radius: 100%;
+    background-color: var(--white); 
+}
+.item-id-header{
+    position: relative;
+    width: 8%;
+    height: 10%;
+    left: 35%;
+    top: -16.5%;
+    align-items: center;
+    background-color: transparent; 
+}

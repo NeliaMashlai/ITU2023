@@ -116,7 +116,8 @@ const ChatsPage = () => {
 
                 <div className={ChatsPageStyles['each-chat-container']}>
                     <div className={ChatsPageStyles['each-chat-header']}></div>
-                        
+                        <img src={user_svg} alt="Upload" className={ChatsPageStyles["chat-item-image"]} />
+                        <span className={ChatsPageStyles["item-id-header"]}>Item: [ItemID]</span>
                     </div>
 
             </div>
