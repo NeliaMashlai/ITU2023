@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { fixElementHeight, checkLogin, Header, API_BASE_URL, GetItem } from "../Utils";
 import user_svg from "../images/user.svg";
 import ChatsPageStyles from "./ChatsPage.module.css";
+import sendIcon from "../images/ArrowCircleRight.svg";
 import "../GlobalStyles.css";
 
 const ChatsPage = () => {
@@ -195,10 +196,10 @@ const ChatsPage = () => {
                             <span className={ChatsPageStyles['each-chat-message']}>Hello</span>
                         </div>
                     </div>
-                    {/* <div className={ChatsPageStyles['each-chat-input-container']}>
+                    <div className={ChatsPageStyles['each-chat-input-container']}>
                         <input type="text" className={ChatsPageStyles['each-chat-input']} placeholder="Type a message..."/>
-                        <button className={ChatsPageStyles['each-chat-send-button']}>Send</button>
-                    </div> */}
+                        <img src={sendIcon} alt="sent" className={ChatsPageStyles["send-icon"]}/>
+                    </div>
                 </div>
             </div>
         </div>
