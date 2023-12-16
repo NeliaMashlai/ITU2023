@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { fixElementHeight, checkLogin, Header, API_BASE_URL, GetItem } from "../Utils";
 import user_svg from "../images/user.svg";
 import ChatsPageStyles from "./ChatsPage.module.css";
@@ -31,11 +31,7 @@ const ChatsPage = () => {
 
     const fetchInterval = useRef(null);
 
-    const [isToggled, setIsToggled] = useState(true);
-
-    const toggleSwitch = () => {
-        setIsToggled(!isToggled);
-    };
+    const location = useLocation();
 
     const addChat = (username, item_name, chat_id, item_id) => {
         return (
@@ -278,14 +274,16 @@ const ChatsPage = () => {
 
         setChats(chats);
 
-        const params = new URLSearchParams(window.location.search);
+        const params = new URLSearchParams(location.search);
         const chat_id = params.get('chat_id');
         const item_id = params.get('item_id');
+
+        navigate(location.pathname, { replace: true });
 
         if (chat_id && item_id) {
             openChat(null, chat_id, item_id);
         }
-    }, [navigate, openChat]);
+    }, [navigate, openChat, location]);
 
     useEffect(() => {
         if (headerRef.current) {
@@ -335,12 +333,6 @@ const ChatsPage = () => {
 
                 <div className={ChatsPageStyles['caption-container']}>
                     <p className={ChatsPageStyles['caption']}>YOUR CHATS<br /> </p>
-                    <div className={ChatsPageStyles['switch-container']}>
-                        <div className={`switch-button ${isToggled ? 'left' : 'right'}`} onClick={toggleSwitch}>
-                            <div className={`switch-text ${isToggled ? 'active' : ''}`}>Куплю</div>
-                            <div className={`switch-text ${!isToggled ? 'active' : ''}`}>Продаю</div>
-                        </div>
-                    </div>
                 </div>
 
                 <div className={ChatsPageStyles['chats-container']} ref = {chatsRef}>
