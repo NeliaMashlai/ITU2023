@@ -48,6 +48,12 @@ const ItemsList = () => {
             contactsRef.current.style.position = "relative";
         }
 
+        for (const item of data) {
+            if (item.name.length > 15) {
+                item.name = item.name.substring(0, 15) + "...";
+            }
+        }
+
         setItems(data);
     }
 

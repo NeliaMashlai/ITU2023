@@ -85,10 +85,7 @@ const UserPage = () => {
     };
 
     const handleLogOutClick = async () => {
-        const cookies = document.cookie.split(';');
-        for (const cookie of cookies) {
-            document.cookie = cookie.split('=')[0] + '=; Max-Age=-99999999;';
-        }
+        document.cookie = "user_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         navigate('/');
     }
     
@@ -203,6 +200,11 @@ const UserPage = () => {
                 },
             });
             const data = await response.json();
+            for (const item of data) {
+                if (item.name.length > 15) {
+                    item.name = item.name.substring(0, 15) + "...";
+                }
+            }
             setItems(data);
         }
         
