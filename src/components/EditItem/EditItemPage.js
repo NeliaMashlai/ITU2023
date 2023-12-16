@@ -125,7 +125,7 @@ const EditItemPage = () => {
                 });
 
                 if (response.ok) {
-                    navigate('/profile');
+                    navigate('/profile?action_id=edit');
                 } else if (response.status === 401) {
                     setError("Unauthorized");
                 } else if (response.status === 404) {
@@ -150,7 +150,7 @@ const EditItemPage = () => {
                 });
 
                 if (response.ok) {
-                    navigate('/profile');
+                    navigate('/profile?action_id=delete');
                 } else if (response.status === 401) {
                     setError("Unauthorized");
                 } else if (response.status === 404) {
@@ -167,12 +167,6 @@ const EditItemPage = () => {
             }
         }
     };
-
- document.getElementsByName("categoryId").onChange = function() {
-    console.log("test");
-    console.log(this.value);
- }
-
 
     useEffect(() => {
 

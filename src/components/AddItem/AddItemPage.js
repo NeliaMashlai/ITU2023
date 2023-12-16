@@ -116,7 +116,7 @@ const AddItemPage = () => {
             });
 
             if (response.ok) {
-                navigate('/profile');
+                navigate('/profile?action_id=add');
             } else if (response.status === 500) {
                 setError("Server error");
             } else {
