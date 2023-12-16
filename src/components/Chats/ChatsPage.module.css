@@ -181,6 +181,26 @@
     border-radius: 25px;
 }
 
+.trash-bin, .edit-message {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    align-items: center;
+    background-color: transparent;
+}
+
+.each-chat-message-container-mine .trash-bin{
+    left: -35px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.each-chat-message-container-mine .edit-message{
+    left: -70px; 
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 .each-chat-message-container-mine:before,
 .each-chat-message-container-mine:after {
     content: "";
