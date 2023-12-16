@@ -61,7 +61,7 @@ const ItemPage = () => {
 
             if (response.ok) {
                 const chatData = await response.json();
-                navigate('/chats?chat_id=' + chatData);
+                navigate('/user/chats?chat_id=' + chatData + '&item_id=' + item_id);
             } else if (response.status === 401) {
                 navigate('/login');
             } else if (response.status === 500) {

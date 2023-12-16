@@ -65,6 +65,7 @@ const AddItemPage = () => {
 
     const CreateItem = async (e) => {
         e.preventDefault();
+        e.target.disabled = true;
 
         if (!selectedFile || !ItemData.name || !ItemData.price || !ItemData.conditionId || !ItemData.categoryId) {
             setError('Please fill all fields');
@@ -119,10 +120,13 @@ const AddItemPage = () => {
                 navigate('/profile?action_id=add');
             } else if (response.status === 500) {
                 setError("Server error");
+                e.target.disabled = false;
             } else {
+                e.target.disabled = false;
                 throw new Error('Something went wrong');
             }
         } catch (err) {
+            e.target.disabled = false;
             setError("Failed to connect to the server");
         }
     }

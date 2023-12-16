@@ -9,10 +9,8 @@ import trashBin from "../images/trashbin.svg";
 import editMessage from "../images/EditMessage.svg"
 
 const ChatsPage = () => {
-    // TODO: Add chat functionality(messages)
     // TODO: Add chat categories(buy, sell)
     // TODO: delete chats
-    // TODO: add functionality in chats
     const headerRef = useRef(null);
     const logInRef = useRef(null);
     const loggedIn = useRef(null);
@@ -32,6 +30,12 @@ const ChatsPage = () => {
     const [error, setError] = useState('');
 
     const fetchInterval = useRef(null);
+
+    const [isToggled, setIsToggled] = useState(true);
+
+    const toggleSwitch = () => {
+        setIsToggled(!isToggled);
+    };
 
     const addChat = (username, item_name, chat_id, item_id) => {
         return (
@@ -162,16 +166,16 @@ const ChatsPage = () => {
     }
 
 
-    const openChat = async(event) => {
-        var chat_id;
-        var item_id;
+    const openChat = useCallback(async(event, chat_id, item_id) => {
 
-        if(event.target.className === ChatsPageStyles['one-chat-container']) {
-            chat_id = event.target.id;
-            item_id = event.target.getAttribute('value');
-        } else {
-            chat_id = event.target.parentNode.id;
-            item_id = event.target.parentNode.getAttribute('value');
+        if (chat_id === undefined && item_id === undefined) {
+            if(event.target.className === ChatsPageStyles['one-chat-container']) {
+                chat_id = event.target.id;
+                item_id = event.target.getAttribute('value');
+            } else {
+                chat_id = event.target.parentNode.id;
+                item_id = event.target.parentNode.getAttribute('value');
+            }
         }
         
         await GetItem(item_id).then((item) => {
@@ -196,7 +200,7 @@ const ChatsPage = () => {
         }
         , 1000);
 
-    }
+    }, []);
 
     const fetchMessages = async(chat_id) => {
         const response = await fetch(API_BASE_URL + "/chat/" + chat_id + "/messages", {
@@ -271,7 +275,15 @@ const ChatsPage = () => {
         }
 
         setChats(chats);
-    }, [navigate]);
+
+        const params = new URLSearchParams(window.location.search);
+        const chat_id = params.get('chat_id');
+        const item_id = params.get('item_id');
+
+        if (chat_id && item_id) {
+            openChat(null, chat_id, item_id);
+        }
+    }, [navigate, openChat]);
 
     useEffect(() => {
         if (headerRef.current) {
@@ -308,7 +320,13 @@ const ChatsPage = () => {
             <div className={ChatsPageStyles['main-container']}>
 
                 <div className={ChatsPageStyles['caption-container']}>
-                        <p className={ChatsPageStyles['caption']}>YOUR CHATS<br /> </p>
+                    <p className={ChatsPageStyles['caption']}>YOUR CHATS<br /> </p>
+                    <div className={ChatsPageStyles['switch-container']}>
+                        <div className={`switch-button ${isToggled ? 'left' : 'right'}`} onClick={toggleSwitch}>
+                            <div className={`switch-text ${isToggled ? 'active' : ''}`}>Куплю</div>
+                            <div className={`switch-text ${!isToggled ? 'active' : ''}`}>Продаю</div>
+                        </div>
+                    </div>
                 </div>
 
                 <div className={ChatsPageStyles['chats-container']} ref = {chatsRef}>
