@@ -47,36 +47,77 @@ const ChatsPage = () => {
 
             <div className={ChatsPageStyles['main-container']}>
 
+                <div className={ChatsPageStyles['caption-container']}>
+                        <p className={ChatsPageStyles['caption']}>YOUR CHATS<br /> </p>
+                </div>
+
                 <div className={ChatsPageStyles['chats-container']} ref = {chatsRef}>
 
-                    <div className={ChatsPageStyles['caption-container']}>
-                        <p className={ChatsPageStyles['caption']}>YOUR CHATS<br /> </p>
+                    <div className={ChatsPageStyles['one-chat-container']}>
+                        <img src={user_svg} alt="Upload" className={ChatsPageStyles["chat-user-image"]} />
+                        <span className={ChatsPageStyles["user-id-label"]}>User: [UserID]</span>
+                        <span className={ChatsPageStyles["item-id-label"]}>Item: [ItemID]</span>
                     </div>
 
                     <div className={ChatsPageStyles['one-chat-container']}>
                         <img src={user_svg} alt="Upload" className={ChatsPageStyles["chat-user-image"]} />
+                        <span className={ChatsPageStyles["user-id-label"]}>User: [UserID]</span>
+                        <span className={ChatsPageStyles["item-id-label"]}>Item: [ItemID]</span>
                     </div>
 
                     <div className={ChatsPageStyles['one-chat-container']}>
                         <img src={user_svg} alt="Upload" className={ChatsPageStyles["chat-user-image"]} />
+                        <span className={ChatsPageStyles["user-id-label"]}>User: [UserID]</span>
+                        <span className={ChatsPageStyles["item-id-label"]}>Item: [ItemID]</span>
                     </div>
 
                     <div className={ChatsPageStyles['one-chat-container']}>
                         <img src={user_svg} alt="Upload" className={ChatsPageStyles["chat-user-image"]} />
+                        <span className={ChatsPageStyles["user-id-label"]}>User: [UserID]</span>
+                        <span className={ChatsPageStyles["item-id-label"]}>Item: [ItemID]</span>
                     </div>
 
                     <div className={ChatsPageStyles['one-chat-container']}>
                         <img src={user_svg} alt="Upload" className={ChatsPageStyles["chat-user-image"]} />
+                        <span className={ChatsPageStyles["user-id-label"]}>User: [UserID]</span>
+                        <span className={ChatsPageStyles["item-id-label"]}>Item: [ItemID]</span>
                     </div>
 
                     <div className={ChatsPageStyles['one-chat-container']}>
                         <img src={user_svg} alt="Upload" className={ChatsPageStyles["chat-user-image"]} />
+                        <span className={ChatsPageStyles["user-id-label"]}>User: [UserID]</span>
+                        <span className={ChatsPageStyles["item-id-label"]}>Item: [ItemID]</span>
+                    </div>
+
+                    <div className={ChatsPageStyles['one-chat-container']}>
+                        <img src={user_svg} alt="Upload" className={ChatsPageStyles["chat-user-image"]} />
+                        <span className={ChatsPageStyles["user-id-label"]}>User: [UserID]</span>
+                        <span className={ChatsPageStyles["item-id-label"]}>Item: [ItemID]</span>
+                    </div>
+
+                    <div className={ChatsPageStyles['one-chat-container']}>
+                        <img src={user_svg} alt="Upload" className={ChatsPageStyles["chat-user-image"]} />
+                        <span className={ChatsPageStyles["user-id-label"]}>User: [UserID]</span>
+                        <span className={ChatsPageStyles["item-id-label"]}>Item: [ItemID]</span>
+                    </div>
+
+                    <div className={ChatsPageStyles['one-chat-container']}>
+                        <img src={user_svg} alt="Upload" className={ChatsPageStyles["chat-user-image"]} />
+                        <span className={ChatsPageStyles["user-id-label"]}>User: [UserID]</span>
+                        <span className={ChatsPageStyles["item-id-label"]}>Item: [ItemID]</span>
+                    </div>
+
+                    <div className={ChatsPageStyles['one-chat-container']}>
+                        <img src={user_svg} alt="Upload" className={ChatsPageStyles["chat-user-image"]} />
+                        <span className={ChatsPageStyles["user-id-label"]}>User: [UserID]</span>
+                        <span className={ChatsPageStyles["item-id-label"]}>Item: [ItemID]</span>
                     </div>
                 </div>
 
                 <div className={ChatsPageStyles['each-chat-container']}>
-                    
-                </div>
+                    <div className={ChatsPageStyles['each-chat-header']}></div>
+                        
+                    </div>
 
             </div>
         </div>
