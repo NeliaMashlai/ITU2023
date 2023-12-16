@@ -670,3 +670,24 @@
     color: var(--green);
     font-size: 2em;
 }
+
+.important-message{
+    position: absolute;
+    width: auto;
+    height: 70px;
+    top: 13%;
+    left: 49%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    justify-content: center;
+    background-color: lightgreen;
+    font-size: 2em;
+    justify-content: center;
+    color: green;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid green;
+    border-radius: 20px;
+    background-color: rgba(0, 255, 0, 0.1);
+    opacity: 0.5;
+}

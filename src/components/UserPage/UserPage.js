@@ -4,7 +4,7 @@ import { fixElementHeight, checkLogin, Header, GetUserInformation, API_BASE_URL 
 import user_svg from "../images/user.svg";
 import UserPageStyles from "./UserPage.module.css";
 import "../GlobalStyles.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const UserPage = () => {
     const headerRef = useRef(null);
@@ -19,9 +19,16 @@ const UserPage = () => {
     const DateOfBirthInputRef = useRef(null);
     const AddressInputRef = useRef(null);
 
+    const [importantMsg, setImportantMsg] = useState("");
+
     const[error, setError] = useState("");
 
     const [items, setItems] = useState([]);
+
+    const location = useLocation();
+
+    const queryParams = new URLSearchParams(location.search);
+    const action_id = queryParams.get('action_id');
 
     const createItem = (item_id, image_path, name, price) => {
         var link = "/user/edit-item?item_id=" + item_id;
@@ -126,6 +133,10 @@ const UserPage = () => {
                 PhoneNumberInputRef.current.disabled = true;
                 AddressInputRef.current.disabled = true;
                 DateOfBirthInputRef.current.disabled = true;
+                setImportantMsg("User data updated successfully");
+                setTimeout(() => {
+                    setImportantMsg(false);
+                }, 2000);  
             } else if (response.status === 409) {
                 setError("Username already exists");
             } else if (response.status === 500) {
@@ -160,42 +171,16 @@ const UserPage = () => {
                 navigate('/login');
                 return;
             } else {
-                if(user.name) {
-                    setUserData({
-                        ...UserData,
-                        name: user.name,
-                    });
-                } 
-                if(user.surname) {
-                    setUserData({
-                        ...UserData,
-                        surname: user.surname,
-                    });
-                }
-                if(user.email) {
-                    setUserData({
-                        ...UserData,
-                        email: user.email,
-                    });
-                }
-                if(user.phone) {
-                    setUserData({
-                        ...UserData,
-                        phone: user.phone,
-                    });
-                }
-                if(user.address) {
-                    setUserData({
-                        ...UserData,
-                        address: user.address,
-                    });
-                }
-                if(user.date_of_birth) {
-                    setUserData({
-                        ...UserData,
-                        date_of_birth: user.date_of_birth,
-                    });
-                }
+                const updatedUserData = {
+                    name: user.name ?? "",
+                    surname: user.surname ?? "",
+                    email: user.email ?? "",
+                    phone: user.phone ?? "",
+                    address: user.address ?? "",
+                    date_of_birth: user.date_of_birth ?? "",
+                };
+        
+                setUserData(updatedUserData);
 
             }
         }
@@ -228,14 +213,26 @@ const UserPage = () => {
             return;
         }
 
+        if(action_id === "add"){
+            setImportantMsg("Item added successfully");
+        } else if(action_id === "edit"){
+            setImportantMsg("Item edited successfully");
+        } else if(action_id === "delete"){
+            setImportantMsg("Item deleted successfully");
+        }
+
+        const timer = setTimeout(() => {
+            setImportantMsg(false);
+        }, 2000);  
+
         const interval = setInterval(() => {
             fetchItems(userId.split('=')[1]);
         }
         , 3000);
 
-        return () => clearInterval(interval);
+        return () => clearInterval(interval, timer);
     }
-    , [navigate, UserData]);
+    , [navigate, action_id]);
 
     return(
 
@@ -309,6 +306,7 @@ const UserPage = () => {
                 <Link to = "/user/add-item" className={UserPageStyles["add-item-button"]}>ADD ITEM</Link>
                 <Link to = "/user/chats" className={UserPageStyles["chat-button"]}>CHATS</Link>
 
+                {importantMsg && <div className={UserPageStyles["important-message"]}>{importantMsg}</div>}
 
                 {error && <div id="error" className={UserPageStyles['error']}>{error}</div>}
 
