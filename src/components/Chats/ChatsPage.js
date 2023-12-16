@@ -193,7 +193,9 @@ const ChatsPage = () => {
 
         await fetchMessages(chat_id);
 
-        clearInterval(fetchInterval.current);
+        if (fetchInterval.current) {
+            clearInterval(fetchInterval.current);
+        }
 
         fetchInterval.current = setInterval(async() => {
             await fetchMessages(chat_id);
@@ -309,8 +311,20 @@ const ChatsPage = () => {
         }
 
         fetchChats();
+
+        const chatsUpdate = setInterval(async() => {
+            await fetchChats();
+        }
+        , 1000);
+
+        return () => {
+            if (fetchInterval.current) {
+                clearInterval(fetchInterval.current);
+            }
+            clearInterval(chatsUpdate);
+        }
     }
-    , [navigate, fetchChats]);
+    , [navigate, fetchChats, fetchInterval]);
 
     return(
 
