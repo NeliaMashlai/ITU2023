@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState } from "react";
+import React, {useEffect, useRef, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { fixElementHeight, checkLogin, Header, API_BASE_URL, GetItem } from "../Utils";
 import user_svg from "../images/user.svg";
@@ -21,10 +21,13 @@ const ChatsPage = () => {
     const chatsRef = useRef(null);
     const chatHeader = useRef(null);
     const chatImage = useRef(null);
+    const inputRef = useRef(null);
 
     const [chats, setChats] = useState([]);
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState("");
+    const [isEditing, setIsEditing] = useState(false);
+    const [messageId, setMessageId] = useState(null);
 
     const [error, setError] = useState('');
 
@@ -45,10 +48,10 @@ const ChatsPage = () => {
         const cookie = document.cookie.split(';').find(cookie => cookie.includes('user_id')).split('=')[1];
         if (parseInt(isMine) === parseInt(cookie)) {
             return (
-                <div className={ChatsPageStyles['each-chat-message-container-mine']} key = {id}>
+                <div className={ChatsPageStyles['each-chat-message-container-mine']} key = {id} value = {id}>
                     <span className={ChatsPageStyles['each-chat-message']}>{message}</span>
-                    <img src={trashBin} alt="sent" className={ChatsPageStyles["trash-bin"]} />
-                     <img src={editMessage} alt="sent" className={ChatsPageStyles["edit-message"]} />
+                    <img src={trashBin} alt="sent" className={ChatsPageStyles["trash-bin"]} onClick={handleDeleteMessage}/>
+                    <img src={editMessage} alt="sent" className={ChatsPageStyles["edit-message"]} onClick={handleEditMessage}/>
                 </div>
             );
         } else {
@@ -60,8 +63,43 @@ const ChatsPage = () => {
         }
     }
 
+    const handleDeleteMessage = async(event) => {
+        const message_id = event.target.parentNode.getAttribute('value');
+
+        const response = await fetch(API_BASE_URL + "/message/" + message_id + "/delete", {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+
+        const result = await response.json();
+
+        if (result.ok) {
+            await fetchMessages(chatHeader.current.value);
+        } else {
+            setError(result.message);
+        }
+    }
+
+    const handleEditMessage = async(event) => {
+        const message_id = event.target.parentNode.getAttribute('value');
+        const message = event.target.parentNode.childNodes[0].innerHTML;
+        setMessage(message);
+        inputRef.current.focus();
+        
+        setIsEditing(true);
+        setMessageId(message_id);
+    }
+    
     const setMessageHandle = (event) => {
         setMessage(event.target.value);
+    }
+
+    const keyDownHandle = async(event) => {
+        if (event.key === 'Enter') {
+            await handleSent();
+        }
     }
 
     const handleSent = async() => {
@@ -69,24 +107,58 @@ const ChatsPage = () => {
         const chat_id = chatHeader.current.value;
         const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
-        const data = {
-            message: message,
-            user_from: user_from,
-            date: timestamp,
-            chat_id: chat_id
+        if (message === "") {
+            return;
         }
 
-        const response = await fetch(API_BASE_URL + "/message/create", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data),
-        });
+        if (isEditing) {
+            const response = await fetch(API_BASE_URL + "/message/" + messageId + "/update", {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({message: message}),
+            });
 
-        const result = await response.json();
-        await fetchMessages(chat_id);
-        setMessage("");
+            await response.json();
+
+            await fetchMessages(chat_id);
+
+            setMessage("");
+            setIsEditing(false);
+            setMessageId(null);
+
+            return;
+        } else {
+
+
+            const data = {
+                message: message,
+                user_from: user_from,
+                date: timestamp,
+                chat_id: chat_id
+            }
+
+            const response = await fetch(API_BASE_URL + "/message/create", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+
+            await fetchMessages(chat_id);
+
+            setMessage("");
+
+            if (result.ok) {
+                setError("");
+            }
+
+            return;
+        }
     }
 
 
@@ -144,7 +216,7 @@ const ChatsPage = () => {
         setMessages(messages.reverse());
     }
 
-    const fetchChats = async () => {
+    const fetchChats = useCallback(async () => {
         const cookies = document.cookie.split(';');
         if (!cookies) {
             navigate('/login');
@@ -199,7 +271,7 @@ const ChatsPage = () => {
         }
 
         setChats(chats);
-    }
+    }, [navigate]);
 
     useEffect(() => {
         if (headerRef.current) {
@@ -225,10 +297,8 @@ const ChatsPage = () => {
         }
 
         fetchChats();
-        
-        setError("This is a simple error message");
     }
-    , [navigate]);
+    , [navigate, fetchChats]);
 
     return(
 
@@ -257,10 +327,12 @@ const ChatsPage = () => {
                     </div>
 
                     <div className={ChatsPageStyles['each-chat-input-container']}>
-                        <input type="text" className={ChatsPageStyles['each-chat-input']} placeholder="Type a message..." onChange={setMessageHandle} value={message}/>
+                        <input type="text" className={ChatsPageStyles['each-chat-input']} placeholder="Type a message..." onChange={setMessageHandle} value={message}
+                        onKeyDown={keyDownHandle} ref = {inputRef}/>
                         <img src={sendIcon} alt="sent" className={ChatsPageStyles["send-icon"]} onClick={handleSent} />
                     </div>
-                    {/* {error && <div className={ChatsPageStyles['error']}>{error}</div>} */}
+
+                    {error && <div className={ChatsPageStyles['error']}>{error}</div>}
                 </div>
             </div>
         </div>
