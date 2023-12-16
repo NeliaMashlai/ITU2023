@@ -345,6 +345,7 @@ const ChatsPage = () => {
                     <div className={ChatsPageStyles['each-chat-header']} >
                         <img src={user_svg} alt="Upload" className={ChatsPageStyles["chat-item-image"]} ref = {chatImage} />
                         <span className={ChatsPageStyles["item-id-header"]} ref = {chatHeader}></span>
+                        <img src={trashBin} alt="Delete" className={ChatsPageStyles["each-chat-delete"]} />
                     </div>
                     <div className={ChatsPageStyles['each-chat-messages']}>
                         {messages.map(message => addMessage(message.message, message.user_from, message.id))}
