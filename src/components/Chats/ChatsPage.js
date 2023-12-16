@@ -27,6 +27,9 @@ const ChatsPage = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [messageId, setMessageId] = useState(null);
 
+    const [chat_id, setChatId] = useState(null);
+    const [item_id, setItemId] = useState(null);
+
     const [error, setError] = useState('');
 
     const fetchInterval = useRef(null);
@@ -274,18 +277,17 @@ const ChatsPage = () => {
 
         setChats(chats);
 
-        const params = new URLSearchParams(location.search);
-        const chat_id = params.get('chat_id');
-        const item_id = params.get('item_id');
+    }, [navigate]);
 
-        navigate(location.pathname, { replace: true });
+    useEffect(() => {
+        const params = new URLSearchParams(location.search);
+        setChatId(params.get('chat_id'));
+        setItemId(params.get('item_id'));
 
         if (chat_id && item_id) {
             openChat(null, chat_id, item_id);
         }
-    }, [navigate, openChat, location]);
 
-    useEffect(() => {
         if (headerRef.current) {
             fixElementHeight(headerRef.current);
         }
@@ -322,7 +324,7 @@ const ChatsPage = () => {
             clearInterval(chatsUpdate);
         }
     }
-    , [navigate, fetchChats, fetchInterval]);
+    , [navigate, fetchChats, fetchInterval, chat_id, item_id, location, openChat]);
 
     return(
 
