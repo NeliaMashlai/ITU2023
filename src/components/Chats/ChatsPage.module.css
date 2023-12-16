@@ -148,6 +148,18 @@
     font-weight: 700;
 }
 
+.each-chat-delete{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    left: 90%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    align-items: center;
+    border-radius: 20px;
+    background-color: transparent;
+}
+
 .each-chat-messages{
     position: relative;
     display: flex;
