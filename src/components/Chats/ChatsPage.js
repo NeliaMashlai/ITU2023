@@ -5,6 +5,8 @@ import user_svg from "../images/user.svg";
 import ChatsPageStyles from "./ChatsPage.module.css";
 import sendIcon from "../images/ArrowCircleRight.svg";
 import "../GlobalStyles.css";
+import trashBin from "../images/trashbin.svg";
+import editMessage from "../images/EditMessage.svg"
 
 const ChatsPage = () => {
     // TODO: Add chat functionality(messages)
@@ -45,6 +47,8 @@ const ChatsPage = () => {
             return (
                 <div className={ChatsPageStyles['each-chat-message-container-mine']} key = {id}>
                     <span className={ChatsPageStyles['each-chat-message']}>{message}</span>
+                    <img src={trashBin} alt="sent" className={ChatsPageStyles["trash-bin"]} />
+                     <img src={editMessage} alt="sent" className={ChatsPageStyles["edit-message"]} />
                 </div>
             );
         } else {
@@ -251,6 +255,7 @@ const ChatsPage = () => {
                     <div className={ChatsPageStyles['each-chat-messages']}>
                         {messages.map(message => addMessage(message.message, message.user_from, message.id))}
                     </div>
+
                     <div className={ChatsPageStyles['each-chat-input-container']}>
                         <input type="text" className={ChatsPageStyles['each-chat-input']} placeholder="Type a message..." onChange={setMessageHandle} value={message}/>
                         <img src={sendIcon} alt="sent" className={ChatsPageStyles["send-icon"]} onClick={handleSent} />
