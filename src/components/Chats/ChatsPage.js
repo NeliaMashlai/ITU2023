@@ -22,7 +22,11 @@ const ChatsPage = () => {
 
     const [chats, setChats] = useState([]);
     const [messages, setMessages] = useState([]);
-    const [message, getMessage] = useState("");
+    const [message, setMessage] = useState("");
+
+    const [error, setError] = useState('');
+
+    const fetchInterval = useRef(null);
 
     const addChat = (username, item_name, chat_id, item_id) => {
         return (
@@ -52,8 +56,8 @@ const ChatsPage = () => {
         }
     }
 
-    const setMessage = (event) => {
-        getMessage(event.target.value);
+    const setMessageHandle = (event) => {
+        setMessage(event.target.value);
     }
 
     const handleSent = async() => {
@@ -77,6 +81,8 @@ const ChatsPage = () => {
         });
 
         const result = await response.json();
+        await fetchMessages(chat_id);
+        setMessage("");
     }
 
 
@@ -107,9 +113,12 @@ const ChatsPage = () => {
 
         await fetchMessages(chat_id);
 
-        setInterval(() => {
-            fetchMessages(chat_id);
-        }, 1000);
+        clearInterval(fetchInterval.current);
+
+        fetchInterval.current = setInterval(async() => {
+            await fetchMessages(chat_id);
+        }
+        , 1000);
 
     }
 
@@ -129,6 +138,63 @@ const ChatsPage = () => {
         }
 
         setMessages(messages.reverse());
+    }
+
+    const fetchChats = async () => {
+        const cookies = document.cookie.split(';');
+        if (!cookies) {
+            navigate('/login');
+            return;
+        }
+
+        const user = cookies.find(cookie => cookie.includes('user_id'));
+
+        if(!user) {
+            navigate('/login');
+            return;
+        }
+
+        const response = await fetch(API_BASE_URL + "/user/" + user.split('=')[1] + "/chats", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        const data = await response.json();
+        const chats = [];
+        for (const chat of data) {
+            const item = await GetItem(chat.item_id);
+            if (item.name.length > 15) {
+                item.name = item.name.substring(0, 15) + "...";
+            }
+            if (parseInt(user.split('=')[1]) === parseInt(chat.user_to)) {
+                const user = await fetch(API_BASE_URL + "/user/" + chat.user_from, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                });
+                const userData = await user.json();
+                if (userData.username.length > 12) {
+                    userData.username = userData.username.substring(0, 12) + "...";
+                }
+                chats.push({username: userData.username, item_name: item.name, item_id: chat.item_id, chat_id: chat.chat_id});
+            } else {
+                const user = await fetch(API_BASE_URL + "/user/" + chat.user_to, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                });
+                const userData = await user.json();
+                if (userData.username.length > 12) {
+                    userData.username = userData.username.substring(0, 12) + "...";
+                }
+                chats.push({username: userData.username, item_name: item.name, item_id: chat.item_id, chat_id: chat.chat_id});
+            }
+        }
+
+        setChats(chats);
     }
 
     useEffect(() => {
@@ -154,66 +220,9 @@ const ChatsPage = () => {
             }, 100);
         }
 
-        const fetchChats = async () => {
-            const cookies = document.cookie.split(';');
-            if (!cookies) {
-                navigate('/login');
-                return;
-            }
-
-            const user = cookies.find(cookie => cookie.includes('user_id'));
-
-            if(!user) {
-                navigate('/login');
-                return;
-            }
-
-            const response = await fetch(API_BASE_URL + "/user/" + user.split('=')[1] + "/chats", {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-            });
-            const data = await response.json();
-            const chats = [];
-            for (const chat of data) {
-                const item = await GetItem(chat.item_id);
-                if (item.name.length > 15) {
-                    item.name = item.name.substring(0, 15) + "...";
-                }
-                if (parseInt(user.split('=')[1]) === parseInt(chat.user_to)) {
-                    const user = await fetch(API_BASE_URL + "/user/" + chat.user_from, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                    });
-                    const userData = await user.json();
-                    if (userData.username.length > 12) {
-                        userData.username = userData.username.substring(0, 12) + "...";
-                    }
-                    chats.push({username: userData.username, item_name: item.name, item_id: chat.item_id, chat_id: chat.chat_id});
-                } else {
-                    const user = await fetch(API_BASE_URL + "/user/" + chat.user_to, {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                    });
-                    const userData = await user.json();
-                    if (userData.username.length > 12) {
-                        userData.username = userData.username.substring(0, 12) + "...";
-                    }
-                    chats.push({username: userData.username, item_name: item.name, item_id: chat.item_id, chat_id: chat.chat_id});
-                }
-            }
-
-            console.log(chats);
-            setChats(chats);
-        }
-
         fetchChats();
         
+        setError("This is a simple error message");
     }
     , [navigate]);
 
@@ -243,9 +252,10 @@ const ChatsPage = () => {
                         {messages.map(message => addMessage(message.message, message.user_from, message.id))}
                     </div>
                     <div className={ChatsPageStyles['each-chat-input-container']}>
-                        <input type="text" className={ChatsPageStyles['each-chat-input']} placeholder="Type a message..." onChange={setMessage} />
+                        <input type="text" className={ChatsPageStyles['each-chat-input']} placeholder="Type a message..." onChange={setMessageHandle} value={message}/>
                         <img src={sendIcon} alt="sent" className={ChatsPageStyles["send-icon"]} onClick={handleSent} />
                     </div>
+                    {/* {error && <div className={ChatsPageStyles['error']}>{error}</div>} */}
                 </div>
             </div>
         </div>

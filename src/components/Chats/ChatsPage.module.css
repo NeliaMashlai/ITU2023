@@ -160,7 +160,7 @@
 }
 
 .each-chat-message-container-mine {
-    max-width: 80%;
+    max-width: 50%;
     width: auto;
     height: 10%;
     margin: 10px;
@@ -204,10 +204,11 @@
 }
 
 .each-chat-message-container-yours {
-    max-width: 80%;
+    max-width: 50%;
     width: auto;
     height: 10%;
     margin: 10px;
+    margin-right: auto;
     background-color: var(--blue);
     color: var(--titanium);
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
@@ -311,4 +312,19 @@
 
 .send-icon:hover{
     cursor: pointer;
+}
+
+.error{
+    position: relative;
+    width: 100%;
+    height: 10%;
+    
+    left: 45%;
+    color: red;
+    transform: translateX(50%);
+    font-size: 1.5em;
+    font-weight: 700;
+    align-items: center;
+    border: none;
+    background: transparent;
 }
