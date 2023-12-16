@@ -42,13 +42,25 @@ const EditItemPage = () => {
             PriceInputRef.current.focus();
         } else if(e.target.name === "edit-Name"){
             NameInputRef.current.disabled = false;
-            PriceInputRef.current.focus();
+            NameInputRef.current.focus();
         } else if(e.target.name === "edit-Size"){
             SizeInputRef.current.disabled = false;
-            PriceInputRef.current.focus();
+            SizeInputRef.current.focus();
         } else if(e.target.name === "edit-Description"){
             DescriptionInputRef.current.disabled = false;
-            PriceInputRef.current.focus();
+            DescriptionInputRef.current.focus();
+        }
+    }
+
+    const inputAbort = (e) => {
+        e.preventDefault();
+        e.target.disabled = true;
+    }
+
+    const HandleKeys = (e) => {
+        if(e.key === "Enter"){
+            e.preventDefault();
+            e.target.disabled = true;
         }
     }
 
@@ -57,8 +69,6 @@ const EditItemPage = () => {
             ...ItemData,
             [e.target.name]: e.target.value,
         });
-        console.log(e.target.name);
-        console.log(e.target.value);
     };
 
     const handleFiles = (file) => {
@@ -259,21 +269,21 @@ const EditItemPage = () => {
                 <div className={EditItemPageStyles["price-input-container"]}>
                     <label htmlFor="price" className={EditItemPageStyles["price-label"]}>Price:</label>
                     <input type="text" name="price" className={EditItemPageStyles["price-input"]} id="price" 
-                    placeholder="Set new item price" value = {ItemData.price} onChange = {handleInputChange} ref={PriceInputRef} disabled/>
+                    placeholder="Set new item price" value = {ItemData.price} onChange = {handleInputChange} ref={PriceInputRef} onKeyDown = {HandleKeys} onBlur = {inputAbort} disabled/>
                     <input type="button" value="EDIT" name = "edit-Price" className={EditItemPageStyles["edit-button-price"]} onClick = {setUnlock} />
                 </div>
 
                 <div className={EditItemPageStyles["name-input-container"]}>
                     <label htmlFor="name" className={EditItemPageStyles["name-label"]}>Name:</label>
                     <input type="text" name="name" className={EditItemPageStyles["name-input"]} id="name" 
-                    placeholder="Add new item naming here..." value = {ItemData.name} onChange = {handleInputChange} ref = {NameInputRef} disabled/>
+                    placeholder="Add new item naming here..." value = {ItemData.name} onChange = {handleInputChange} ref = {NameInputRef} onKeyDown = {HandleKeys} onBlur = {inputAbort} disabled/>
                     <input type="button" value="EDIT" name = "edit-Name" className={EditItemPageStyles["edit-button-name"]} onClick = {setUnlock} />
                 </div>
 
                 <div className={EditItemPageStyles["size-input-container"]}>
                     <label htmlFor="size" className={EditItemPageStyles["size-label"]}>Size:</label>
                     <input type="text" name="size" className={EditItemPageStyles["size-input"]} id="size" 
-                    placeholder="Add new item size here..." value = {ItemData.size} onChange = {handleInputChange} ref = {SizeInputRef} disabled/>
+                    placeholder="Add new item size here..." value = {ItemData.size} onChange = {handleInputChange} ref = {SizeInputRef} onKeyDown = {HandleKeys} onBlur = {inputAbort} disabled/>
                     <input type="button" value="EDIT" name = "edit-Size" className={EditItemPageStyles["edit-button-size"]} onClick = {setUnlock} />
                 </div>
 
@@ -326,7 +336,7 @@ const EditItemPage = () => {
                 <div className={EditItemPageStyles["description-input-container"]}>
                     <label htmlFor="description" className={EditItemPageStyles["description-label"]}>Description:</label>
                     <textarea name="description" className={EditItemPageStyles["description-input"]} id="description" 
-                    placeholder="Add new item description here..." value = {ItemData.description} onChange = {handleInputChange} ref = {DescriptionInputRef} disabled/>
+                    placeholder="Add new item description here..." value = {ItemData.description} onChange = {handleInputChange} ref = {DescriptionInputRef} onBlur = {inputAbort} disabled/>
                     <input type="button" value="EDIT" name = "edit-Description" className={EditItemPageStyles["edit-button-description"]} onClick = {setUnlock} />
                 </div>
 

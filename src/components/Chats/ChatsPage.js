@@ -164,8 +164,41 @@ const ChatsPage = () => {
                 <div className={ChatsPageStyles['each-chat-container']}>
                     <div className={ChatsPageStyles['each-chat-header']} >
                         <img src={user_svg} alt="Upload" className={ChatsPageStyles["chat-item-image"]} ref = {chatImage} />
-                        <span className={ChatsPageStyles["item-id-header"]} ref = {chatHeader}>Item: [ItemID]іотцмоітмоиімоимоіиоіиомоімиомоіиоіиоли</span>
+                        <span className={ChatsPageStyles["item-id-header"]} ref = {chatHeader}></span>
                     </div>
+                    <div className={ChatsPageStyles['each-chat-messages']}>
+                        <div className={ChatsPageStyles['each-chat-message-container']}>
+                            <span className={ChatsPageStyles['each-chat-message']}>Hello</span>
+                        </div>
+                        <div className={ChatsPageStyles['each-chat-message-container1']}>
+                            <span className={ChatsPageStyles['each-chat-message']}>Hello</span>
+                        </div>
+                        <div className={ChatsPageStyles['each-chat-message-container']}>
+                            <span className={ChatsPageStyles['each-chat-message']}>Hello</span>
+                        </div>
+                        <div className={ChatsPageStyles['each-chat-message-container']}>
+                            <span className={ChatsPageStyles['each-chat-message']}>Hello</span>
+                        </div>
+                        <div className={ChatsPageStyles['each-chat-message-container']}>
+                            <span className={ChatsPageStyles['each-chat-message']}>Hello</span>
+                        </div>
+                        <div className={ChatsPageStyles['each-chat-message-container']}>
+                            <span className={ChatsPageStyles['each-chat-message']}>Hello</span>
+                        </div>
+                        <div className={ChatsPageStyles['each-chat-message-container']}>
+                            <span className={ChatsPageStyles['each-chat-message']}>Hello</span>
+                        </div>
+                        <div className={ChatsPageStyles['each-chat-message-container']}>
+                            <span className={ChatsPageStyles['each-chat-message']}>Hello</span>
+                        </div>
+                        <div className={ChatsPageStyles['each-chat-message-container']}>
+                            <span className={ChatsPageStyles['each-chat-message']}>Hello</span>
+                        </div>
+                    </div>
+                    {/* <div className={ChatsPageStyles['each-chat-input-container']}>
+                        <input type="text" className={ChatsPageStyles['each-chat-input']} placeholder="Type a message..."/>
+                        <button className={ChatsPageStyles['each-chat-send-button']}>Send</button>
+                    </div> */}
                 </div>
             </div>
         </div>

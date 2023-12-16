@@ -146,3 +146,101 @@
     font-size: 1em;
     font-weight: 700;
 }
+
+.each-chat-messages{
+    position: relative;
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100%;
+    height: 70%;
+    top: 15%;
+    background-color: transparent;
+    overflow-y: scroll;
+}
+
+.each-chat-message-container {
+    max-width: 80%;
+    width: 50%; /* Ваша ширина */
+    height: 10%; /* Ваша висота */
+    margin: 10px;
+    margin-left: auto; /* Автоматичний відступ зліва, вирівнює елемент справа */
+    background-color: #0B93F6; /* Синій колір для відправлених повідомлень */
+    color: white; /* Білий колір тексту */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    word-wrap: break-word;
+    margin-bottom: 12px;
+    line-height: 24px;
+    padding: 10px 20px;
+    border-radius: 25px;
+}
+
+.each-chat-message-container:before,
+.each-chat-message-container:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    height: 25px;
+}
+
+.each-chat-message-container:before {
+    right: -7px;
+    width: 20px;
+    background-color: #0B93F6;
+    border-bottom-left-radius: 16px 14px;
+}
+
+.each-chat-message-container:after {
+    right: -8px;
+    width: 8px; 
+    background-color: var(--titanium);
+    border-bottom-left-radius: 10px;
+}
+
+.each-chat-message-container1 {
+    max-width: 80%;
+    width: 50%; /* Ваша ширина */
+    height: 10%; /* Ваша висота */
+    margin: 10px;
+    background-color: #0B93F6; /* Синій колір для відправлених повідомлень */
+    color: white; /* Білий колір тексту */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    word-wrap: break-word;
+    margin-bottom: 12px;
+    line-height: 24px;
+    padding: 10px 20px;
+    border-radius: 25px;
+}
+
+.each-chat-message-container1:before,
+.each-chat-message-container1:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    height: 25px;
+}
+
+.each-chat-message-container1:before {
+    left: -7px;
+    width: 20px;
+    background-color: #0B93F6;
+    border-bottom-right-radius: 16px 14px;
+}
+
+.each-chat-message-container1:after {
+    left: -8px;
+    width: 8px; 
+    background-color: var(--titanium);
+    border-bottom-right-radius: 10px;
+}
