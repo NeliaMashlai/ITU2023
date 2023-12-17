@@ -102,6 +102,7 @@ const EditItemPage = () => {
 
     const EditItem = async (e) => {
         e.preventDefault();
+        e.target.disabled = true;
         const queryParams = new URLSearchParams(location.search);
         const item_id = queryParams.get('item_id');
         if(e.target.value === "DONE"){
@@ -138,10 +139,13 @@ const EditItemPage = () => {
                     navigate('/profile?action_id=edit');
                 } else if (response.status === 401) {
                     setError("Unauthorized");
+                    e.target.disabled = false;
                 } else if (response.status === 404) {
                     setError("Item not found");
+                    e.target.disabled = false;
                 } else if (response.status === 500) {
                     setError("Server error");
+                    e.target.disabled = false;
                 } else {
                     throw new Error('Something went wrong');
                 }
@@ -149,6 +153,7 @@ const EditItemPage = () => {
             } catch (error) {
                 console.error('Error:', error);
                 setError('An error occurred while editing item');
+                e.target.disabled = false;
             }
         } else if(e.target.value === "DELETE"){
             try {

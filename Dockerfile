@@ -2,12 +2,12 @@ FROM node:16-alpine as build
 
 WORKDIR /app
 
-COPY package.json ./
+COPY . .
 EXPOSE 3000
 
 RUN npm install
+RUN npm run build
+RUN npm install -g serve
 
-COPY . .
-
-CMD ["npm", "start"]
+CMD ["serve", "-s", "build", "-l", "3000"]
 

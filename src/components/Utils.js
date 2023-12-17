@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 import React, { forwardRef } from "react";
 
 // API base URL
-export const API_BASE_URL = "http://10.0.0.106:8080/api/v1.0";
+export const API_BASE_URL = "http://localhost:8080/api/v1.0";
 
 export const fixElementHeight = (element) => {
     if (element) {
@@ -71,12 +71,13 @@ export const ifUserLoggedIn = async () => {
 }
 
 export const checkLogin = async (loggedInElement, logInElement) => {
-    const username = await ifUserLoggedIn();
 
-    if (loggedInElement.current === null || logInElement.current === null) {
+    if (!loggedInElement.current || !logInElement.current) {
         checkLogin(loggedInElement, logInElement);
         return;
     }
+
+    const username = await ifUserLoggedIn();
 
     if (username) {
         loggedInElement.current.style.display = 'flex';

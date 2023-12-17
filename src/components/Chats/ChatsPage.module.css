@@ -361,3 +361,18 @@
     border: none;
     background: transparent;
 }
+
+.empty-chat{
+    position: relative;
+    width: 100%;
+    height: 50%;
+    top: 45%;
+    color: var(--blue);
+    font-size: 2em;
+    font-weight: 700;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background: transparent;
+}
