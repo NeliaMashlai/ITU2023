@@ -1,0 +1,41 @@
+/*
+ * Project: ITU project - Garage sale website
+ * @file Page404.module.css
+
+ * @brief Styles for page 404
+
+ * @author Maksym Podhornyi - xpodho08
+*/
+
+.header{
+    position: absolute;
+    color: red;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+    font-size: 100px;
+    font-weight: 700;
+    font-family: var(--font-inria-sans);
+}
+
+.text{
+    position: absolute;
+    color: red;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 35px;
+    font-weight: 700;
+    font-family: var(--font-inria-sans);
+}
+
+.link{
+    position: absolute;
+    color: red;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+    font-size: 35px;
+    font-weight: 700;
+    font-family: var(--font-inria-sans);
+}
