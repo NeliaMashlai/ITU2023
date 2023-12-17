@@ -1,0 +1,127 @@
+/**
+ * Project: ITU project - Garage sale website
+ * @file RegisterPage.module.css
+
+ * @brief Styles for register page
+
+ * @author Maksym Podhornyi xpodho08
+*/
+
+.password-label,
+.password-label1,
+.username-label{
+    position: absolute;
+    color: var(--blue);
+    font-family: var(--font-inria-sans);
+    font-weight: 700;
+    display: flex;
+    align-items: flex-end;
+    font-size: var(--font-size-13xl)
+}
+
+.username-label {
+    top: 33.5%;
+    left: 36.39%;
+    width: 27.22%;
+    height: 5.86%;
+}
+
+.password-label {
+    top: 46.34%;
+    left: 36.39%;
+    width: 27.22%;
+    height: 5.86%;
+}
+
+.password-label1 {
+    top: 59.18%;
+    left: 36.39%;
+    width: 27.22%;
+    height: 5.86%;
+}
+
+.username-input,
+.password-input {
+    position: absolute;
+    background: var(--white);
+    border-radius: var(--br-6xl);
+    border: none;
+    color: var(--blue);
+    font-family: var(--font-inria-sans);
+    font-weight: 700;
+}
+
+.username-input,
+.password-input1 {
+    position: absolute;
+    background: var(--white);
+    border-radius: var(--br-6xl);
+    border: none;
+    color: var(--blue);
+    font-family: var(--font-inria-sans);
+    font-weight: 700;
+}
+
+.username-input {
+    top: 40%;
+    left: 36.39%;
+    width: 27.22%;
+    height: 4.88%;
+}
+
+.password-input {
+    top: 53%;
+    left: 36.39%;
+    width: 27.22%;
+    height: 4.88%;
+}
+
+.password-input1 {
+    top: 66%;
+    left: 36.39%;
+    width: 27.22%;
+    height: 4.88%;
+}
+
+.register-form{
+    position: absolute;
+    top: 30.53%;
+    left: 33.33%;
+    width: 33.33%;
+    height: 50.88%;
+    background-color:  rgba(217, 217, 217, 0.7);
+}
+
+.error{
+    position: absolute;
+    top: 82%;
+    left: 33.3%;
+    width: 33.33%;
+    height: auto;
+    color: red;
+    font-family: var(--font-inria-sans);
+    font-weight: 700;
+    font-size: var(--font-size-13xl);
+    text-align: center;
+}
+
+.sign-up-btn {
+    position: absolute;
+    top: 73%;
+    left: 36.46%;
+    width: 27.22%;
+    height: 6.84%;
+    border-radius: 20px;
+    border: none;
+    background-color: var(--titanium);
+    color: var(--blue);
+    font-family: var(--font-inria-serif);
+    font-size: var(--font-size-13xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sign-up-btn:hover {
+    background-color: lightgray;
+}

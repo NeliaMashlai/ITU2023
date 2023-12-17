@@ -1,0 +1,26 @@
+/*
+ * Project: ITU project - Garage sale website
+ * @file MenCategories.module.css
+
+ * @brief Styles for categories page
+
+ * @author Maksym Podhornyi - xpodho08
+*/
+
+.categories {
+    position: absolute;
+    width: 100%;
+    height: 10%;
+    top: 12.5%;
+    text-align: center;
+    font-size: var(--font-size-21xl);
+    font-family: var(--font-inria-sans);
+    color: #093825;
+}
+
+.main-container {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}

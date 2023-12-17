@@ -1,0 +1,159 @@
+/*
+ * Project: ITU project - Garage sale website
+ * @file ItemsList.module.css
+
+ * @brief Styles for list of items
+
+ * @author Maksym Podhornyi - xpodho08
+*/
+
+.main-container {
+    width: 100%;
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    padding-bottom: 0px;
+}
+
+.items-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 10px;
+    column-gap: 30px;
+    top: 10%;
+    width: 1200px;
+    min-height: 49vh;
+    padding: 20px;
+    margin-top: 10%;
+    background-color: transparent;
+}
+
+.item-container {
+    position: relative;
+    height: 350px;
+    background-color: var(--titanium);
+    border-radius: var(--br-xl);
+}
+
+.item-container:hover {
+    cursor: pointer;
+}
+
+.item-image {
+    position: absolute;
+    width: calc(100% - 2px);
+    height: 80%;
+    top: 0;
+    left: 0;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: var(--br-xl);
+    overflow: hidden;
+    object-fit: cover;
+    border: 1px solid var(--titanium);
+}
+
+.item-name {
+    position: absolute;
+    width: 100%;
+    height: 10%;
+    top: 80%;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--blue);
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.item-price {
+    position: absolute;
+    width: 100%;
+    height: 10%;
+    top: 88%;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--blue);
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.caption{
+    position: absolute;
+    width: 100%;
+    height: 10%;
+    top: 11%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--blue);
+    font-size: 2em;
+    font-weight: 700;
+}
+
+.contacts{
+    width: 100%;
+    height: 150px;
+    background-color: var(--brown);
+    margin-top: 10px;
+    position: relative;
+}
+
+.address-container {
+    position: absolute;
+    width: 30%;
+    height: 90%;
+    top: 10%;
+    left: 40%;
+    font-weight: 700;
+}
+
+.address {
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    color: var(--white);
+}
+
+.contacts-container {
+    position: absolute;
+    top: 18%;
+    left: 9%;
+}
+
+.contacts-text{
+    top: 0;
+    left: 0;
+    font-size: 20px;
+    color: var(--white);
+}
+
+.facebook-icon,
+.instagram-icon,
+.twitter-icon {
+  position: absolute;
+  height: 60px;
+  width: 60px;
+  top: 35%;
+  max-width: 100%;
+  overflow: hidden;
+  max-height: 100%;
+}
+
+.facebook-icon {
+  right: 7%;
+}
+
+.instagram-icon {
+  right: 13%;
+}
+
+.twitter-icon {
+  right: 19%;
+}
