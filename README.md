@@ -20,6 +20,8 @@ cd frontend
 docker build --pull --rm -f "Dockerfile" -t frontend:latest .
 ```
 
+#
+
 ### Manual installation
 
 #### Backend
@@ -35,8 +37,6 @@ pip install -r requirements.txt
 
 ```bash
 cd frontend
-python -m venv venv
-source venv/bin/activate
 npm install
 ```
 
@@ -55,6 +55,7 @@ docker run --rm -d -p 8080:8080/tcp backend:latest
 ```bash
 docker run --rm -d -p 3000:3000/tcp frontend:latest
 ```
+#
 
 ### Manual run
 
@@ -70,10 +71,21 @@ python run.py
 
 ```bash
 cd frontend
-source venv/bin/activate
 npm build
 npm install -g serve
 serve -s build
+```
+
+### If you want to run backend and frontend at the same time without Docker you can use Tmux or Screen
+
+## Now application is available on
+
+```bash
+http://localhost:3000 # frontend
+
+or 
+
+http://localhost:8080 # backend
 ```
 
 ## Frontend debugging
