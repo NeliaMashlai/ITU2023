@@ -1,7 +1,4 @@
 .idea
-src/**/__pycache__/
-database.db
-tests/crypto.py
-tests/*
-tests
+backend/src/**/__pycache__/
+backend/src/database.db
 .DS_Store
