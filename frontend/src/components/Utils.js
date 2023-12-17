@@ -8,15 +8,6 @@
  * @author Mashlai Neonila - xmashl00
 */
 
-/*
- * Project: ITU project - Garage sale website
- * @file Utils.js
- * @brief ReactJS functions used in multiple components
- *        This file contains utility functions and components shared across the project.
- * @author Maksym Podhornyi - xpodho08
- * @author Mashlai Neonila - xmashl00
-*/
-
 // Importing assets and necessary libraries.
 import InstagramIcon from "./images/instagram_icon.png";
 import FacebookIcon from "./images/facebook_icon.png";
