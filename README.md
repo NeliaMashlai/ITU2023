@@ -92,7 +92,6 @@ npm run start
 [python-pip]: https://pypi.org/project/pip/
 [nodejs]: https://nodejs.org/en/download/
 [npm]: https://www.npmjs.com/get-npm
-[git]: https://git-scm.com/downloads
 [docker]: https://docs.docker.com/get-docker/
 
 <!-- links end -->
@@ -102,12 +101,11 @@ npm run start
 - [Python pip][python-pip]
 - [Node.js][nodejs] >= 14.17.0
 - [npm][npm] >= 6.14.13
-- [Git][git]
 - [Docker][docker] (optional)
 
 ## Authors
 
-- [**Mashlai Neonila - xmashl00**](https://github.com/NeliaMashlai)
+- [**Neonila Mashlai - xmashl00**](https://github.com/NeliaMashlai)
 - [**Maksym Podhornyi - xpodho08**](https://github.com/max0n1x)
 
 ## License
