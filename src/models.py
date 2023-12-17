@@ -60,8 +60,8 @@ class Chat(BaseModel):
     item_id: int
 
 class ChatMessage(BaseModel):
-    message_id: int
     chat_id: int
+    user_from: int
     message: str
     date: str
 

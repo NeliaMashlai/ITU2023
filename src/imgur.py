@@ -1,3 +1,13 @@
+"""
+ * Project: ITU project - Garage sale website
+ * @file imgur.py
+
+ * @brief imgur uploader
+
+ * @author Maksym Podhornyi - xpodho08
+
+"""
+
 import requests
 
 class ImageUploader:

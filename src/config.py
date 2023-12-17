@@ -1,3 +1,13 @@
+"""
+ * Project: ITU project - Garage sale website
+ * @file config.py
+
+ * @brief file for configuration parsing
+
+ * @author Neonila Mashlai - xmashl00
+
+"""
+
 from configparser import ConfigParser
 import os
 

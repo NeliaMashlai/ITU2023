@@ -63,6 +63,7 @@ class Database:
             self.conn.execute('''CREATE TABLE IF NOT EXISTS messages (
                             message_id INTEGER PRIMARY KEY AUTOINCREMENT,
                             chat_id INTEGER NOT NULL,
+                            user_from INTEGER NOT NULL,
                             message TEXT NOT NULL,
                             date TEXT NOT NULL,
                             FOREIGN KEY (chat_id) REFERENCES chats (chat_id));
@@ -147,6 +148,25 @@ class Database:
             cursor.execute('''
             DELETE FROM items WHERE id = :id
             ''', {'id': item_id})
+
+            self.conn.commit()
+
+            cursor.execute('''
+            SELECT chat_id FROM chats WHERE item_id = :item_id
+            ''', {'item_id': item_id})
+
+            rows = cursor.fetchall()
+
+            for row in rows:
+                cursor.execute('''
+                DELETE FROM messages WHERE chat_id = :chat_id
+                ''', {'chat_id': row[0]})
+
+            self.conn.commit()
+
+            cursor.execute('''
+            DELETE FROM chats WHERE item_id = :item_id
+            ''', {'item_id': item_id})
 
             self.conn.commit()
 
@@ -394,6 +414,12 @@ class Database:
 
             self.conn.commit()
 
+            cursor.execute('''
+            DELETE FROM messages WHERE chat_id = :chat_id
+            ''', {'chat_id': chat_id})
+
+            self.conn.commit()
+
             return True
         
         except Error as e:
@@ -408,8 +434,8 @@ class Database:
             cursor = self.conn.cursor()
 
             cursor.execute('''
-            INSERT INTO messages (chat_id, message, date)
-            VALUES (:chat_id, :message, :date)
+            INSERT INTO messages (chat_id, user_from, message, date)
+            VALUES (:chat_id, :user_from, :message, :date)
             ''', message)
 
             self.conn.commit()
@@ -433,7 +459,7 @@ class Database:
 
             rows = cursor.fetchall()
 
-            keys = ('message_id', 'chat_id', 'message', 'date')
+            keys = ('message_id', 'chat_id', 'user_from', 'message', 'date')
 
             return [{key: value for key, value in zip(keys, row)} for row in rows]
         

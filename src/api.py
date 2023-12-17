@@ -54,17 +54,17 @@ async def get_chat(chat_id: int) -> dict:
         return chat
     raise HTTPException(status_code=500, detail='Server error')
 
-@app.get('/api/v1.0/{user_id}/chats')
+@app.get('/api/v1.0/user/{user_id}/chats')
 async def get_chats(user_id: int) -> list[dict]:
     chats = db.get_chats(user_id)
-    if chats:
+    if chats is not None:
         return chats
     raise HTTPException(status_code=500, detail='Server error')
 
-@app.get('/api/v1.0/{chat_id}/messages')
+@app.get('/api/v1.0/chat/{chat_id}/messages')
 async def get_messages(chat_id: int) -> list[dict]:
     messages = db.get_messages(chat_id)
-    if messages:
+    if messages is not None:
         return messages
     raise HTTPException(status_code=500, detail='Server error')
 
