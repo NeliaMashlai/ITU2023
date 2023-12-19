@@ -5,7 +5,6 @@
  * @brief ReactJS functions used in multiple components
 
  * @author Maksym Podhornyi - xpodho08
- * @author Mashlai Neonila - xmashl00
 */
 
 // Importing assets and necessary libraries.
