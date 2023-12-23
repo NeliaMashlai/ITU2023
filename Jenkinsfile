@@ -19,6 +19,7 @@ pipeline {
             steps {
                 dir('backend') {
                     script {
+                        sh 'docker cp $(docker ps | grep "build:latest" | awk '{print $1}'):app/src/database.db ./src/database.db'
                         sh 'docker build --pull --rm -f "Dockerfile" -t backend:latest .'
                     }
                 }
