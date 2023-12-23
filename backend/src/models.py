@@ -54,7 +54,7 @@ class UserUpdate(BaseModel):
     date_of_birth: Optional[str]
 
 class Chat(BaseModel):
-    chat_id: Optional[int]
+    # chat_id: Optional[int]
     user_from: int
     user_to: int
     item_id: int
