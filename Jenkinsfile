@@ -26,14 +26,8 @@ pipeline {
         }
     }
     post {
-        // if build fails, send notification to Slack
-        failure {
-            slackSend (color: '#FF0000', message: "Build failed for ${env.JOB_NAME} ${env.BUILD_NUMBER} More info at: ${env.BUILD_URL}")
-        }
-
         // if build succeeds, send notification to Slack
         success {
-            slackSend (color: '#00FF00', message: "Build succeeded for ${env.JOB_NAME} ${env.BUILD_NUMBER} More info at: ${env.BUILD_URL}")
             sh 'docker container stop frontend:latest'
             sh 'docker container rm frontend:latest'
             sh 'docker container stop backend:latest'
