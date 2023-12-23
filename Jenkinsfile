@@ -10,8 +10,7 @@ pipeline {
             steps {
                 dir('frontend') {
                     script {
-                        // sh current dir 
-                        sh 'docker build --pull --rm -f "Dockerfile" -t backend:latest .'
+                        docker.build()
                     }
                 }
             }
@@ -20,7 +19,6 @@ pipeline {
             steps {
                 dir('backend') {
                     script {
-                        // sh current dir 
                         sh 'docker build --pull --rm -f "Dockerfile" -t frontend:latest .'
                     }
                 }
@@ -28,10 +26,21 @@ pipeline {
         }
     }
     post {
-        always {
-            // Clean up
-            sh 'docker rm -f backend:latest || true'
-            sh 'docker rm -f frontend:latest || true'
+        // if build fails, send notification to Slack
+        failure {
+            slackSend (color: '#FF0000', message: "Build failed for ${env.JOB_NAME} ${env.BUILD_NUMBER} More info at: ${env.BUILD_URL}")
+        }
+
+        // if build succeeds, send notification to Slack
+        success {
+            slackSend (color: '#00FF00', message: "Build succeeded for ${env.JOB_NAME} ${env.BUILD_NUMBER} More info at: ${env.BUILD_URL}")
+            sh 'docker container stop frontend:latest'
+            sh 'docker container rm frontend:latest'
+            sh 'docker container stop backend:latest'
+            sh 'docker container rm backend:latest'
+
+            sh 'docker run --rm -d -p 8080:8080/tcp backend:latest'
+            sh 'docker run --rm -d -p 3000:3000/tcp frontend:latest'
         }
     }
 }
