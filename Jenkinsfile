@@ -54,5 +54,7 @@ pipeline {
                 to: "forjant1@gmai.com",
             )
 
+        }
     }
+
 }
