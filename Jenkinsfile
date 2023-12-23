@@ -19,7 +19,8 @@ pipeline {
             steps {
                 dir('backend') {
                     script {
-                        sh 'docker cp $(docker ps | grep "build:latest" | awk '{print $1}'):app/src/database.db ./src/database.db'
+                        sh 'chmod +x ../scripts/get_db.sh'
+                        sh '../scripts/get_db.sh'
                         sh 'docker build --pull --rm -f "Dockerfile" -t backend:latest .'
                     }
                 }
@@ -29,8 +30,8 @@ pipeline {
     post {
         success {
 
-            sh 'docker stop $(docker ps | grep "frontend:latest" | awk '{print $1}')'
-            sh 'docker stop $(docker ps | grep "backend:latest" | awk '{print $1}')'
+            sh 'chmod +x ./scripts/stops.sh'
+            sh './scripts/stops.sh'
 
             sh 'docker run --rm -d -p 8080:8080/tcp backend:latest'
             sh 'docker run --rm -d -p 3000:3000/tcp frontend:latest'
