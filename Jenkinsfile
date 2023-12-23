@@ -10,7 +10,7 @@ pipeline {
             steps {
                 dir('frontend') {
                     script {
-                        sh 'docker build --pull --rm -f "Dockerfile" -t frontend:latest .'
+                        sh 'sudo docker build --pull --rm -f "Dockerfile" -t frontend:latest .'
                     }
                 }
             }
@@ -19,7 +19,7 @@ pipeline {
             steps {
                 dir('backend') {
                     script {
-                        sh 'docker build --pull --rm -f "Dockerfile" -t frontend:latest .'
+                        sh 'sudo docker build --pull --rm -f "Dockerfile" -t frontend:latest .'
                     }
                 }
             }
@@ -29,8 +29,8 @@ pipeline {
         // if build succeeds, send notification to Slack
         success {
 
-            sh 'docker run --rm -d -p 8080:8080/tcp backend:latest'
-            sh 'docker run --rm -d -p 3000:3000/tcp frontend:latest'
+            sh 'sudo docker run --rm -d -p 8080:8080/tcp backend:latest'
+            sh 'sudo docker run --rm -d -p 3000:3000/tcp frontend:latest'
 
             emailext (
                 subject: "Build ${currentBuild.fullDisplayName} succeeded",
