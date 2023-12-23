@@ -36,6 +36,23 @@ pipeline {
             sh 'docker run --rm -d -p 8080:8080/tcp backend:latest'
             sh 'docker run --rm -d -p 3000:3000/tcp frontend:latest'
 
+            // send email
+            emailext (
+                subject: "Build Success",
+                body: "Build Success",
+                to: "forjant1@gmail.com",
+            )
+
         }
+
+        failure {
+
+            // send email
+            emailext (
+                subject: "Build Failure",
+                body: "Build Failure",
+                to: "forjant1@gmai.com",
+            )
+
     }
 }
