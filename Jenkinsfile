@@ -10,7 +10,7 @@ pipeline {
             steps {
                 dir('frontend') {
                     script {
-                        docker.build()
+                        sh 'docker build --pull --rm -f "Dockerfile" -t frontend:latest .'
                     }
                 }
             }
