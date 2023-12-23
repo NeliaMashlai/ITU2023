@@ -10,13 +10,13 @@ pipeline {
             steps {
                 dir('frontend') {
                     script {
-                        docker.build("my-frontend:${env.BUILD_ID}").inside {
+                        docker.build("frontend:${env.BUILD_ID}").inside {
                             // Run tests or other build steps
                             sh 'cd frontend'
-                            sh 'docker build --pull --rm -f "Dockerfile" -t frontend:latest .'
+                            sh 'docker build --pull --rm -f "Dockerfile" .'
                         }
                         // Deploy or run the container
-                        sh 'docker run --rm -d -p 8080:8080/tcp backend:latest'
+                        sh 'docker run --rm -d -p 8080:8080/tcp --name frontend'
                     }
                 }
             }
@@ -25,13 +25,13 @@ pipeline {
             steps {
                 dir('backend') {
                     script {
-                        docker.build("my-backend:${env.BUILD_ID}").inside {
+                        docker.build("backend:${env.BUILD_ID}").inside {
                             // Run tests or other build steps
                             sh 'cd backend'
-                            sh 'docker build --pull --rm -f "Dockerfile" -t backend:latest .'
+                            sh 'docker build --pull --rm -f "Dockerfile" .'
                         }
                         // Deploy or run the container
-                        sh 'docker run --rm -d -p 8080:8080/tcp backend:latest'
+                        sh 'docker run --rm -d -p 8080:8080/tcp --name backend'
                     }
                 }
             }
