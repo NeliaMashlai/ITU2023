@@ -11,7 +11,7 @@ pipeline {
                 dir('frontend') {
                     script {
                         // sh current dir 
-                        sh 'ls'
+                        sh 'docker build --pull --rm -f "Dockerfile" -t backend:latest .'
                     }
                 }
             }
@@ -21,7 +21,7 @@ pipeline {
                 dir('backend') {
                     script {
                         // sh current dir 
-                        sh 'ls'
+                        sh 'docker build --pull --rm -f "Dockerfile" -t frontend:latest .'
                     }
                 }
             }
@@ -30,8 +30,8 @@ pipeline {
     post {
         always {
             // Clean up
-            sh 'docker rm -f backend || true'
-            sh 'docker rm -f frontend || true'
+            sh 'docker rm -f backend:latest || true'
+            sh 'docker rm -f frontend:latest || true'
         }
     }
 }
