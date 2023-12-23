@@ -38,9 +38,9 @@ pipeline {
 
             // send email
             emailext (
-                subject: "Build Success",
-                body: "Build Success",
-                to: "forjant1@gmail.com",
+                subject: "Build success in Jenkins: ${currentBuild.fullDisplayName}",
+                body: "Everything is fine with ${env.BUILD_URL}",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
             )
 
         }
@@ -49,9 +49,9 @@ pipeline {
 
             // send email
             emailext (
-                subject: "Build Failure",
-                body: "Build Failure",
-                to: "forjant1@gmai.com",
+                subject: "Build failed in Jenkins: ${currentBuild.fullDisplayName}",
+                body: "Something is wrong with ${env.BUILD_URL}",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
             )
 
         }
