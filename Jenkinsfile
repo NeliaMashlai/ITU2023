@@ -29,6 +29,8 @@ pipeline {
         // if build succeeds, send notification to Slack
         success {
 
+            sh 'sudo docker stop $(sudo docker ps -a -q)'
+
             sh 'sudo docker run --rm -d -p 8080:8080/tcp backend:latest'
             sh 'sudo docker run --rm -d -p 3000:3000/tcp frontend:latest'
 
