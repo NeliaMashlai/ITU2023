@@ -11,7 +11,7 @@ pipeline {
                 dir('frontend') {
                     script {
                         // sh current dir 
-                        sh 'pwd'
+                        sh 'ls'
                     }
                 }
             }
@@ -21,7 +21,7 @@ pipeline {
                 dir('backend') {
                     script {
                         // sh current dir 
-                        sh 'pwd'
+                        sh 'ls'
                     }
                 }
             }
