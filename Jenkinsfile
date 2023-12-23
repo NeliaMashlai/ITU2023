@@ -26,10 +26,10 @@ pipeline {
         }
     }
     post {
-        // if build succeeds, send notification to Slack
         success {
 
-            sh 'docker stop $(sudo docker ps -a -q)'
+            sh 'docker stop $(docker ps | grep "frontend:latest" | awk '{print $1}')'
+            sh 'docker stop $(docker ps | grep "backend:latest" | awk '{print $1}')'
 
             sh 'docker run --rm -d -p 8080:8080/tcp backend:latest'
             sh 'docker run --rm -d -p 3000:3000/tcp frontend:latest'
