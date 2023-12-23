@@ -33,8 +33,14 @@ pipeline {
             sh 'docker container stop backend:latest'
             sh 'docker container rm backend:latest'
 
-            sh 'docker run --rm -d -p 8080:8080/tcp backend:latest'
+            sh 'docker run --rm -d -p 8080:8080/tcp --name backend backend:latest'
             sh 'docker run --rm -d -p 3000:3000/tcp frontend:latest'
+
+            emailext (
+                subject: "Build ${currentBuild.fullDisplayName} succeeded",
+                body: "Build ${currentBuild.fullDisplayName} succeeded",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+            )
         }
     }
 }
