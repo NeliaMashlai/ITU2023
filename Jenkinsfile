@@ -39,7 +39,7 @@ pipeline {
             // send email
             mail to: 'forjant1@gmail.com',
             subject: "Build failed in Jenkins: ${currentBuild.fullDisplayName}",
-            body: "Something is wrong with ${env.BUILD_URL}",
+            body: "Something is wrong with ${env.BUILD_URL}"
 
         }
 
@@ -48,7 +48,7 @@ pipeline {
             // send email
             mail to: 'forjant1@gmail.com',
             subject: "Build failed in Jenkins: ${currentBuild.fullDisplayName}",
-            body: "Something is wrong with ${env.BUILD_URL}",
+            body: "Something is wrong with ${env.BUILD_URL}"
 
         }
     }
