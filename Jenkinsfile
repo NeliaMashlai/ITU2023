@@ -16,8 +16,9 @@ pipeline {
             }
 
             post {
-                failed{
-                    currentBuild.result = 'FAILURE'
+                failure{
+                    currentBuild.result = 'ABORTED'
+                    echo 'Build failed, aborting deployment'
 
                     emailext (
                         subject: "Build failed in Jenkins: ${currentBuild.fullDisplayName}",
@@ -41,8 +42,9 @@ pipeline {
             }
 
             post {
-                failed{
-                    currentBuild.result = 'FAILURE'
+                failure{
+                    currentBuild.result = 'ABORTED'
+                    echo 'Build failed, aborting deployment'
 
                     emailext (
                         subject: "Build failed in Jenkins: ${currentBuild.fullDisplayName}",
@@ -72,7 +74,7 @@ pipeline {
         }
 
         failure {
-            
+
             emailext (
                 subject: "Build failed in Jenkins: ${currentBuild.fullDisplayName}",
                 body: "Something is wrong with ${env.BUILD_URL}",
