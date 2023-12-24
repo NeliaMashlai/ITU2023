@@ -1,5 +1,3 @@
-erors = False
-
 pipeline {
     agent any
     stages {
