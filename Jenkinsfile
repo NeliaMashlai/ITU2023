@@ -37,22 +37,18 @@ pipeline {
             sh 'docker run --rm -d -p 3000:3000/tcp frontend:latest'
 
             // send email
-            emailext (
-                subject: "Build success in Jenkins: ${currentBuild.fullDisplayName}",
-                body: "Everything is fine with ${env.BUILD_URL}",
-                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-            )
+            mail to: 'forjant1@gmail.com',
+            subject: "Build failed in Jenkins: ${currentBuild.fullDisplayName}",
+            body: "Something is wrong with ${env.BUILD_URL}",
 
         }
 
         failure {
 
             // send email
-            emailext (
-                subject: "Build failed in Jenkins: ${currentBuild.fullDisplayName}",
-                body: "Something is wrong with ${env.BUILD_URL}",
-                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-            )
+            mail to: 'forjant1@gmail.com',
+            subject: "Build failed in Jenkins: ${currentBuild.fullDisplayName}",
+            body: "Something is wrong with ${env.BUILD_URL}",
 
         }
     }
