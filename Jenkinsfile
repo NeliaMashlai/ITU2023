@@ -49,6 +49,7 @@ pipeline {
         failure {
 
             // send email
+            
             emailext (
                 subject: "Build failed in Jenkins: ${currentBuild.fullDisplayName}",
                 body: "Something is wrong with ${env.BUILD_URL}",
