@@ -14,6 +14,19 @@ pipeline {
                     }
                 }
             }
+
+            post {
+                failed{
+                    currentBuild.result = 'FAILURE'
+
+                    emailext (
+                        subject: "Build failed in Jenkins: ${currentBuild.fullDisplayName}",
+                        body: "Something is wrong with ${env.BUILD_URL} in stage ${env.STAGE_NAME}",
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                    )
+
+                }
+            }
         }
         stage('Build and Deploy Backend') {
             steps {
@@ -22,7 +35,21 @@ pipeline {
                         sh 'chmod +x ../scripts/get_db.sh'
                         sh '../scripts/get_db.sh'
                         sh 'docker build --pull --rm -f "Dockerfile" -t backend:latest .'
+
                     }
+                }
+            }
+
+            post {
+                failed{
+                    currentBuild.result = 'FAILURE'
+
+                    emailext (
+                        subject: "Build failed in Jenkins: ${currentBuild.fullDisplayName}",
+                        body: "Something is wrong with ${env.BUILD_URL} in stage ${env.STAGE_NAME}",
+                        recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                    )
+
                 }
             }
         }
@@ -36,8 +63,6 @@ pipeline {
             sh 'docker run --rm -d -p 8080:8080/tcp backend:latest'
             sh 'docker run --rm -d -p 3000:3000/tcp frontend:latest'
 
-            // send email
-
             emailext (
                 subject: "Build success in Jenkins: ${currentBuild.fullDisplayName}",
                 body: "Everything is fine with ${env.BUILD_URL}",
@@ -47,8 +72,6 @@ pipeline {
         }
 
         failure {
-
-            // send email
             
             emailext (
                 subject: "Build failed in Jenkins: ${currentBuild.fullDisplayName}",
