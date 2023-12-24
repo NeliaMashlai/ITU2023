@@ -1,3 +1,5 @@
+erors = False
+
 pipeline {
     agent any
     stages {
@@ -7,29 +9,28 @@ pipeline {
             }
         }
         stage('Build and Deploy Frontend') {
-            steps {
-                try{
+            try{
+                steps {
                     dir('frontend') {
                         script {
                             sh 'docker build --pull --rm -f "Dockerfile" -t frontend:latest .'
                         }
                     }
-                } catch (err) {
-                    echo 'Build failed, aborting deployment'
-                    emailext (
-                        subject: "Build failed in Jenkins: ${currentBuild.fullDisplayName}",
-                        body: "Something is wrong with ${env.BUILD_URL} in stage ${env.STAGE_NAME}",
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-                    )
-                    build.result = 'FAILURE'
-                    return
                 }
-            }
+            }catch(e){
+                echo 'Build failed, aborting deployment'
 
+                emailext (
+                    subject: "Build failed in Jenkins: ${currentBuild.fullDisplayName}",
+                    body: "Something is wrong with ${env.BUILD_URL} in stage ${env.STAGE_NAME}",
+                    recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                )
+                return
+            }
         }
         stage('Build and Deploy Backend') {
-            steps {
-                try {
+            try{
+                steps {
                     dir('backend') {
                         script {
                             sh 'chmod +x ../scripts/get_db.sh'
@@ -38,16 +39,16 @@ pipeline {
 
                         }
                     }
-                } catch (err) {
-                    echo 'Build failed, aborting deployment'
-                    emailext (
-                        subject: "Build failed in Jenkins: ${currentBuild.fullDisplayName}",
-                        body: "Something is wrong with ${env.BUILD_URL} in stage ${env.STAGE_NAME}",
-                        recipientProviders: [[$class: 'DevelopersRecipientProvider']]
-                    )
-                    build.result = 'FAILURE'
-                    return
                 }
+            }catch(e){
+                echo 'Build failed, aborting deployment'
+
+                emailext (
+                    subject: "Build failed in Jenkins: ${currentBuild.fullDisplayName}",
+                    body: "Something is wrong with ${env.BUILD_URL} in stage ${env.STAGE_NAME}",
+                    recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                )
+                return
             }
 
         }
