@@ -16,10 +16,25 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.models import Item, ItemUpdate, User, UserUpdate, Chat, ChatMessage, ChatMessageUpdate
 from src.imgur import ImageUploader
 from prometheus_fastapi_instrumentator import Instrumentator
+import logging
+from os import getenv
+from multiprocessing import Queue
+from logging_loki import LokiQueueHandler
 
 
 app = FastAPI()
 Instrumentator().instrument(app).expose(app)
+
+loki_logs_handler = LokiQueueHandler(
+    Queue(-1),
+    url=getenv("http://localhost:3100"),
+    tags={"application": "fastapi"},
+    version="1",
+)
+
+uvicorn_access_logger = logging.getLogger("uvicorn.access")
+uvicorn_access_logger.addHandler(loki_logs_handler)
+
 db = Database()
 
 
