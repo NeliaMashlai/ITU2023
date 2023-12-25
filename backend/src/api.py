@@ -15,9 +15,11 @@ from src.sqlite import Database
 from fastapi.middleware.cors import CORSMiddleware
 from src.models import Item, ItemUpdate, User, UserUpdate, Chat, ChatMessage, ChatMessageUpdate
 from src.imgur import ImageUploader
+from prometheus_fastapi_instrumentator import Instrumentator
 
 
 app = FastAPI()
+Instrumentator().instrument(app).expose(app)
 db = Database()
 
 

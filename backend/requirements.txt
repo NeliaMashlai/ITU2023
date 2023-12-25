@@ -3,3 +3,4 @@ uvicorn
 cryptography 
 python-multipart 
 requests
+prometheus-fastapi-instrumentator
